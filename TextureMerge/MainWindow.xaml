@@ -5,8 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextureMerge"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Texture Merge" Height="450" Width="800" Background="#FF34363A">
     <Grid>
-
+        <Grid Margin="50,40,50,110">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" >
+                <Image Margin="10,10,10,40" Source="https://www.goodtextures.com/cache/8b5c7c71/av6d8ca155e60fb0d3fdd.png"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
+                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" >
+                <Image Margin="10,10,10,40" Source="https://2.img-dpreview.com/files/p/E~C1000x0S4000x4000T1200x1200~articles/3925134721/0266554465.jpeg"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
+                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" >
+                <Image Margin="10,10,10,40" Source="https://www.arkance-systems.cz/wp-content/uploads/sites/12/2021/03/Maya2020_Audio.jpg"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
+                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Height="80" VerticalAlignment="Bottom" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
+                <TextBox Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents" Padding="0,3,3,0"/>
+                <Border BorderBrush="#FF007AC8" BorderThickness="2,2,2,2" HorizontalAlignment="Right" Width="80" CornerRadius="10,10,10,10">
+                    <Label Content="Browse" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
+                <TextBox Margin="0,0,90,0" TextAlignment="Right" Text="Pack" Padding="0,3,2,0"/>
+                <Border BorderBrush="#FF007AC8" BorderThickness="2,2,2,2" HorizontalAlignment="Right" Width="80" CornerRadius="10,10,10,10">
+                    <Label Content="Merge" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+                </Border>
+                
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
