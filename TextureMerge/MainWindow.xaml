@@ -1,0 +1,118 @@
+﻿<Window x:Class="TextureMerge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        Title="Texture Merge"
+        Height="500" Width="1100"
+        MinWidth="600" MinHeight="350">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="bigLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="50,30,50,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="5,0,5,0">
+                <Label x:Name="redNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
+                <Border>
+                    <Image x:Name="RedCh" Margin="10,10,10,40"/>
+                </Border>
+                <Label Content="R" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCC0000" FontSize="16"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
+                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearR" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Margin="5,0,5,0">
+                <Label x:Name="greenNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
+                <Border>
+                    <Image x:Name="GreenCh" Margin="10,10,10,40"/>
+                </Border>
+                <Label Content="G" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF00CC00" FontSize="16"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadG" />
+                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearG" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" Margin="5,0,5,0">
+                <Label x:Name="blueNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
+                <Border>
+                    <Image x:Name="BlueCh" Margin="10,10,10,40"/>
+                </Border>
+                <Label Content="B" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF0000CC" FontSize="16"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadB" />
+                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearB" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="3" Margin="5,0,5,0">
+                <Label x:Name="alphaNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
+                <Border>
+                    <Image x:Name="AlphaCh" Margin="10,10,10,40"/>
+                </Border>
+                <Label Content="A" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCCCCCC" FontSize="16"/>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadA" />
+                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearA" />
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,0,50,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Label Content="Color when no image provided: " HorizontalAlignment="Left" Margin="0,0,100,0" VerticalAlignment="Center"/>
+            <Rectangle x:Name="DefaultColorRect" Fill="Black" Height="20" Width="20" HorizontalAlignment="Right" Margin="0,0,70,0"/>
+            <Button Content="Change" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ChangeDefaultColor"/>
+        </Grid>
+        <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
+                <TextBox x:Name="PathToSave" Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents" TextChanged="PathToSaveChanged"/>
+                <Button Content="Browse" HorizontalAlignment="Right" Width="80" Click="ButtonBrowse"/>
+            </Grid>
+            <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
+                <TextBox x:Name="SaveImageName" Margin="0,0,90,0" TextAlignment="Right" Text="Pack.png" TextChanged="SaveImageNameChanged"/>
+                <Button Content="Merge" HorizontalAlignment="Right" Width="80" Click="ButtonMerge"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Label x:Name="StatusLabel" Content="" Margin="0,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+    </Grid>
+</Window>

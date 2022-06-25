@@ -1,0 +1,6 @@
+.vs
+bin
+obj
+packages
+Setup/setup*-SetupFiles
+Setup/setup-cache

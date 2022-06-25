@@ -1,0 +1,22 @@
+﻿<Window x:Class="TextureMerge.Resize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        Title="Resize" Height="258" Width="441" ResizeMode="NoResize" Topmost="True">
+    <Grid>
+        <Label Content="New Resolution" FontSize="20" Width="auto" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="23,22,0,0"/>
+        <Label Content="Width" Width="auto" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="23,70,0,0"/>
+        <TextBox x:Name="WidthBox" Text="1024" Width="40" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,72,0,0"/>
+        <Label Content="Height" Width="auto" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="23,100,0,0"/>
+        <TextBox x:Name="HeightBox" Text="1024" Width="40" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,100,0,0"/>
+        <Label Content="Images have a different resolution! What resolution do you want to use?" Margin="23,140,0,0" HorizontalAlignment="Left" Width="auto" Height="auto" VerticalAlignment="Top"/>
+        <Button Content="OK" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22" Click="OKButton"/>
+        <Button Content="Cancel" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22" Click="CancelButton"/>
+        <CheckBox x:Name="DoStretch" Content="Stretch" HorizontalAlignment="Left" Margin="148,88,0,0" VerticalAlignment="Top"
+                  ToolTip="With stretch option image resize will ignore aspect ratio of image and stretch it to specified resolution"/>
+        <!--TODO write better tooltip-->
+    </Grid>
+</Window>
