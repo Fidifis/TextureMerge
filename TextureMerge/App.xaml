@@ -3,4 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TextureMerge"
              StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="RoundBlueBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="#FF007AC8" />
+                <Setter Property="BorderThickness" Value="2,2,2,2" />
+                <Setter Property="CornerRadius" Value="10,10,10,10" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

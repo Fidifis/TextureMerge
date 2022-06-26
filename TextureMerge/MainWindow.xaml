@@ -20,8 +20,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
-                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                    <local:RoundButton Grid.Column="0" Margin="10,10,10,10" Text="Load"/>
+                    <local:RoundButton Grid.Column="1" Margin="10,10,10,10" Text="Clear"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" >
@@ -31,8 +31,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
-                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                    <local:RoundButton Grid.Column="0" Margin="10,10,10,10" Text="Load"/>
+                    <local:RoundButton Grid.Column="1" Margin="10,10,10,10" Text="Clear"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="2" >
@@ -42,8 +42,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="10,10,10,10" Content="Load"/>
-                    <Button Grid.Column="1" Margin="5,10,10,10" Content="Clear"/>
+                    <local:RoundButton Grid.Column="0" Margin="10,10,10,10" Text="Load"/>
+                    <local:RoundButton Grid.Column="1" Margin="10,10,10,10" Text="Clear"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -54,16 +54,11 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
                 <TextBox Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents" Padding="0,3,3,0"/>
-                <Border BorderBrush="#FF007AC8" BorderThickness="2,2,2,2" HorizontalAlignment="Right" Width="80" CornerRadius="10,10,10,10">
-                    <Label Content="Browse" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
-                </Border>
+                <local:RoundButton Text="Browse" HorizontalAlignment="Right" Width="80"/>
             </Grid>
             <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
                 <TextBox Margin="0,0,90,0" TextAlignment="Right" Text="Pack" Padding="0,3,2,0"/>
-                <Border BorderBrush="#FF007AC8" BorderThickness="2,2,2,2" HorizontalAlignment="Right" Width="80" CornerRadius="10,10,10,10">
-                    <Label Content="Merge" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
-                </Border>
-                
+                <local:RoundButton Text="Merge" HorizontalAlignment="Right" Width="80"/>
             </Grid>
         </Grid>
     </Grid>
