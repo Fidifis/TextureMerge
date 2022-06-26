@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="RoundButton.xaml.cs">
+    <Compile Update="Resize.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -15,7 +15,7 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="RoundButton.xaml">
+    <Page Update="Resize.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

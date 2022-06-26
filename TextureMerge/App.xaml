@@ -5,10 +5,46 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <Style x:Key="RoundBlueBorder" TargetType="Border">
+            <Style TargetType="local:MainWindow">
+                <Setter Property="Background" Value="#FF34363A"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="#FF0097F5"/>
+                <Setter Property="Padding" Value="3,3,3,3"/>
+            </Style>
+            <Style TargetType="Border">
                 <Setter Property="BorderBrush" Value="#FF007AC8" />
-                <Setter Property="BorderThickness" Value="2,2,2,2" />
-                <Setter Property="CornerRadius" Value="10,10,10,10" />
+                <Setter Property="CornerRadius" Value="5,5,5,5" />
+                <Setter Property="BorderThickness" Value="1,1,1,1" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="#FF007AC8"
+                                    BorderThickness="2,2,2,2"
+                                    CornerRadius="10,10,10,10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FF2C5067"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="#FF182B37"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
