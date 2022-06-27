@@ -13,7 +13,7 @@
         <Label Content="Height" Width="auto" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="23,100,0,0"/>
         <TextBox Text="1024" Width="40" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="70,100,0,0"/>
         <Label Content="Images have a different resolution! What resolution do you want to use?" Margin="23,140,0,0" HorizontalAlignment="Left" Width="auto" Height="auto" VerticalAlignment="Top"/>
-        <Button Content="OK" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22"/>
-        <Button Content="Cancel" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22"/>
+        <Button Content="OK" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22"/>
+        <Button Content="Cancel" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22"/>
     </Grid>
 </Window>

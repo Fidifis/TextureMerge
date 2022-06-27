@@ -21,6 +21,8 @@ namespace TextureMerge
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Merge merge = new Merge();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -38,32 +40,32 @@ namespace TextureMerge
 
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
+            RedCh.Source = merge.LoadRedChannel(GetImagePath());
         }
 
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
+            GreenCh.Source = merge.LoadGreenChannel(GetImagePath());
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
+            BlueCh.Source = merge.LoadBlueChannel(GetImagePath());
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
         {
-
+            RedCh.Source = null;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
         {
-
+            GreenCh.Source = null;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
         {
-
+            BlueCh.Source = null;
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
@@ -80,7 +82,18 @@ namespace TextureMerge
 
         private void ButtonMerge(object sender, RoutedEventArgs e)
         {
+            merge.DoMerge(PathToSave.Text + "\\" + SaveImageName.Text);
+        }
 
+        private bool dummyColorSwap = false;
+        private void ChangeDefaultColor(object sender, RoutedEventArgs e)
+        {
+            //TODO: Implement color picker
+            if (dummyColorSwap)
+                DefaultColorRect.Fill = new SolidColorBrush(Colors.Black);
+            else
+                DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
+            dummyColorSwap = !dummyColorSwap;
         }
     }
 }

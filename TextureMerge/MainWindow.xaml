@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextureMerge"
         mc:Ignorable="d"
-        Title="Texture Merge" Height="450" Width="800">
+        Title="Texture Merge" Height="500" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="bigLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
@@ -16,17 +16,17 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid Margin="50,40,50,110">
+        <Grid Margin="50,40,50,140">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="5,0,5,0">
+                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="RedCh" Margin="10,10,10,40"/>
                 </Border>
-                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -37,10 +37,10 @@
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" Margin="5,0,5,0">
+                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="GreenCh" Margin="10,10,10,40"/>
                 </Border>
-                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -51,10 +51,10 @@
                 </Grid>
             </Grid>
             <Grid Grid.Column="2" Margin="5,0,5,0">
+                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="BlueCh" Margin="10,10,10,40"/>
                 </Border>
-                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -64,6 +64,11 @@
                     <Button Content="Clear"  Grid.Column="1" Margin="10,10,10,10" Click="ButtonClearB" />
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid Margin="0,0,50,80" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Label Content="Color when no image provided: " HorizontalAlignment="Left" Margin="0,0,100,0" VerticalAlignment="Center"/>
+            <Rectangle x:Name="DefaultColorRect" Fill="Black" Height="20" Width="20" HorizontalAlignment="Right" Margin="0,0,70,0"/>
+            <Button Content="Change" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ChangeDefaultColor"/>
         </Grid>
         <Grid Height="80" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
