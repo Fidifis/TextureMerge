@@ -55,16 +55,19 @@ namespace TextureMerge
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
         {
+            merge.Clear(0);
             RedCh.Source = null;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
         {
+            merge.Clear(1);
             GreenCh.Source = null;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
         {
+            merge.Clear(2);
             BlueCh.Source = null;
         }
 
