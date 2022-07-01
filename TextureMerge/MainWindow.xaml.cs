@@ -37,20 +37,26 @@ namespace TextureMerge
                 return openFileDialog.FileName;
             return string.Empty;
         }
-
+        
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            RedCh.Source = merge.LoadChannel(GetImagePath(), Channel.Red);
+            string path = GetImagePath();
+            if (path != string.Empty)
+                RedCh.Source = merge.LoadChannel(path, Channel.Red, Channel.Red);
         }
-
+        
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            GreenCh.Source = merge.LoadChannel(GetImagePath(), Channel.Green);
+            string path = GetImagePath();
+            if (path != string.Empty)
+                GreenCh.Source = merge.LoadChannel(path, Channel.Green, Channel.Green);
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            BlueCh.Source = merge.LoadChannel(GetImagePath(), Channel.Blue);
+            string path = GetImagePath();
+            if (path != string.Empty)
+                BlueCh.Source = merge.LoadChannel(path, Channel.Blue, Channel.Blue);
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
@@ -85,6 +91,11 @@ namespace TextureMerge
 
         private void ButtonMerge(object sender, RoutedEventArgs e)
         {
+            if (!merge.CheckResolution(out int width, out int height))
+            {
+                // TODO call resize dialog and suggest width or height of exists
+                merge.Resize(1024, 1024);
+            }
             merge.DoMerge(PathToSave.Text + "\\" + SaveImageName.Text);
         }
 
