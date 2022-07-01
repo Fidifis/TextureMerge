@@ -25,6 +25,7 @@ namespace TextureMerge
             
             SKColor[] result = new SKColor[width * height];
             
+            // TODO read the color from color picker
             SKColor[] redPixels = red is not null ? red.Pixels : new SKColor[width * height];
             SKColor[] greenPixels = green is not null ? green.Pixels : new SKColor[width * height];
             SKColor[] bluePixels = blue is not null ? blue.Pixels : new SKColor[width * height];
@@ -58,7 +59,7 @@ namespace TextureMerge
 
             using var bitmap = new SKBitmap(width, height) { Pixels = result };
             using FileStream stream = new(saveFilePath, FileMode.OpenOrCreate);
-            bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
+            bitmap.Encode(stream, SKEncodedImageFormat.Png, 100); // TODO Detect extension and Add input for quality
             stream.Close();
         }
 
@@ -99,7 +100,25 @@ namespace TextureMerge
 
         public void Resize(int width, int height)
         {
-            //TODO: Implemetation
+            // TODO read color from color picker
+            if (red is not null)
+                red = FillUnusedSpace(Fit(red, width, height), width, height, new SKColor(0, 0, 0));
+            if (green is not null)
+                green = FillUnusedSpace(Fit(green, width, height), width, height, new SKColor(0, 0, 0));
+            if (blue is not null)
+                blue = FillUnusedSpace(Fit(blue, width, height), width, height, new SKColor(0, 0, 0));
+        }
+
+        private static SKBitmap Fit(SKBitmap bitmap, int width, int height)
+        {
+            // TODO Implement
+            return bitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
+        }
+
+        private SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
+        {
+            // TODO Implement
+            return bitmap;
         }
 
         private static SKBitmap ExtractChannel(SKBitmap sourceBitmap, Channel channel)
