@@ -19,9 +19,28 @@ namespace TextureMerge
     /// </summary>
     public partial class Resize : Window
     {
-        public Resize()
+        public int NewWidth { get; private set; }
+        public int NewHeight { get; private set; }
+
+        public Resize(int width, int height)
         {
             InitializeComponent();
+            WidthBox.Text = (NewWidth = width).ToString();
+            HeightBox.Text = (NewHeight = height).ToString();
+        }
+
+        private void OKButton(object sender, RoutedEventArgs e)
+        {
+            WidthBox.Text = NewWidth.ToString();
+            HeightBox.Text = NewHeight.ToString();
+            DialogResult = true;
+            Close();
+        }
+
+        private void CancelButton(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
         }
     }
 }

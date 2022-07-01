@@ -93,8 +93,17 @@ namespace TextureMerge
         {
             if (!merge.CheckResolution(out int width, out int height))
             {
-                // TODO call resize dialog and suggest width or height of exists
-                merge.Resize(1024, 1024);
+                var resizeDialog = new Resize(width, height);
+                resizeDialog.Owner = this;
+                if (resizeDialog.ShowDialog() == true)
+                {
+                    merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight);
+                }
+                else
+                {
+                    MessageBox.Show("Operation aborted");
+                    return;
+                }
             }
             merge.DoMerge(PathToSave.Text + "\\" + SaveImageName.Text);
         }
