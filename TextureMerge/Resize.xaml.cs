@@ -31,10 +31,17 @@ namespace TextureMerge
 
         private void OKButton(object sender, RoutedEventArgs e)
         {
-            WidthBox.Text = NewWidth.ToString();
-            HeightBox.Text = NewHeight.ToString();
-            DialogResult = true;
-            Close();
+            if (int.TryParse(WidthBox.Text, out int width) && int.TryParse(HeightBox.Text, out int height))
+            {
+                NewWidth = width;
+                NewHeight = height;
+                DialogResult = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid input");
+            }
         }
 
         private void CancelButton(object sender, RoutedEventArgs e)
