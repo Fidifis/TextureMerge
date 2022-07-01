@@ -9,14 +9,16 @@ using SkiaSharp;
 
 namespace TextureMerge
 {
+    public enum Channel { Red, Green, Blue }
+
     public static class Extensions
     {
-        public static ImageSource? toImageSource(this SKBitmap bitmap)
+        public static ImageSource ToImageSource(this SKBitmap bitmap)
         {
             SKImage image = SKImage.FromPixels(bitmap.PeekPixels());
             SKData encoded = image.Encode();
             Stream stream = encoded.AsStream();
-            return new ImageSourceConverter().ConvertFrom(stream) as ImageSource;
+            return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
         }
     }
 }

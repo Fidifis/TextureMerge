@@ -40,34 +40,34 @@ namespace TextureMerge
 
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            RedCh.Source = merge.LoadRedChannel(GetImagePath());
+            RedCh.Source = merge.LoadChannel(GetImagePath(), Channel.Red);
         }
 
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            GreenCh.Source = merge.LoadGreenChannel(GetImagePath());
+            GreenCh.Source = merge.LoadChannel(GetImagePath(), Channel.Green);
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            BlueCh.Source = merge.LoadBlueChannel(GetImagePath());
+            BlueCh.Source = merge.LoadChannel(GetImagePath(), Channel.Blue);
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
         {
-            merge.Clear(0);
+            merge.Clear(Channel.Red);
             RedCh.Source = null;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
         {
-            merge.Clear(1);
+            merge.Clear(Channel.Green);
             GreenCh.Source = null;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
         {
-            merge.Clear(2);
+            merge.Clear(Channel.Blue);
             BlueCh.Source = null;
         }
 

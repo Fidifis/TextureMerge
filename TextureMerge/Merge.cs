@@ -16,37 +16,25 @@ namespace TextureMerge
         {
             //TODO: Implemetation
         }
-        
-        public ImageSource? LoadRedChannel(string path)
+
+        public ImageSource? LoadChannel(string path, Channel channel)
         {
             red = SKBitmap.Decode(path);
             //TODO extract channel
-            return red?.toImageSource();
+            return red?.ToImageSource();
         }
 
-        public ImageSource? LoadGreenChannel(string path)
-        {
-            green = SKBitmap.Decode(path);
-            return green?.toImageSource();
-        }
-
-        public ImageSource? LoadBlueChannel(string path)
-        {
-            blue = SKBitmap.Decode(path);
-            return blue?.toImageSource();
-        }
-
-        public void Clear(byte which)
+        public void Clear(Channel which)
         {
             switch (which)
             {
-                case 0:
+                case Channel.Red:
                     red = null;
                     break;
-                case 1:
+                case Channel.Green:
                     green = null;
                     break;
-                case 2:
+                case Channel.Blue:
                     blue = null;
                     break;
             }
