@@ -17,6 +17,9 @@ namespace TextureMerge
         
         public void DoMerge(string saveFilePath)
         {
+            if (!File.Exists(saveFilePath))
+                throw new ArgumentException("Invalid path");
+
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
             

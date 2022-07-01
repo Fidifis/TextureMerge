@@ -22,6 +22,7 @@ namespace TextureMerge
     public partial class MainWindow : Window
     {
         private Merge merge = new Merge();
+        private bool hasSetupPath = false;
         
         public MainWindow()
         {
@@ -36,6 +37,21 @@ namespace TextureMerge
             if (openFileDialog.ShowDialog() == true)
                 return openFileDialog.FileName;
             return string.Empty;
+        }
+        
+        private void SetSaveImagePath()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = PathToSave.Text;
+            saveFileDialog.FileName = SaveImageName.Text;
+            saveFileDialog.Title = "Select an image file";
+            saveFileDialog.Filter = "PNG (*.png)|*.png|All files (*.*)|*.*"; //TODO: Add more formats
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                PathToSave.Text = Path.GetDirectoryName(saveFileDialog.FileName);
+                SaveImageName.Text = Path.GetFileName(saveFileDialog.FileName);
+                hasSetupPath = true;
+            }
         }
         
         private void ButtonLoadR(object sender, RoutedEventArgs e)
@@ -79,18 +95,14 @@ namespace TextureMerge
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = "Select an image file";
-            saveFileDialog.Filter = "PNG (*.png)|*.png|All files (*.*)|*.*"; //TODO: Add more formats
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                PathToSave.Text = Path.GetDirectoryName(saveFileDialog.FileName);
-                SaveImageName.Text = Path.GetFileName(saveFileDialog.FileName);
-            }
+            SetSaveImagePath();
         }
 
         private void ButtonMerge(object sender, RoutedEventArgs e)
         {
+            if (!hasSetupPath)
+                SetSaveImagePath();
+
             if (!merge.CheckResolution(out int width, out int height))
             {
                 var resizeDialog = new Resize(width, height);
@@ -105,7 +117,13 @@ namespace TextureMerge
                     return;
                 }
             }
-            merge.DoMerge(PathToSave.Text + "\\" + SaveImageName.Text);
+            
+            string path = PathToSave.Text + "\\" + SaveImageName.Text;
+            if (File.Exists(path))
+                merge.DoMerge(path);
+            else
+                MessageBox.Show("Save path is not valid!\n" +
+                    "Check if the path is correct.");
         }
 
         private bool dummyColorSwap = false;
