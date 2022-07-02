@@ -16,7 +16,7 @@
         <Button Content="OK" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22" Click="OKButton"/>
         <Button Content="Cancel" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22" Click="CancelButton"/>
         <CheckBox x:Name="DoStretch" Content="Stretch" HorizontalAlignment="Left" Margin="148,88,0,0" VerticalAlignment="Top"
-                  ToolTip="With stretch option image reesize will ignore aspect ratio of image and stretch it to specified resolution"/>
+                  ToolTip="With stretch option image resize will ignore aspect ratio of image and stretch it to specified resolution"/>
         <!--TODO write better tooltip-->
     </Grid>
 </Window>
