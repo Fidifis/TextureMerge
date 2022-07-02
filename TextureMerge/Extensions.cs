@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using SkiaSharp;
+using ImageMagick;
 
 namespace TextureMerge
 {
@@ -18,6 +19,13 @@ namespace TextureMerge
             SKImage image = SKImage.FromPixels(bitmap.PeekPixels());
             SKData encoded = image.Encode();
             Stream stream = encoded.AsStream();
+            return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
+        }
+
+        public static ImageSource ToImageSource(this MagickImage bitmap)
+        {
+            using MemoryStream stream = new MemoryStream();
+            bitmap.Write(stream);
             return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
         }
 

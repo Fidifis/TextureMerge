@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using ImageMagick;
 
 namespace TextureMerge
 {
@@ -28,6 +29,7 @@ namespace TextureMerge
         public MainWindow()
         {
             InitializeComponent();
+            MagickNET.Initialize();
         }
 
         private string GetImagePath()
