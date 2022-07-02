@@ -15,11 +15,8 @@ namespace TextureMerge
         SKBitmap? red = null, green = null, blue = null;
         Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
 
-        public void DoMerge(string saveFilePath)
+        public SKBitmap DoMerge()
         {
-            if (!File.Exists(saveFilePath))
-                throw new ArgumentException("Invalid path");
-
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
             
@@ -57,10 +54,7 @@ namespace TextureMerge
                     );
             }
 
-            using var bitmap = new SKBitmap(width, height) { Pixels = result };
-            using FileStream stream = new(saveFilePath, FileMode.OpenOrCreate);
-            bitmap.Encode(stream, SKEncodedImageFormat.Png, 100); // TODO Detect extension and Add input for quality
-            stream.Close();
+            return new SKBitmap(width, height) { Pixels = result };
         }
 
         public bool CheckResolution(out int width, out int height)

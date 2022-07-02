@@ -127,7 +127,7 @@ namespace TextureMerge
             
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
             if (File.Exists(path))
-                correct.DoMerge(path);
+                correct.DoMerge().Save(path);
             else
                 MessageBox.Show("Save path is not valid!\n" +
                     "Check if the path is correct.");

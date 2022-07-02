@@ -20,5 +20,16 @@ namespace TextureMerge
             Stream stream = encoded.AsStream();
             return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
         }
+
+        public static SKBitmap Save(this SKBitmap bitmap, string saveFilePath)
+        {
+            if (!File.Exists(saveFilePath))
+                throw new ArgumentException("Invalid path");
+
+            using FileStream stream = new(saveFilePath, FileMode.OpenOrCreate);
+            bitmap.Encode(stream, SKEncodedImageFormat.Png, 100); // TODO Detect extension and Add input for quality
+            stream.Close();
+            return bitmap;
+        }
     }
 }
