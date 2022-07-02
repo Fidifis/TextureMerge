@@ -112,6 +112,17 @@ namespace TextureMerge
                 }
             }
 
+            if (Path.GetExtension(SaveImageName.Text) is null or "")
+            {
+                if (
+                MessageBox.Show("File don't have an extension!\n" +
+                                "Do you want to continue?",
+                                "No extension",
+                                MessageBoxButton.YesNo)
+                != MessageBoxResult.Yes)
+                    return;
+            }
+
             Merge correct = merge;
 
             if (!merge.CheckResolution(out int width, out int height))
