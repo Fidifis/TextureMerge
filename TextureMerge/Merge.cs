@@ -140,15 +140,26 @@ namespace TextureMerge
         private static SKBitmap Scale(SKBitmap bitmap, bool onWidth, int newRes)
         {
             if (onWidth)
-                return bitmap.Resize(new SKImageInfo(newRes, (int)(bitmap.Height * newRes / (float)bitmap.Width)), SKFilterQuality.High);
+                return bitmap.Resize(new SKImageInfo(newRes, (int)(bitmap.Height * (newRes / (float)bitmap.Width))), SKFilterQuality.High);
             else
-                return bitmap.Resize(new SKImageInfo((int)(bitmap.Width * newRes / (float)bitmap.Height), newRes), SKFilterQuality.High);
+                return bitmap.Resize(new SKImageInfo((int)(bitmap.Width * (newRes / (float)bitmap.Height)), newRes), SKFilterQuality.High);
         }
         
         private SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
         {
-            // TODO Implement
-            return bitmap;
+            SKBitmap result = new(width, height);
+            using SKCanvas canvas = new(result);
+            canvas.Clear(color);
+            int x = 0, y = 0;
+
+            if (bitmap.Width < width)
+                x = (width - bitmap.Width) / 2;
+            
+            else if (bitmap.Height < height)
+                y = (height - bitmap.Height) / 2;
+
+            canvas.DrawBitmap(bitmap, x, y);
+            return result;
         }
 
         private static SKBitmap ExtractChannel(SKBitmap sourceBitmap, Channel channel)
