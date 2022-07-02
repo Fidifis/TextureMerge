@@ -108,13 +108,15 @@ namespace TextureMerge
                 return;
             }
 
+            Merge correct = merge;
+
             if (!merge.CheckResolution(out int width, out int height))
             {
                 var resizeDialog = new Resize(width, height);
                 resizeDialog.Owner = this;
                 if (resizeDialog.ShowDialog() == true)
                 {
-                    merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
+                    correct = merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
                 }
                 else
                 {
@@ -125,7 +127,7 @@ namespace TextureMerge
             
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
             if (File.Exists(path))
-                merge.DoMerge(path);
+                correct.DoMerge(path);
             else
                 MessageBox.Show("Save path is not valid!\n" +
                     "Check if the path is correct.");

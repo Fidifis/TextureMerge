@@ -12,9 +12,9 @@ namespace TextureMerge
 {
     internal class Merge
     {
-        SKBitmap? red, green, blue;
-        Channel redChSource, greenChSource, blueChSource;
-        
+        SKBitmap? red = null, green = null, blue = null;
+        Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
+
         public void DoMerge(string saveFilePath)
         {
             if (!File.Exists(saveFilePath))
@@ -98,18 +98,26 @@ namespace TextureMerge
 
         public bool CheckResolution() => CheckResolution(out _, out _);
 
-        public void Resize(int width, int height, bool stretch)
+        public Merge Resize(int width, int height, bool stretch)
         {
+            Merge newInst = new Merge()
+            {
+                redChSource = redChSource,
+                greenChSource = greenChSource,
+                blueChSource = blueChSource
+            };
+            
             // TODO read color from color picker
             if (red is not null)
-                red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
+                newInst.red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
             if (green is not null)
-                green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
+                newInst.green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
             if (blue is not null)
-                blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
+                newInst.blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
+            return newInst;
         }
 
-        private SKBitmap Stretch(SKBitmap bitmap, int width, int height) =>
+        private static SKBitmap Stretch(SKBitmap bitmap, int width, int height) =>
             bitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
 
         private static SKBitmap ResizeKeepRatio(SKBitmap bitmap, int width, int height, SKColor color) =>
