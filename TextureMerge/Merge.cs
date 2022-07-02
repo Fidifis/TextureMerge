@@ -113,14 +113,14 @@ namespace TextureMerge
         {
             if (bitmap.Width > width && bitmap.Height > height)
             {
-                if (width > height)
+                if (bitmap.Width - width < bitmap.Height - height)
                     return Scale(bitmap, false, height);
                 else
                     return Scale(bitmap, true, width);
             }
             else if (bitmap.Width < width && bitmap.Height < height)
             {
-                if (bitmap.Width > bitmap.Height)
+                if (width - bitmap.Width < height - bitmap.Height)
                     return Scale(bitmap, true, width);
                 else
                     return Scale(bitmap, false, height);
@@ -147,6 +147,9 @@ namespace TextureMerge
         
         private SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
         {
+            if (bitmap.Width == width && bitmap.Height == height)
+                return bitmap;
+
             SKBitmap result = new(width, height);
             using SKCanvas canvas = new(result);
             canvas.Clear(color);
