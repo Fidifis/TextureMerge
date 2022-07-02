@@ -102,6 +102,11 @@ namespace TextureMerge
         {
             if (!hasSetupPath)
                 SetSaveImagePath();
+            if (!hasSetupPath)
+            {
+                MessageBox.Show("Operation aborted");
+                return;
+            }
 
             if (!merge.CheckResolution(out int width, out int height))
             {
