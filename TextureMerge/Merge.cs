@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SkiaSharp;
+using ImageMagick;
 
 namespace TextureMerge
 {
     internal class Merge : IDisposable
     {
-        SKBitmap? red = null, green = null, blue = null;
+        MagickImage? red = null, green = null, blue = null;
         Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
 
         public SKBitmap DoMerge()
@@ -176,28 +177,17 @@ namespace TextureMerge
             return result;
         }
 
-        private static SKBitmap ExtractChannel(SKBitmap sourceBitmap, Channel channel)
+        private static MagickImage ExtractChannel(MagickImage sourceBitmap, Channel channel)
         {
-            SKColor[] source = sourceBitmap.Pixels;
-            SKColor[] result = new SKColor[source.Length];
-            switch (channel)
+            // TODO use thumbnail method to proccess and display smaller image
+            MagickImage result = (MagickImage)sourceBitmap.Clone();
+            var pixels = result.GetPixels();
+            foreach (Pixel p in pixels)
             {
-                case Channel.Red:
-                    for (int i = 0; i < source.Length; i++)
-                        result[i] = new SKColor(source[i].Red, source[i].Red, source[i].Red);
-                    break;
-                case Channel.Green:
-                    for (int i = 0; i < source.Length; i++)
-                        result[i] = new SKColor(source[i].Green, source[i].Green, source[i].Green);
-                    break;
-                case Channel.Blue:
-                    for (int i = 0; i < source.Length; i++)
-                        result[i] = new SKColor(source[i].Blue, source[i].Blue, source[i].Blue);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid channel");
+                p.SetValues(new ushort[] { p.GetChannel((int)channel), p.GetChannel((int)channel), p.GetChannel((int)channel) });
+                // pixels.SetPixel(p); // Maybe this will be needed
             }
-            return new SKBitmap(sourceBitmap.Width, sourceBitmap.Height) { Pixels = result };
+            return result;
         }
 
         public ImageSource LoadChannel(string path, Channel channelSlot, Channel channelSource)
@@ -205,7 +195,7 @@ namespace TextureMerge
             if (path == string.Empty)
                 throw new ArgumentException("Invalid path");
 
-            var source = SKBitmap.Decode(path);
+            var source = new MagickImage(path);
 
             if (source is null)
                 throw new ArgumentException("Failed to load image");

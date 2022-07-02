@@ -10,7 +10,7 @@ using ImageMagick;
 
 namespace TextureMerge
 {
-    public enum Channel { Red, Green, Blue }
+    public enum Channel : int { Red, Green, Blue }
 
     public static class Extensions
     {
