@@ -14,6 +14,9 @@
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
+            <Style TargetType="CheckBox">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
             <Style TargetType="TextBox">
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Background" Value="Transparent"/>

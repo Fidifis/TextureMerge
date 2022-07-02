@@ -109,7 +109,7 @@ namespace TextureMerge
                 resizeDialog.Owner = this;
                 if (resizeDialog.ShowDialog() == true)
                 {
-                    merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight);
+                    merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
                 }
                 else
                 {

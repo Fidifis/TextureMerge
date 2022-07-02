@@ -98,16 +98,22 @@ namespace TextureMerge
 
         public bool CheckResolution() => CheckResolution(out _, out _);
 
-        public void Resize(int width, int height)
+        public void Resize(int width, int height, bool stretch)
         {
             // TODO read color from color picker
             if (red is not null)
-                red = FillUnusedSpace(Fit(red, width, height), width, height, new SKColor(0, 0, 0));
+                red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
             if (green is not null)
-                green = FillUnusedSpace(Fit(green, width, height), width, height, new SKColor(0, 0, 0));
+                green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
             if (blue is not null)
-                blue = FillUnusedSpace(Fit(blue, width, height), width, height, new SKColor(0, 0, 0));
+                blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
         }
+
+        private SKBitmap Stretch(SKBitmap bitmap, int width, int height) =>
+            bitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
+
+        private static SKBitmap ResizeKeepRatio(SKBitmap bitmap, int width, int height, SKColor color) =>
+            FillUnusedSpace(Fit(bitmap, width, height), width, height, color);
 
         private static SKBitmap Fit(SKBitmap bitmap, int width, int height)
         {
@@ -145,7 +151,7 @@ namespace TextureMerge
                 return bitmap.Resize(new SKImageInfo((int)(bitmap.Width * (newRes / (float)bitmap.Height)), newRes), SKFilterQuality.High);
         }
         
-        private SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
+        private static SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
         {
             if (bitmap.Width == width && bitmap.Height == height)
                 return bitmap;
