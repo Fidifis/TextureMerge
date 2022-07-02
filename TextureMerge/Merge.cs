@@ -111,10 +111,40 @@ namespace TextureMerge
 
         private static SKBitmap Fit(SKBitmap bitmap, int width, int height)
         {
-            // TODO Implement
-            return bitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
+            if (bitmap.Width > width && bitmap.Height > height)
+            {
+                if (width > height)
+                    return Scale(bitmap, false, height);
+                else
+                    return Scale(bitmap, true, width);
+            }
+            else if (bitmap.Width < width && bitmap.Height < height)
+            {
+                if (bitmap.Width > bitmap.Height)
+                    return Scale(bitmap, true, width);
+                else
+                    return Scale(bitmap, false, height);
+            }
+            else if (bitmap.Width > width)
+            {
+                return Scale(bitmap, true, width);
+            }
+            else if (bitmap.Height > height)
+            {
+                return Scale(bitmap, false, height);
+            }
+            else
+                return bitmap;
         }
-
+        
+        private static SKBitmap Scale(SKBitmap bitmap, bool onWidth, int newRes)
+        {
+            if (onWidth)
+                return bitmap.Resize(new SKImageInfo(newRes, (int)(bitmap.Height * newRes / (float)bitmap.Width)), SKFilterQuality.High);
+            else
+                return bitmap.Resize(new SKImageInfo((int)(bitmap.Width * newRes / (float)bitmap.Height), newRes), SKFilterQuality.High);
+        }
+        
         private SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
         {
             // TODO Implement
