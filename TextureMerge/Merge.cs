@@ -10,7 +10,7 @@ using SkiaSharp;
 
 namespace TextureMerge
 {
-    internal class Merge
+    internal class Merge : IDisposable
     {
         SKBitmap? red = null, green = null, blue = null;
         Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
@@ -243,6 +243,13 @@ namespace TextureMerge
                     blue = null;
                     break;
             }
+        }
+
+        public void Dispose()
+        {
+            red?.Dispose();
+            green?.Dispose();
+            blue?.Dispose();
         }
     }
 }
