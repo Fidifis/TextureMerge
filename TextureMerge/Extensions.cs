@@ -23,7 +23,7 @@ namespace TextureMerge
 
         public static SKBitmap Save(this SKBitmap bitmap, string saveFilePath)
         {
-            if (!File.Exists(saveFilePath))
+            if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
                 throw new ArgumentException("Invalid path");
 
             using FileStream stream = new(saveFilePath, FileMode.OpenOrCreate);
