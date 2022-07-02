@@ -206,6 +206,10 @@ namespace TextureMerge
                 throw new ArgumentException("Invalid path");
 
             var source = SKBitmap.Decode(path);
+
+            if (source is null)
+                throw new ArgumentException("Failed to load image");
+
             switch (channelSlot)
             {
                 case Channel.Red:
