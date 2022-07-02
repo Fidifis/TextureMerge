@@ -17,6 +17,9 @@ namespace TextureMerge
 
         public SKBitmap DoMerge()
         {
+            if (red is null && green is null && blue is null)
+                throw new InvalidOperationException("No image loaded");
+
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
             

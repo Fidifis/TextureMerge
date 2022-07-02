@@ -23,7 +23,8 @@ namespace TextureMerge
     {
         private Merge merge = new Merge();
         private bool hasSetupPath = false;
-        
+        private bool hasEditedPath = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -100,12 +101,15 @@ namespace TextureMerge
 
         private void ButtonMerge(object sender, RoutedEventArgs e)
         {
-            if (!hasSetupPath)
-                SetSaveImagePath();
-            if (!hasSetupPath)
+            if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
+                !hasSetupPath)
             {
-                MessageBox.Show("Operation aborted");
-                return;
+                SetSaveImagePath();
+                if (!hasSetupPath)
+                {
+                    MessageBox.Show("Operation aborted");
+                    return;
+                }
             }
 
             Merge correct = merge;
@@ -126,7 +130,7 @@ namespace TextureMerge
             }
             
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
-            if (Directory.Exists(Path.GetDirectoryName(path)))
+            if (Directory.Exists(PathToSave.Text))
                 correct.DoMerge().Save(path);
             else
                 MessageBox.Show("Save path is not valid!\n" +
@@ -142,6 +146,12 @@ namespace TextureMerge
             else
                 DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
             dummyColorSwap = !dummyColorSwap;
+        }
+
+        private void PathToSaveChanged(object sender, TextChangedEventArgs e)
+        {
+            hasEditedPath = true;
+            hasSetupPath = false;
         }
     }
 }

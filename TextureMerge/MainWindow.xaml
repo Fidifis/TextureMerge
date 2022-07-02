@@ -76,7 +76,7 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
-                <TextBox x:Name="PathToSave" Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents"/>
+                <TextBox x:Name="PathToSave" Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents" TextChanged="PathToSaveChanged"/>
                 <Button Content="Browse" HorizontalAlignment="Right" Width="80" Click="ButtonBrowse"/>
             </Grid>
             <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
