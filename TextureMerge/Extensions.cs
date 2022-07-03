@@ -25,6 +25,7 @@ namespace TextureMerge
         public static ImageSource ToImageSource(this MagickImage bitmap)
         {
             using MemoryStream stream = new MemoryStream();
+            bitmap.Format = MagickFormat.Jpeg;
             bitmap.Write(stream);
             return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
         }
@@ -38,6 +39,17 @@ namespace TextureMerge
             bitmap.Encode(stream, SKEncodedImageFormat.Png, 100); // TODO Detect extension and Add input for quality
             stream.Close();
             return bitmap;
+        }
+
+        public static void Save(this MagickImage bitmap, string saveFilePath)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
+                throw new ArgumentException("Invalid path");
+
+            using FileStream stream = new(saveFilePath, FileMode.OpenOrCreate);
+            bitmap.Format = MagickFormat.Png; //TODO read extension and decide format
+            bitmap.Write(stream);
+            stream.Close();
         }
     }
 }

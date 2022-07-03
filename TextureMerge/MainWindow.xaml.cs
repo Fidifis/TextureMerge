@@ -141,7 +141,7 @@ namespace TextureMerge
                     return;
                 }
             }
-            
+
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
             if (Directory.Exists(PathToSave.Text))
                 correct.DoMerge().Save(path);

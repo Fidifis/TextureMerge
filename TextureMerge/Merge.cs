@@ -16,49 +16,32 @@ namespace TextureMerge
         MagickImage? red = null, green = null, blue = null;
         Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
 
-        public SKBitmap DoMerge()
+        public MagickImage DoMerge()
         {
             if (red is null && green is null && blue is null)
                 throw new InvalidOperationException("No image loaded");
 
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
-            
-            SKColor[] result = new SKColor[width * height];
-            
-            // TODO read the color from color picker
-            SKColor[] redPixels = red is not null ? red.Pixels : new SKColor[width * height];
-            SKColor[] greenPixels = green is not null ? green.Pixels : new SKColor[width * height];
-            SKColor[] bluePixels = blue is not null ? blue.Pixels : new SKColor[width * height];
 
-            for (int i = 0; i < result.Length; i++)
+            // TODO read the color from color picker
+            var result = new MagickImage(new MagickColor(0, 0, 0), width, height);
+            var resultPixels = result.GetPixels();
+            var redPixels = red?.GetPixels();
+            var greenPixels = green?.GetPixels();
+            var bluePixels = blue?.GetPixels();
+
+            foreach (Pixel p in resultPixels)
             {
-                result[i] = new SKColor(
-                    redChSource switch
-                    {
-                        Channel.Red => redPixels[i].Red,
-                        Channel.Green => redPixels[i].Green,
-                        Channel.Blue => redPixels[i].Blue,
-                        _ => throw new ArgumentException("Invalid channel"),
-                    },
-                    greenChSource switch
-                    {
-                        Channel.Red => greenPixels[i].Red,
-                        Channel.Green => greenPixels[i].Green,
-                        Channel.Blue => greenPixels[i].Blue,
-                        _ => throw new ArgumentException("Invalid channel"),
-                    },
-                    blueChSource switch
-                    {
-                        Channel.Red => bluePixels[i].Red,
-                        Channel.Green => bluePixels[i].Green,
-                        Channel.Blue => bluePixels[i].Blue,
-                        _ => throw new ArgumentException("Invalid channel"),
-                    }
-                    );
+                p.SetValues(new ushort[] {
+                    redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
+                    greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
+                    bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
+                });
+                resultPixels.SetPixel(p);
             }
 
-            return new SKBitmap(width, height) { Pixels = result };
+            return result;
         }
 
         public bool CheckResolution(out int width, out int height)
@@ -106,12 +89,12 @@ namespace TextureMerge
             };
             
             // TODO read color from color picker
-            if (red is not null)
-                newInst.red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
-            if (green is not null)
-                newInst.green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
-            if (blue is not null)
-                newInst.blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
+            //if (red is not null)
+            //    newInst.red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
+            //if (green is not null)
+            //    newInst.green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
+            //if (blue is not null)
+            //    newInst.blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
             return newInst;
         }
 
@@ -184,9 +167,10 @@ namespace TextureMerge
             var pixels = result.GetPixels();
             foreach (Pixel p in pixels)
             {
-                p.SetValues(new ushort[] { p.GetChannel((int)channel), p.GetChannel((int)channel), p.GetChannel((int)channel) });
-                // pixels.SetPixel(p); // Maybe this will be needed
+                p.SetValues(new ushort[] { p.GetChannel((int)channel), p.GetChannel((int)channel), p.GetChannel((int)channel)});
+                pixels.SetPixel(p); // Maybe this will be needed
             }
+
             return result;
         }
 
