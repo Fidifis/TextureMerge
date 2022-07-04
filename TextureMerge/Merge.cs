@@ -163,12 +163,18 @@ namespace TextureMerge
         private static MagickImage ExtractChannel(MagickImage sourceBitmap, Channel channel)
         {
             // TODO use thumbnail method to proccess and display smaller image
-            MagickImage result = (MagickImage)sourceBitmap.Clone();
+            MagickImage thumb = (MagickImage)sourceBitmap.Clone();
+            thumb.Thumbnail(512, 512);
+            var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
             var pixels = result.GetPixels();
+            var sourcePixels = thumb.GetPixels();
             foreach (Pixel p in pixels)
             {
-                p.SetValues(new ushort[] { p.GetChannel((int)channel), p.GetChannel((int)channel), p.GetChannel((int)channel)});
-                pixels.SetPixel(p); // Maybe this will be needed
+                p.SetValues(new ushort[] {
+                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel),
+                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel),
+                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel)});
+                pixels.SetPixel(p);
             }
 
             return result;
@@ -201,6 +207,7 @@ namespace TextureMerge
                 default:
                     throw new ArgumentException("Invalid channel");
             }
+
             return ExtractChannel(source, channelSource).ToImageSource();
         }
 
