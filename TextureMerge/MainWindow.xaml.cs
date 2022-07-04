@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using ImageMagick;
 
 namespace TextureMerge
@@ -22,7 +12,7 @@ namespace TextureMerge
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Merge merge = new Merge();
+        private readonly Merge merge = new();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
 
@@ -31,12 +21,14 @@ namespace TextureMerge
             InitializeComponent();
             MagickNET.Initialize();
         }
-
-        private string GetImagePath()
+        
+        private static string GetImagePath()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Select an image file";
-            openFileDialog.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*"; //TODO: Add more formats
+            var openFileDialog = new OpenFileDialog
+            {
+                Title = "Select an image file",
+                Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*" //TODO: Add more formats
+            };
             if (openFileDialog.ShowDialog() == true)
                 return openFileDialog.FileName;
             return string.Empty;
@@ -44,11 +36,13 @@ namespace TextureMerge
         
         private void SetSaveImagePath()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = PathToSave.Text;
-            saveFileDialog.FileName = SaveImageName.Text;
-            saveFileDialog.Title = "Select an image file";
-            saveFileDialog.Filter = "PNG (*.png)|*.png|All files (*.*)|*.*"; //TODO: Add more formats
+            var saveFileDialog = new SaveFileDialog
+            {
+                InitialDirectory = PathToSave.Text,
+                FileName = SaveImageName.Text,
+                Title = "Select an image file",
+                Filter = "PNG (*.png)|*.png|All files (*.*)|*.*" //TODO: Add more formats
+            };
             if (saveFileDialog.ShowDialog() == true)
             {
                 PathToSave.Text = Path.GetDirectoryName(saveFileDialog.FileName);
@@ -129,8 +123,10 @@ namespace TextureMerge
 
             if (!merge.CheckResolution(out int width, out int height))
             {
-                var resizeDialog = new Resize(width, height);
-                resizeDialog.Owner = this;
+                var resizeDialog = new Resize(width, height)
+                {
+                    Owner = this
+                };
                 if (resizeDialog.ShowDialog() == true)
                 {
                     correct = merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);

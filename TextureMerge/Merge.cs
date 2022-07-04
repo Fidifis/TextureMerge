@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using SkiaSharp;
 using ImageMagick;
 
 namespace TextureMerge
@@ -78,10 +71,10 @@ namespace TextureMerge
         }
 
         public bool CheckResolution() => CheckResolution(out _, out _);
-
+        
         public Merge Resize(int width, int height, bool stretch)
         {
-            Merge newInst = new Merge()
+            var newInst = new Merge()
             {
                 redChSource = redChSource,
                 greenChSource = greenChSource,
@@ -117,72 +110,10 @@ namespace TextureMerge
             return result;
         }
 
-        private static SKBitmap Stretch(SKBitmap bitmap, int width, int height) =>
-            bitmap.Resize(new SKImageInfo(width, height), SKFilterQuality.High);
-
-        private static SKBitmap ResizeKeepRatio(SKBitmap bitmap, int width, int height, SKColor color) =>
-            FillUnusedSpace(Fit(bitmap, width, height), width, height, color);
-
-        private static SKBitmap Fit(SKBitmap bitmap, int width, int height)
-        {
-            if (bitmap.Width > width && bitmap.Height > height)
-            {
-                if (bitmap.Width - width < bitmap.Height - height)
-                    return Scale(bitmap, false, height);
-                else
-                    return Scale(bitmap, true, width);
-            }
-            else if (bitmap.Width < width && bitmap.Height < height)
-            {
-                if (width - bitmap.Width < height - bitmap.Height)
-                    return Scale(bitmap, true, width);
-                else
-                    return Scale(bitmap, false, height);
-            }
-            else if (bitmap.Width > width)
-            {
-                return Scale(bitmap, true, width);
-            }
-            else if (bitmap.Height > height)
-            {
-                return Scale(bitmap, false, height);
-            }
-            else
-                return bitmap;
-        }
-        
-        private static SKBitmap Scale(SKBitmap bitmap, bool onWidth, int newRes)
-        {
-            if (onWidth)
-                return bitmap.Resize(new SKImageInfo(newRes, (int)(bitmap.Height * (newRes / (float)bitmap.Width))), SKFilterQuality.High);
-            else
-                return bitmap.Resize(new SKImageInfo((int)(bitmap.Width * (newRes / (float)bitmap.Height)), newRes), SKFilterQuality.High);
-        }
-        
-        private static SKBitmap FillUnusedSpace(SKBitmap bitmap, int width, int height, SKColor color)
-        {
-            if (bitmap.Width == width && bitmap.Height == height)
-                return bitmap;
-
-            SKBitmap result = new(width, height);
-            using SKCanvas canvas = new(result);
-            canvas.Clear(color);
-            int x = 0, y = 0;
-
-            if (bitmap.Width < width)
-                x = (width - bitmap.Width) / 2;
-            
-            else if (bitmap.Height < height)
-                y = (height - bitmap.Height) / 2;
-
-            canvas.DrawBitmap(bitmap, x, y);
-            return result;
-        }
-
         private static MagickImage ExtractChannel(MagickImage sourceBitmap, Channel channel)
         {
-            // TODO use thumbnail method to proccess and display smaller image
-            MagickImage thumb = (MagickImage)sourceBitmap.Clone();
+            // TODO read color from color picker
+            var thumb = (MagickImage)sourceBitmap.Clone();
             thumb.Thumbnail(512, 512);
             var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
             var pixels = result.GetPixels();
