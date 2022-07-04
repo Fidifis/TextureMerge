@@ -88,14 +88,33 @@ namespace TextureMerge
                 blueChSource = blueChSource
             };
             
-            // TODO read color from color picker
-            //if (red is not null)
-            //    newInst.red = stretch ? Stretch(red, width, height) : ResizeKeepRatio(red, width, height, new SKColor(0, 0, 0));
-            //if (green is not null)
-            //    newInst.green = stretch ? Stretch(green, width, height) : ResizeKeepRatio(green, width, height, new SKColor(0, 0, 0));
-            //if (blue is not null)
-            //    newInst.blue = stretch ? Stretch(blue, width, height) : ResizeKeepRatio(blue, width, height, new SKColor(0, 0, 0));
+            if (red is not null)
+                newInst.red = ResizeImage(red, width, height, stretch);
+            if (green is not null)
+                newInst.green = ResizeImage(green, width, height, stretch);
+            if (blue is not null)
+                newInst.blue = ResizeImage(blue, width, height, stretch);
             return newInst;
+        }
+
+        private static MagickImage ResizeImage(MagickImage source, int width, int height, bool stretch)
+        {
+            var result = (MagickImage)source.Clone();
+            if (stretch)
+            {
+                var geo = new MagickGeometry(width, height)
+                {
+                    IgnoreAspectRatio = true
+                };
+                result.Resize(geo);
+            }
+            else
+            {
+                // TODO read color from color picker
+                result.Resize(width, height);
+                result.Extent(width, height, Gravity.Center, new MagickColor(0, 0, 0));
+            }
+            return result;
         }
 
         private static SKBitmap Stretch(SKBitmap bitmap, int width, int height) =>
