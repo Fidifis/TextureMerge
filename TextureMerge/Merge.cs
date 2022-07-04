@@ -19,10 +19,10 @@ namespace TextureMerge
 
             // TODO read the color from color picker
             var result = new MagickImage(new MagickColor(0, 0, 0), width, height);
-            var resultPixels = result.GetPixels();
-            var redPixels = red?.GetPixels();
-            var greenPixels = green?.GetPixels();
-            var bluePixels = blue?.GetPixels();
+            using var resultPixels = result.GetPixels();
+            using var redPixels = red?.GetPixels();
+            using var greenPixels = green?.GetPixels();
+            using var bluePixels = blue?.GetPixels();
 
             foreach (Pixel p in resultPixels)
             {
@@ -110,14 +110,14 @@ namespace TextureMerge
             return result;
         }
 
-        private static MagickImage ExtractChannel(MagickImage sourceBitmap, Channel channel)
+        private static MagickImage MakeChannelThumbnail(MagickImage sourceBitmap, Channel channel)
         {
             // TODO read color from color picker
-            var thumb = (MagickImage)sourceBitmap.Clone();
+            using var thumb = (MagickImage)sourceBitmap.Clone();
             thumb.Thumbnail(512, 512);
             var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
-            var pixels = result.GetPixels();
-            var sourcePixels = thumb.GetPixels();
+            using var pixels = result.GetPixels();
+            using var sourcePixels = thumb.GetPixels();
             foreach (Pixel p in pixels)
             {
                 p.SetValues(new ushort[] {
@@ -158,7 +158,7 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            return ExtractChannel(source, channelSource).ToImageSource();
+            return MakeChannelThumbnail(source, channelSource).ToImageSource();
         }
 
         public void Clear(Channel which)
