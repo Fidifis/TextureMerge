@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ImageMagick;
+using System.Threading.Tasks;
 
 namespace TextureMerge
 {
@@ -12,6 +13,8 @@ namespace TextureMerge
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly SolidColorBrush statusBlueColor = new(Color.FromRgb(51, 150, 226));
+        private static readonly SolidColorBrush statusGreenColor = new(Color.FromRgb(51, 226, 110));
         private readonly Merge merge = new();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
@@ -21,7 +24,15 @@ namespace TextureMerge
             InitializeComponent();
             MagickNET.Initialize();
         }
-        
+
+        private void SetStatus() => SetStatus("", statusBlueColor);
+
+        private void SetStatus(string message, SolidColorBrush color)
+        {
+            StatusLabel.Foreground = color;
+            StatusLabel.Content = message;
+        }
+
         private static string GetImagePath()
         {
             var openFileDialog = new OpenFileDialog
@@ -51,32 +62,35 @@ namespace TextureMerge
             }
         }
         
-        private void ButtonLoadR(object sender, RoutedEventArgs e)
+        private void ButtonLoad(Image WPFElement, Channel channel, Channel sourceChannel)
         {
             string path = GetImagePath();
             if (path != string.Empty)
-                RedCh.Source = merge.LoadChannel(path, Channel.Red, Channel.Red);
+            {
+                SetStatus("Loading...", statusBlueColor);
+                WPFElement.Source = merge.LoadChannel(path, channel, sourceChannel);
+                SetStatus();
+            }
+        }
+
+        private void ButtonLoadR(object sender, RoutedEventArgs e)
+        {
+            ButtonLoad(RedCh, Channel.Red, Channel.Red);
         }
         
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
-            if (path != string.Empty)
-                GreenCh.Source = merge.LoadChannel(path, Channel.Green, Channel.Green);
+            ButtonLoad(GreenCh, Channel.Green, Channel.Green);
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
-            if (path != string.Empty)
-                BlueCh.Source = merge.LoadChannel(path, Channel.Blue, Channel.Blue);
+            ButtonLoad(BlueCh, Channel.Blue, Channel.Blue);
         }
         
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            string path = GetImagePath();
-            if (path != string.Empty)
-                AlphaCh.Source = merge.LoadChannel(path, Channel.Alpha, Channel.Red);
+            ButtonLoad(AlphaCh, Channel.Alpha, Channel.Red);
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
@@ -108,7 +122,7 @@ namespace TextureMerge
             SetSaveImagePath();
         }
 
-        private void ButtonMerge(object sender, RoutedEventArgs e)
+        private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
             if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
                 !hasSetupPath)
@@ -142,6 +156,7 @@ namespace TextureMerge
                 };
                 if (resizeDialog.ShowDialog() == true)
                 {
+                    SetStatus("Merging...", statusBlueColor);
                     correct = merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
                 }
                 else
@@ -151,12 +166,17 @@ namespace TextureMerge
                 }
             }
 
+            SetStatus("Merging...", statusBlueColor);
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
             if (Directory.Exists(PathToSave.Text))
                 correct.DoMerge().Save(path);
             else
                 MessageBox.Show("Save path is not valid!\n" +
                     "Check if the path is correct.");
+            
+            SetStatus("Done!", statusGreenColor);
+            await Task.Delay(5000);
+            SetStatus();
         }
 
         private bool dummyColorSwap = false;

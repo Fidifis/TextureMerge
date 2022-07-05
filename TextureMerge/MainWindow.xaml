@@ -108,7 +108,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="3">
-            <Label x:Name="StatusLabel" Content="Status here" Margin="0,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold" Foreground="#FF3396E2"/>
+            <Label x:Name="StatusLabel" Content="" Margin="0,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>
