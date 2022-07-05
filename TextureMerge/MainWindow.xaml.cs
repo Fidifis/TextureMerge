@@ -19,7 +19,6 @@ namespace TextureMerge
         private readonly Merge merge = new();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
-        private byte imgLoaded = 0;
 
         public MainWindow()
         {
@@ -72,7 +71,6 @@ namespace TextureMerge
             if (path != string.Empty)
             {
                 SetStatus("Loading...", statusBlueColor);
-                imgLoaded++;
                 WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
                 SetStatus();
             }
@@ -81,49 +79,53 @@ namespace TextureMerge
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
             ButtonLoad(RedCh, Channel.Red, Channel.Red);
+            redNoDataLabel.Visibility = Visibility.Hidden;
         }
         
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
             ButtonLoad(GreenCh, Channel.Green, Channel.Green);
+            greenNoDataLabel.Visibility = Visibility.Hidden;
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
             ButtonLoad(BlueCh, Channel.Blue, Channel.Blue);
+            blueNoDataLabel.Visibility = Visibility.Hidden;
         }
         
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
             ButtonLoad(AlphaCh, Channel.Alpha, Channel.Red);
+            alphaNoDataLabel.Visibility = Visibility.Hidden;
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Red);
             RedCh.Source = null;
-            imgLoaded--;
+            redNoDataLabel.Visibility = Visibility.Visible;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Green);
             GreenCh.Source = null;
-            imgLoaded--;
+            greenNoDataLabel.Visibility = Visibility.Visible;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
-            imgLoaded--;
+            blueNoDataLabel.Visibility = Visibility.Visible;
         }
         
         private void ButtonClearA(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Alpha);
             AlphaCh.Source = null;
-            imgLoaded--;
+            alphaNoDataLabel.Visibility = Visibility.Visible;
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
@@ -133,17 +135,6 @@ namespace TextureMerge
 
         private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
-            if (imgLoaded == 0)
-            {
-                MessageBox.Show("No images loaded", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            else if (imgLoaded < 0)
-            {
-                throw new InvalidOperationException("Internal error: imgLoaded < 0\n" +
-                    "Please report this bug.");
-            }
-            
             if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
                 !hasSetupPath)
             {
@@ -184,6 +175,11 @@ namespace TextureMerge
                     MessageBox.Show("Operation aborted");
                     return;
                 }
+            }
+            else if (width == 0 || height == 0)
+            {
+                MessageBox.Show("No images loaded", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             SetStatus("Merging...", statusBlueColor);
