@@ -65,39 +65,39 @@ namespace TextureMerge
             }
         }
         
-        private async void ButtonLoad(Image WPFElement, Channel channel, Channel sourceChannel)
+        private async void ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel)
         {
             string path = GetImagePath();
             if (path != string.Empty)
             {
+                var tmpLabelContent = label.Content;
+                label.Content = "Loading...";
                 SetStatus("Loading...", statusBlueColor);
                 WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
                 SetStatus();
+                label.Content = tmpLabelContent;
+                label.Visibility = Visibility.Hidden;
             }
         }
 
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(RedCh, Channel.Red, Channel.Red);
-            redNoDataLabel.Visibility = Visibility.Hidden;
+            ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
         }
         
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(GreenCh, Channel.Green, Channel.Green);
-            greenNoDataLabel.Visibility = Visibility.Hidden;
+            ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(BlueCh, Channel.Blue, Channel.Blue);
-            blueNoDataLabel.Visibility = Visibility.Hidden;
+            ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
         }
         
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(AlphaCh, Channel.Alpha, Channel.Red);
-            alphaNoDataLabel.Visibility = Visibility.Hidden;
+            ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
