@@ -132,37 +132,38 @@ namespace TextureMerge
 
         public bool CheckResolution() => CheckResolution(out _, out _);
 
-        public Task<Merge> ResizeAsync(int width, int height, bool stretch)
+        public Task<Merge> ResizeAsync(int width, int height, bool stretch, MagickColor? fillColor = null)
         {
             lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
             {
-                return Task.Run(() => Resize(width, height, stretch));
+                return Task.Run(() => Resize(width, height, stretch, fillColor));
             }
         }
 
-        public Merge Resize(int width, int height, bool stretch)
+        public Merge Resize(int width, int height, bool stretch, MagickColor? fillColor=null)
         {
+            Merge merge = this;
             var newInst = new Merge()
             {
-                redChSource = this.redChSource,
-                greenChSource = this.greenChSource,
-                blueChSource = this.blueChSource,
-                alphaChSource = this.alphaChSource
+                redChSource = merge.redChSource,
+                greenChSource = merge.greenChSource,
+                blueChSource = merge.blueChSource,
+                alphaChSource = merge.alphaChSource
             };
             
             if (red is not null)
-                newInst.red = ResizeImage(red, width, height, stretch);
+                newInst.red = ResizeImage(red, width, height, stretch, fillColor);
             if (green is not null)
-                newInst.green = ResizeImage(green, width, height, stretch);
+                newInst.green = ResizeImage(green, width, height, stretch, fillColor);
             if (blue is not null)
-                newInst.blue = ResizeImage(blue, width, height, stretch);
+                newInst.blue = ResizeImage(blue, width, height, stretch, fillColor);
             if (alpha is not null)
-                newInst.alpha = ResizeImage(alpha, width, height, stretch);
+                newInst.alpha = ResizeImage(alpha, width, height, stretch, fillColor);
 
             return newInst;
         }
 
-        private static MagickImage ResizeImage(MagickImage source, int width, int height, bool stretch)
+        private static MagickImage ResizeImage(MagickImage source, int width, int height, bool stretch, MagickColor? fillColor = null)
         {
             var result = (MagickImage)source.Clone();
             if (stretch)
@@ -177,7 +178,8 @@ namespace TextureMerge
             {
                 // TODO read color from color picker
                 result.Resize(width, height);
-                result.Extent(width, height, Gravity.Center, new MagickColor(0, 0, 0));
+                result.Extent(width, height, Gravity.Center,
+                    fillColor is not null ? fillColor : new MagickColor(0, 0, 0));
             }
 
             return result;

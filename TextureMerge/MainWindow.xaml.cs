@@ -189,7 +189,9 @@ namespace TextureMerge
                 if (resizeDialog.ShowDialog() == true)
                 {
                     SetStatus("Resizeing...", statusBlueColor);
-                    correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
+                    correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
+                        resizeDialog.DoStretch.IsChecked == true,
+                        dummyColorSwap ? new MagickColor(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue) : new MagickColor(0, 0, 0));
                 }
                 else
                 {
