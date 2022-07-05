@@ -156,8 +156,8 @@ namespace TextureMerge
                 };
                 if (resizeDialog.ShowDialog() == true)
                 {
-                    SetStatus("Merging...", statusBlueColor);
-                    correct = merge.Resize(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
+                    SetStatus("Resizeing...", statusBlueColor);
+                    correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight, resizeDialog.DoStretch.IsChecked == true);
                 }
                 else
                 {
@@ -168,8 +168,14 @@ namespace TextureMerge
 
             SetStatus("Merging...", statusBlueColor);
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
+
             if (Directory.Exists(PathToSave.Text))
-                correct.DoMerge().Save(path);
+            {
+                var result = await correct.DoMergeAsync();
+                SetStatus("Saving...", statusBlueColor);
+                await result.SaveAsync(path);
+            }
+
             else
                 MessageBox.Show("Save path is not valid!\n" +
                     "Check if the path is correct.");

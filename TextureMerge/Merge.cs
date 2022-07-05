@@ -12,6 +12,14 @@ namespace TextureMerge
         Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
+        public Task<MagickImage> DoMergeAsync()
+        {
+            lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
+            {
+                return Task.Run(() => DoMerge());
+            }
+        }
+
         public MagickImage DoMerge()
         {
             if (red is null && green is null && blue is null)
@@ -118,7 +126,15 @@ namespace TextureMerge
         }
 
         public bool CheckResolution() => CheckResolution(out _, out _);
-        
+
+        public Task<Merge> ResizeAsync(int width, int height, bool stretch)
+        {
+            lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
+            {
+                return Task.Run(() => Resize(width, height, stretch));
+            }
+        }
+
         public Merge Resize(int width, int height, bool stretch)
         {
             var newInst = new Merge()

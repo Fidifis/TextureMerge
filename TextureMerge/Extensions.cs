@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using ImageMagick;
 
@@ -26,6 +27,11 @@ namespace TextureMerge
             bitmap.Format = MagickFormat.Png; //TODO read extension and decide format
             bitmap.Write(stream);
             stream.Close();
+        }
+
+        public static Task SaveAsync(this MagickImage bitmap, string saveFilePath)
+        {
+            return Task.Run(() => bitmap.Save(saveFilePath));
         }
     }
 }
