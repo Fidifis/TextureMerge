@@ -185,7 +185,6 @@ namespace TextureMerge
 
         private static MagickImage MakeChannelThumbnail(MagickImage sourceBitmap, Channel channel)
         {
-            // TODO read color from color picker
             using var thumb = (MagickImage)sourceBitmap.Clone();
             thumb.Thumbnail(512, 512);
             var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
