@@ -8,7 +8,7 @@ namespace TextureMerge
     internal class Merge : IDisposable
     {
         MagickImage? red = null, green = null, blue = null, alpha = null;
-        object redLock = new(), greenLock = new(), blueLock = new(), alphaLock = new();
+        readonly object redLock = new(), greenLock = new(), blueLock = new(), alphaLock = new();
         Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ImageMagick;
 using System.Threading.Tasks;
+using System;
 
 namespace TextureMerge
 {
@@ -18,6 +19,7 @@ namespace TextureMerge
         private readonly Merge merge = new();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
+        private byte imgLoaded = 0;
 
         public MainWindow()
         {
@@ -68,6 +70,7 @@ namespace TextureMerge
             if (path != string.Empty)
             {
                 SetStatus("Loading...", statusBlueColor);
+                imgLoaded++;
                 WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
                 SetStatus();
             }
@@ -97,24 +100,28 @@ namespace TextureMerge
         {
             merge.Clear(Channel.Red);
             RedCh.Source = null;
+            imgLoaded--;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Green);
             GreenCh.Source = null;
+            imgLoaded--;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
+            imgLoaded--;
         }
         
         private void ButtonClearA(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Alpha);
             AlphaCh.Source = null;
+            imgLoaded--;
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
@@ -124,6 +131,17 @@ namespace TextureMerge
 
         private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
+            if (imgLoaded == 0)
+            {
+                MessageBox.Show("No images loaded", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (imgLoaded < 0)
+            {
+                throw new InvalidOperationException("Internal error: imgLoaded < 0\n" +
+                    "Please report this bug.");
+            }
+            
             if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
                 !hasSetupPath)
             {
