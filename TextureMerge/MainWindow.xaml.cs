@@ -54,6 +54,7 @@ namespace TextureMerge
             {
                 InitialDirectory = PathToSave.Text,
                 FileName = SaveImageName.Text,
+                OverwritePrompt = false,
                 Title = "Select an image file",
                 Filter = "PNG (*.png)|*.png|All files (*.*)|*.*" //TODO: Add more formats
             };
@@ -157,6 +158,19 @@ namespace TextureMerge
                     return;
             }
 
+            string path = PathToSave.Text + "\\" + SaveImageName.Text;
+            if (File.Exists(path))
+            {
+                if (MessageBox.Show("File already exist!\n" +
+                    "Do you want to overwrite it?",
+                    "File already exist",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                    {
+                        return;
+                    }
+            }
+            
             Merge correct = merge;
 
             if (!merge.CheckResolution(out int width, out int height))
@@ -183,7 +197,6 @@ namespace TextureMerge
             }
 
             SetStatus("Merging...", statusBlueColor);
-            string path = PathToSave.Text + "\\" + SaveImageName.Text;
 
             if (Directory.Exists(PathToSave.Text))
             {
