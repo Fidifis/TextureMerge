@@ -78,6 +78,12 @@ namespace TextureMerge
             string path = GetImagePath();
             if (path != string.Empty)
             {
+                if (!hasEditedPath && !hasSetupPath)
+                {
+                    PathToSave.Text = Path.GetDirectoryName(path);
+                    hasEditedPath = false;
+                }
+
                 var tmpLabelContent = label.Content;
                 label.Content = "Loading...";
                 SetStatus("Loading...", statusBlueColor);
