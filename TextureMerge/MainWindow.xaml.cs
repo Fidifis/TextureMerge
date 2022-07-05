@@ -24,6 +24,8 @@ namespace TextureMerge
         public MainWindow()
         {
             InitializeComponent();
+            PathToSave.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            hasEditedPath = false;
             MagickNET.Initialize();
         }
 
