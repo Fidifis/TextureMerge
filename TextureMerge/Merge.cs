@@ -19,6 +19,7 @@ namespace TextureMerge
 
             // TODO read the color from color picker
             var result = new MagickImage(new MagickColor(0, 0, 0), width, height);
+            result.Depth = GetHighestDepth();
             using var resultPixels = result.GetPixels();
             using var redPixels = red?.GetPixels();
             using var greenPixels = green?.GetPixels();
@@ -35,6 +36,18 @@ namespace TextureMerge
             }
 
             return result;
+        }
+
+        private int GetHighestDepth()
+        {
+            int max = 0;
+            if (red is not null)
+                max = red.Depth > max ? red.Depth : max;
+            if (green is not null)
+                max = green.Depth > max ? green.Depth : max;
+            if (blue is not null)
+                max = blue.Depth > max ? blue.Depth : max;
+            return max;
         }
 
         public bool CheckResolution(out int width, out int height)
@@ -87,6 +100,7 @@ namespace TextureMerge
                 newInst.green = ResizeImage(green, width, height, stretch);
             if (blue is not null)
                 newInst.blue = ResizeImage(blue, width, height, stretch);
+
             return newInst;
         }
 
@@ -107,6 +121,7 @@ namespace TextureMerge
                 result.Resize(width, height);
                 result.Extent(width, height, Gravity.Center, new MagickColor(0, 0, 0));
             }
+
             return result;
         }
 
