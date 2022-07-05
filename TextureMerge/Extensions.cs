@@ -24,7 +24,7 @@ namespace TextureMerge
                 throw new ArgumentException("Invalid path");
 
             using FileStream stream = new(saveFilePath, FileMode.Create);
-            bitmap.Format = MagickFormat.Png; //TODO read extension and decide format
+            bitmap.Format = GetExtension(Path.GetExtension(saveFilePath));
             bitmap.Write(stream);
             stream.Close();
         }
@@ -33,5 +33,25 @@ namespace TextureMerge
         {
             return Task.Run(() => bitmap.Save(saveFilePath));
         }
+
+        private static MagickFormat GetExtension(string ext) => ext switch
+        {
+            //This is some formats that are supported by ImageMagick
+            ".png" => MagickFormat.Png,
+            ".jpg" => MagickFormat.Jpeg,
+            ".jpeg" => MagickFormat.Jpeg,
+            ".bmp" => MagickFormat.Bmp,
+            ".gif" => MagickFormat.Gif,
+            ".tiff" => MagickFormat.Tiff,
+            ".tif" => MagickFormat.Tiff,
+            ".tga" => MagickFormat.Tga,
+            ".webp" => MagickFormat.WebP,
+            ".pdf" => MagickFormat.Pdf,
+            ".psd" => MagickFormat.Psd,
+            ".dib" => MagickFormat.Dib,
+            ".ico" => MagickFormat.Ico,
+            ".svg" => MagickFormat.Svg,
+            _ => throw new ArgumentException("Invalid extension"),
+        };
     }
 }

@@ -56,7 +56,14 @@ namespace TextureMerge
                 FileName = SaveImageName.Text,
                 OverwritePrompt = false,
                 Title = "Select an image file",
-                Filter = "PNG (*.png)|*.png|All files (*.*)|*.*" //TODO: Add more formats
+                Filter =
+                "Portable Network Graphics (*.png)|*.png|" +
+                "Joint Photographic Experts Group (*.jpg;*.jpeg;*.jpe)|*.jpg;*.jpeg;*.jpe|" +
+                "Microsoft Windows Bitmap Format (*.bmp;*.dib)|*.bmp;*.dib|" +
+                "Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff|" +
+                "Targa (*.tga)|*.tga|" +
+                "Graphics Interchange Format (*.gif)|*.gif|" +
+                "All files|*.*"
             };
             if (saveFileDialog.ShowDialog() == true)
             {
