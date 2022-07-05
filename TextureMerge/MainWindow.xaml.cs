@@ -62,13 +62,13 @@ namespace TextureMerge
             }
         }
         
-        private void ButtonLoad(Image WPFElement, Channel channel, Channel sourceChannel)
+        private async void ButtonLoad(Image WPFElement, Channel channel, Channel sourceChannel)
         {
             string path = GetImagePath();
             if (path != string.Empty)
             {
                 SetStatus("Loading...", statusBlueColor);
-                WPFElement.Source = merge.LoadChannel(path, channel, sourceChannel);
+                WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
                 SetStatus();
             }
         }

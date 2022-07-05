@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using ImageMagick;
 
@@ -7,6 +8,7 @@ namespace TextureMerge
     internal class Merge : IDisposable
     {
         MagickImage? red = null, green = null, blue = null, alpha = null;
+        object redLock = new(), greenLock = new(), blueLock = new(), alphaLock = new();
         Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
@@ -178,6 +180,32 @@ namespace TextureMerge
             }
 
             return result;
+        }
+
+        public Task<ImageSource> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
+        {
+            switch (channelSlot)
+            {
+                case Channel.Red:
+                lock (redLock)
+                    return Task.Run(() =>
+                        LoadChannel(path, channelSlot, channelSource));
+
+                case Channel.Green:
+                    lock (greenLock)
+                        return Task.Run(() =>
+                            LoadChannel(path, channelSlot, channelSource));
+                case Channel.Blue:
+                    lock (blueLock)
+                        return Task.Run(() =>
+                            LoadChannel(path, channelSlot, channelSource));
+                case Channel.Alpha:
+                    lock (alphaLock)
+                        return Task.Run(() =>
+                            LoadChannel(path, channelSlot, channelSource));
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
         }
 
         public ImageSource LoadChannel(string path, Channel channelSlot, Channel channelSource)
