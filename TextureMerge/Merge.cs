@@ -12,15 +12,15 @@ namespace TextureMerge
         Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
-        public Task<MagickImage> DoMergeAsync()
+        public Task<MagickImage> DoMergeAsync(MagickColor fillColor)
         {
             lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
             {
-                return Task.Run(() => DoMerge());
+                return Task.Run(() => DoMerge(fillColor));
             }
         }
 
-        public MagickImage DoMerge()
+        public MagickImage DoMerge(MagickColor fillColor)
         {
             if (red is null && green is null && blue is null && alpha is null)
                 throw new InvalidOperationException("No image loaded");
@@ -28,8 +28,7 @@ namespace TextureMerge
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
 
-            // TODO read the color from color picker
-            var result = new MagickImage(new MagickColor(0, 0, 0), width, height);
+            var result = new MagickImage(fillColor, width, height);
             result.Depth = GetHighestDepth();
 
             if (alpha is not null)
@@ -47,15 +46,15 @@ namespace TextureMerge
             {
                 if (alphaPixels is null)
                     p.SetValues(new ushort[] {
-                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
-                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
-                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
+                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : fillColor.R,
+                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : fillColor.G,
+                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : fillColor.B,
                     });
                 else
                     p.SetValues(new ushort[] {
-                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
-                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
-                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
+                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : fillColor.R,
+                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : fillColor.G,
+                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : fillColor.B,
                         alphaPixels[p.X, p.Y]!.GetChannel((int)alphaChSource)
                     });
                 resultPixels.SetPixel(p);
@@ -176,7 +175,6 @@ namespace TextureMerge
             }
             else
             {
-                // TODO read color from color picker
                 result.Resize(width, height);
                 result.Extent(width, height, Gravity.Center,
                     fillColor is not null ? fillColor : new MagickColor(0, 0, 0));

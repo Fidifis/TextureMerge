@@ -191,7 +191,7 @@ namespace TextureMerge
                     SetStatus("Resizeing...", statusBlueColor);
                     correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
                         resizeDialog.DoStretch.IsChecked == true,
-                        dummyColorSwap ? new MagickColor(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue) : new MagickColor(0, 0, 0));
+                        GetDefaultFillColor(dummyColorSwap));
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace TextureMerge
 
             if (Directory.Exists(PathToSave.Text))
             {
-                var result = await correct.DoMergeAsync();
+                var result = await correct.DoMergeAsync(GetDefaultFillColor(dummyColorSwap));
                 SetStatus("Saving...", statusBlueColor);
                 await result.SaveAsync(path);
             }
@@ -233,6 +233,9 @@ namespace TextureMerge
                 DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
             dummyColorSwap = !dummyColorSwap;
         }
+
+        private MagickColor GetDefaultFillColor(bool useWhite) =>
+            useWhite ? new MagickColor(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue) : new MagickColor(0, 0, 0);
 
         private void PathToSaveChanged(object sender, TextChangedEventArgs e)
         {
