@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextureMerge"
         mc:Ignorable="d"
-        Title="Texture Merge" Height="500" Width="800">
+        Title="Texture Merge"
+        Height="500" Width="1100"
+        MinWidth="600" MinHeight="350">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="bigLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
@@ -18,6 +20,7 @@
     <Grid>
         <Grid Margin="50,40,50,140">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -62,6 +65,20 @@
                     </Grid.ColumnDefinitions>
                     <Button Content="Load"  Grid.Column="0" Margin="10,10,10,10" Click="ButtonLoadB" />
                     <Button Content="Clear"  Grid.Column="1" Margin="10,10,10,10" Click="ButtonClearB" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="3" Margin="5,0,5,0">
+                <Label Content="No Image Data" Style="{StaticResource bigLabelStyle}"/>
+                <Border>
+                    <Image x:Name="AlphaCh" Margin="10,10,10,40"/>
+                </Border>
+                <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Load"  Grid.Column="0" Margin="10,10,10,10" Click="ButtonLoadA" />
+                    <Button Content="Clear"  Grid.Column="1" Margin="10,10,10,10" Click="ButtonClearA" />
                 </Grid>
             </Grid>
         </Grid>

@@ -71,6 +71,13 @@ namespace TextureMerge
             if (path != string.Empty)
                 BlueCh.Source = merge.LoadChannel(path, Channel.Blue, Channel.Blue);
         }
+        
+        private void ButtonLoadA(object sender, RoutedEventArgs e)
+        {
+            string path = GetImagePath();
+            if (path != string.Empty)
+                AlphaCh.Source = merge.LoadChannel(path, Channel.Alpha, Channel.Red);
+        }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
         {
@@ -88,6 +95,12 @@ namespace TextureMerge
         {
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
+        }
+        
+        private void ButtonClearA(object sender, RoutedEventArgs e)
+        {
+            merge.Clear(Channel.Alpha);
+            AlphaCh.Source = null;
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)

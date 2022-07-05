@@ -6,8 +6,9 @@ namespace TextureMerge
 {
     internal class Merge : IDisposable
     {
-        MagickImage? red = null, green = null, blue = null;
-        Channel redChSource = Channel.Red, greenChSource = Channel.Green, blueChSource = Channel.Blue;
+        MagickImage? red = null, green = null, blue = null, alpha = null;
+        Channel redChSource = Channel.Red, greenChSource = Channel.Green,
+            blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
         public MagickImage DoMerge()
         {
@@ -20,18 +21,33 @@ namespace TextureMerge
             // TODO read the color from color picker
             var result = new MagickImage(new MagickColor(0, 0, 0), width, height);
             result.Depth = GetHighestDepth();
+
+            if (alpha is not null)
+                result.Alpha(AlphaOption.On);
+            else
+                result.Alpha(AlphaOption.Off);
+
             using var resultPixels = result.GetPixels();
             using var redPixels = red?.GetPixels();
             using var greenPixels = green?.GetPixels();
             using var bluePixels = blue?.GetPixels();
+            using var alphaPixels = alpha?.GetPixels();
 
             foreach (Pixel p in resultPixels)
             {
-                p.SetValues(new ushort[] {
-                    redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
-                    greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
-                    bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
-                });
+                if (alphaPixels is null)
+                    p.SetValues(new ushort[] {
+                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
+                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
+                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
+                    });
+                else
+                    p.SetValues(new ushort[] {
+                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : (ushort)0,
+                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : (ushort)0,
+                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : (ushort)0,
+                        alphaPixels[p.X, p.Y]!.GetChannel((int)alphaChSource)
+                    });
                 resultPixels.SetPixel(p);
             }
 
@@ -47,6 +63,9 @@ namespace TextureMerge
                 max = green.Depth > max ? green.Depth : max;
             if (blue is not null)
                 max = blue.Depth > max ? blue.Depth : max;
+            if (alpha is not null)
+                max = alpha.Depth > max ? alpha.Depth : max;
+
             return max;
         }
 
@@ -79,6 +98,19 @@ namespace TextureMerge
                     if (width != blue.Width || height != blue.Height)
                         return false;
                 }
+                else
+                {
+                    width = blue.Width;
+                    height = blue.Height;
+                }
+            }
+            if (alpha is not null)
+            {
+                if (width is not 0)
+                {
+                    if (width != alpha.Width || height != alpha.Height)
+                        return false;
+                }
             }
             return true;
         }
@@ -89,9 +121,10 @@ namespace TextureMerge
         {
             var newInst = new Merge()
             {
-                redChSource = redChSource,
-                greenChSource = greenChSource,
-                blueChSource = blueChSource
+                redChSource = this.redChSource,
+                greenChSource = this.greenChSource,
+                blueChSource = this.blueChSource,
+                alphaChSource = this.alphaChSource
             };
             
             if (red is not null)
@@ -100,6 +133,8 @@ namespace TextureMerge
                 newInst.green = ResizeImage(green, width, height, stretch);
             if (blue is not null)
                 newInst.blue = ResizeImage(blue, width, height, stretch);
+            if (alpha is not null)
+                newInst.alpha = ResizeImage(alpha, width, height, stretch);
 
             return newInst;
         }
@@ -169,6 +204,10 @@ namespace TextureMerge
                     blue = source;
                     blueChSource = channelSource;
                     break;
+                case Channel.Alpha:
+                    alpha = source;
+                    alphaChSource = channelSource;
+                    break;
                 default:
                     throw new ArgumentException("Invalid channel");
             }
@@ -189,6 +228,11 @@ namespace TextureMerge
                 case Channel.Blue:
                     blue = null;
                     break;
+                case Channel.Alpha:
+                    alpha = null;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid channel");
             }
         }
 
