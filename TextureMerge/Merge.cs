@@ -22,7 +22,7 @@ namespace TextureMerge
 
         public MagickImage DoMerge()
         {
-            if (red is null && green is null && blue is null)
+            if (red is null && green is null && blue is null && alpha is null)
                 throw new InvalidOperationException("No image loaded");
 
             if (!CheckResolution(out int width, out int height))
@@ -120,6 +120,11 @@ namespace TextureMerge
                 {
                     if (width != alpha.Width || height != alpha.Height)
                         return false;
+                }
+                else
+                {
+                    width = alpha.Width;
+                    height = alpha.Height;
                 }
             }
             return true;
