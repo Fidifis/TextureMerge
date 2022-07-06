@@ -36,10 +36,11 @@ namespace TextureMerge
             StatusLabel.Content = message;
         }
 
-        private static string GetImagePath()
+        private string GetImagePath()
         {
             var openFileDialog = new OpenFileDialog
             {
+                InitialDirectory = PathToSave.Text,
                 Title = "Select an image file",
                 Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*" //TODO: Add more formats
             };
