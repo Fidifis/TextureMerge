@@ -107,7 +107,7 @@
                 <Button Content="Browse" HorizontalAlignment="Right" Width="80" Click="ButtonBrowse"/>
             </Grid>
             <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
-                <TextBox x:Name="SaveImageName" Margin="0,0,90,0" TextAlignment="Right" Text="Pack.png"/>
+                <TextBox x:Name="SaveImageName" Margin="0,0,90,0" TextAlignment="Right" Text="Pack.png" TextChanged="SaveImageNameChanged"/>
                 <Button Content="Merge" HorizontalAlignment="Right" Width="80" Click="ButtonMerge"/>
             </Grid>
         </Grid>

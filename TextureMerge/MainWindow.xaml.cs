@@ -71,6 +71,7 @@ namespace TextureMerge
                 PathToSave.Text = Path.GetDirectoryName(saveFileDialog.FileName);
                 SaveImageName.Text = Path.GetFileName(saveFileDialog.FileName);
                 hasSetupPath = true;
+                hasEditedPath = false;
             }
         }
         
@@ -150,6 +151,7 @@ namespace TextureMerge
 
         private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
+            // TODO It looks weird. Maybe simplify this to one variable.
             if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
                 !hasSetupPath)
             {
@@ -248,6 +250,11 @@ namespace TextureMerge
         {
             hasEditedPath = true;
             hasSetupPath = false;
+        }
+
+        private void SaveImageNameChanged(object sender, TextChangedEventArgs e)
+        {
+            hasEditedPath = true;
         }
     }
 }
