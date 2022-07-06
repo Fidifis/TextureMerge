@@ -36,30 +36,35 @@ namespace TextureMerge
             else
                 result.Alpha(AlphaOption.Off);
 
-            using var resultPixels = result.GetPixels();
-            using var redPixels = red?.GetPixels();
-            using var greenPixels = green?.GetPixels();
-            using var bluePixels = blue?.GetPixels();
-            using var alphaPixels = alpha?.GetPixels();
+            var resultPix = result.GetPixels();
+            var resultPixels = resultPix.ToArray()!;
+            var redPixels = red is not null ? red.GetPixels().ToArray()! : new ushort[width * height * 3];
+            var greenPixels = green is not null ? green.GetPixels().ToArray()! : new ushort[width * height * 3];
+            var bluePixels = blue is not null ? blue.GetPixels().ToArray()! : new ushort[width * height * 3];
+            var alphaPixels = alpha is not null ? alpha.GetPixels().ToArray()! : new ushort[width * height * 3];
 
-            foreach (Pixel p in resultPixels)
+            for (int i = 0; i < resultPixels.Length; i++)
             {
-                if (alphaPixels is null)
-                    p.SetValues(new ushort[] {
-                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : fillColor.R,
-                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : fillColor.G,
-                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : fillColor.B,
-                    });
-                else
-                    p.SetValues(new ushort[] {
-                        redPixels is not null ? redPixels[p.X, p.Y]!.GetChannel((int)redChSource) : fillColor.R,
-                        greenPixels is not null ? greenPixels[p.X, p.Y]!.GetChannel((int)greenChSource) : fillColor.G,
-                        bluePixels is not null ? bluePixels[p.X, p.Y]!.GetChannel((int)blueChSource) : fillColor.B,
-                        alphaPixels[p.X, p.Y]!.GetChannel((int)alphaChSource)
-                    });
-                resultPixels.SetPixel(p);
-            }
+                if (alpha is null)
+                    resultPixels[i] = (i % 3) switch
+                    {
+                        0 => redPixels[i],
+                        1 => greenPixels[i],
+                        2 => bluePixels[i],
+                        _ => throw new InvalidOperationException("Impossible Exception")
+                    };
 
+                else
+                    resultPixels[i] = (i % 4) switch
+                    {
+                        0 => redPixels[i],
+                        1 => greenPixels[i],
+                        2 => bluePixels[i],
+                        3 => alphaPixels[i],
+                        _ => throw new InvalidOperationException("Impossible Exception")
+                    };
+            }
+            resultPix.SetPixels(resultPixels);
             return result;
         }
 
