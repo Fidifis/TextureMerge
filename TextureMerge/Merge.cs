@@ -45,24 +45,32 @@ namespace TextureMerge
 
             for (int i = 0; i < resultPixels.Length; i++)
             {
+                var redi = i - (i % 3) + (int)redChSource;
+                var greeni = i - (i % 3) + (int)greenChSource;
+                var bluei = i - (i % 3) + (int)blueChSource;
+                var alphai = i - (i % 3) + (int)alphaChSource;
+
                 if (alpha is null)
+                {
                     resultPixels[i] = (i % 3) switch
                     {
-                        0 => redPixels[i],
-                        1 => greenPixels[i],
-                        2 => bluePixels[i],
+                        0 => redPixels[redi],
+                        1 => greenPixels[greeni],
+                        2 => bluePixels[bluei],
                         _ => throw new InvalidOperationException("Impossible Exception")
                     };
-
+                }
                 else
+                {
                     resultPixels[i] = (i % 4) switch
                     {
-                        0 => redPixels[i],
-                        1 => greenPixels[i],
-                        2 => bluePixels[i],
-                        3 => alphaPixels[i],
+                        0 => redPixels[(i / 4) * 3 + (redi % 3)],
+                        1 => greenPixels[(i / 4) * 3 + (greeni % 3)],
+                        2 => bluePixels[(i / 4) * 3 + (bluei % 3)],
+                        3 => alphaPixels[(i / 4) * 3 + (alphai % 3)],
                         _ => throw new InvalidOperationException("Impossible Exception")
                     };
+                }
             }
             resultPix.SetPixels(resultPixels);
             return result;
@@ -233,6 +241,8 @@ namespace TextureMerge
 
             if (source is null)
                 throw new ArgumentException("Failed to load image");
+
+            source.Alpha(AlphaOption.Off);
 
             switch (channelSlot)
             {
