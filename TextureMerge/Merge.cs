@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ImageMagick;
@@ -38,10 +39,10 @@ namespace TextureMerge
 
             var resultPix = result.GetPixels();
             var resultPixels = resultPix.ToArray()!;
-            var redPixels = red is not null ? red.GetPixels().ToArray()! : new ushort[width * height * 3];
-            var greenPixels = green is not null ? green.GetPixels().ToArray()! : new ushort[width * height * 3];
-            var bluePixels = blue is not null ? blue.GetPixels().ToArray()! : new ushort[width * height * 3];
-            var alphaPixels = alpha is not null ? alpha.GetPixels().ToArray()! : new ushort[width * height * 3];
+            var redPixels = red is not null ? red.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.R);
+            var greenPixels = green is not null ? green.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.G);
+            var bluePixels = blue is not null ? blue.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.B);
+            var alphaPixels = alpha is not null ? alpha.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.A);
 
             for (int i = 0; i < resultPixels.Length; i++)
             {
@@ -74,6 +75,13 @@ namespace TextureMerge
             }
             resultPix.SetPixels(resultPixels);
             return result;
+        }
+
+        private ushort[] CreateArrayWithColor(int capacity, ushort color)
+        {
+            var arr = new ushort[capacity];
+            Array.Fill(arr, color);
+            return arr;
         }
 
         private int GetHighestDepth()
