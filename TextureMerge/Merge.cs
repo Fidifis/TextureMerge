@@ -245,6 +245,9 @@ namespace TextureMerge
             if (path == string.Empty)
                 throw new ArgumentException("Invalid path");
 
+            if (channelSource == Channel.Alpha)
+                throw new ArgumentException("Alpha can't be source channel");
+
             var source = new MagickImage(path);
 
             if (source is null)
