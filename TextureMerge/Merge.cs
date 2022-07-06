@@ -14,10 +14,10 @@ namespace TextureMerge
 
         public Task<MagickImage> DoMergeAsync(MagickColor fillColor)
         {
-            lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
-            {
-                return Task.Run(() => DoMerge(fillColor));
-            }
+            return Task.Run(() => {
+                lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock) 
+                    return DoMerge(fillColor);
+            });
         }
 
         public MagickImage DoMerge(MagickColor fillColor)
@@ -133,10 +133,10 @@ namespace TextureMerge
 
         public Task<Merge> ResizeAsync(int width, int height, bool stretch, MagickColor? fillColor = null)
         {
-            lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
-            {
-                return Task.Run(() => Resize(width, height, stretch, fillColor));
-            }
+            return Task.Run(() => {
+                lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
+                    return Resize(width, height, stretch, fillColor);
+            });
         }
 
         public Merge Resize(int width, int height, bool stretch, MagickColor? fillColor=null)
@@ -207,22 +207,13 @@ namespace TextureMerge
             switch (channelSlot)
             {
                 case Channel.Red:
-                lock (redLock)
-                    return Task.Run(() =>
-                        LoadChannel(path, channelSlot, channelSource));
-
+                    return Task.Run(() => { lock (redLock) return LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Green:
-                    lock (greenLock)
-                        return Task.Run(() =>
-                            LoadChannel(path, channelSlot, channelSource));
+                    return Task.Run(() => { lock (greenLock) return LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Blue:
-                    lock (blueLock)
-                        return Task.Run(() =>
-                            LoadChannel(path, channelSlot, channelSource));
+                    return Task.Run(() => { lock (blueLock) return LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Alpha:
-                    lock (alphaLock)
-                        return Task.Run(() =>
-                            LoadChannel(path, channelSlot, channelSource));
+                    return Task.Run(() => { lock (alphaLock) return LoadChannel(path, channelSlot, channelSource); });
                 default:
                     throw new ArgumentException("Invalid channel");
             }
