@@ -37,7 +37,7 @@ namespace TextureMerge
             else
                 result.Alpha(AlphaOption.Off);
 
-            var resultPix = result.GetPixels();
+            using var resultPix = result.GetPixels();
             var resultPixels = resultPix.ToArray()!;
             var redPixels = red is not null ? red.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.R);
             var greenPixels = green is not null ? green.GetPixels().ToArray()! : CreateArrayWithColor(width * height * 3, fillColor.G);
@@ -206,20 +206,20 @@ namespace TextureMerge
 
         private static MagickImage MakeChannelThumbnail(MagickImage sourceBitmap, Channel channel)
         {
+            if (sourceBitmap.HasAlpha)
+                throw new ArgumentException("Source bitmap has alpha channel");
+
             using var thumb = (MagickImage)sourceBitmap.Clone();
             thumb.Thumbnail(512, 512);
             var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
-            using var pixels = result.GetPixels();
-            using var sourcePixels = thumb.GetPixels();
-            foreach (Pixel p in pixels)
+            using var resPix = result.GetPixels();
+            var pixels = resPix.ToArray()!;
+            var sourcePixels = thumb.GetPixels().ToArray()!;
+            for (int i = 0; i < pixels.Length; i++)
             {
-                p.SetValues(new ushort[] {
-                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel),
-                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel),
-                    sourcePixels[p.X, p.Y]!.GetChannel((int)channel)});
-                pixels.SetPixel(p);
+                pixels[i] = sourcePixels[i - (i % 3) + (int)channel];
             }
-
+            resPix.SetPixels(pixels);
             return result;
         }
 
