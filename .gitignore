@@ -1,3 +1,5 @@
 .vs
 */bin
 */obj
+Setup/setup*-SetupFiles
+Setup/setup-cache
