@@ -9,7 +9,6 @@
     <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.6 build bf52c98e" ValueLocId="-"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER"/>
     <ROW Property="ALLUSERS" Value="1" MultiBuildValue="AnyCPU_Release:2"/>
-    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPNOMODIFY" MultiBuildValue="AnyCPU_Release:1"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="Manufacturer" Value="Fidifis"/>
@@ -37,27 +36,28 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{3EED38C5-17D2-40C7-B341-69EAC84AF7E6}" Directory_="APPDIR" Attributes="4" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{1BE485AA-F4A0-4B07-ACB5-ECBD9AE0F39C}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Magick.NET.Core.dll" ComponentId="{09A97E79-916E-4977-BA2F-164DAF710CCF}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NET.Core.dll"/>
-    <ROW Component="Magick.NETQ16AnyCPU.dll" ComponentId="{07E6C6D3-8F7E-4D97-B2DF-F3E6D7AEBB90}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NETQ16AnyCPU.dll"/>
-    <ROW Component="Magick.NativeQ16x64.dll" ComponentId="{36450534-02DF-44DD-BAA5-ABD74384A9E4}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16x64.dll"/>
+    <ROW Component="D3DCompiler_47_cor3.dll" ComponentId="{A22A31A4-0B43-43F1-AB98-9FD284F109FC}" Directory_="APPDIR" Attributes="256" KeyPath="D3DCompiler_47_cor3.dll"/>
+    <ROW Component="Magick.NativeQ16x64.dll" ComponentId="{D7956141-4EC9-4DF2-92FD-F932DC456C6E}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16x64.dll"/>
+    <ROW Component="PenImc_cor3.dll" ComponentId="{51F31E38-90B8-493F-8DDA-B584FB390485}" Directory_="APPDIR" Attributes="256" KeyPath="PenImc_cor3.dll"/>
+    <ROW Component="PresentationNative_cor3.dll" ComponentId="{F7066DEC-DA47-4E47-9C0D-02BFEC9E8D7F}" Directory_="APPDIR" Attributes="256" KeyPath="PresentationNative_cor3.dll"/>
     <ROW Component="ProductInformation" ComponentId="{4B9A628B-3E6D-4C79-BFE7-FE3C1E62B3AB}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{14C65C5F-1F03-485F-B1E6-6A11B84762F6}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="TextureMerge.dll" ComponentId="{2334E8C6-D849-4AC9-ADD6-9F0016BBCA80}" Directory_="APPDIR" Attributes="0" KeyPath="TextureMerge.dll"/>
     <ROW Component="TextureMerge.exe" ComponentId="{3526C014-1AD0-4936-B537-AEA6D14139F8}" Directory_="APPDIR" Attributes="0" KeyPath="TextureMerge.exe"/>
-    <ROW Component="TextureMerge.runtimeconfig.json" ComponentId="{DEC796B1-CD57-40F2-87C4-6C7084D5AD48}" Directory_="APPDIR" Attributes="0" KeyPath="TextureMerge.runtimeconfig.json" Type="0"/>
+    <ROW Component="vcruntime140_cor3.dll" ComponentId="{64370F41-8E75-40E3-884F-85C999A7B99E}" Directory_="APPDIR" Attributes="256" KeyPath="vcruntime140_cor3.dll"/>
+    <ROW Component="wpfgfx_cor3.dll" ComponentId="{FC945244-0115-4A8F-B4CC-6F32FB4F203B}" Directory_="APPDIR" Attributes="256" KeyPath="wpfgfx_cor3.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="TextureMerge.runtimeconfig.json" Component_="TextureMerge.runtimeconfig.json" FileName="TEXTUR~1.JSO|TextureMerge.runtimeconfig.json" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\TextureMerge.runtimeconfig.json" SelfReg="false"/>
-    <ROW File="TextureMerge.dll" Component_="TextureMerge.dll" FileName="TEXTUR~1.DLL|TextureMerge.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\TextureMerge.dll" SelfReg="false"/>
-    <ROW File="TextureMerge.deps.json" Component_="TextureMerge.runtimeconfig.json" FileName="TEXTUR~2.JSO|TextureMerge.deps.json" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\TextureMerge.deps.json" SelfReg="false"/>
-    <ROW File="TextureMerge.exe" Component_="TextureMerge.exe" FileName="TEXTUR~1.EXE|TextureMerge.exe" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\TextureMerge.exe" SelfReg="false"/>
-    <ROW File="Magick.NativeQ16x64.dll" Component_="Magick.NativeQ16x64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-x64.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\Magick.Native-Q16-x64.dll" SelfReg="false"/>
-    <ROW File="Magick.NET.Core.dll" Component_="Magick.NET.Core.dll" FileName="MAGICK~2.DLL|Magick.NET.Core.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\Magick.NET.Core.dll" SelfReg="false"/>
-    <ROW File="Magick.NETQ16AnyCPU.dll" Component_="Magick.NETQ16AnyCPU.dll" FileName="MAGICK~3.DLL|Magick.NET-Q16-AnyCPU.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\net6.0-windows\win-x64\publish\Magick.NET-Q16-AnyCPU.dll" SelfReg="false"/>
+    <ROW File="TextureMerge.exe" Component_="TextureMerge.exe" FileName="TEXTUR~1.EXE|TextureMerge.exe" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\TextureMerge.exe" SelfReg="false"/>
+    <ROW File="D3DCompiler_47_cor3.dll" Component_="D3DCompiler_47_cor3.dll" FileName="D3DCOM~1.DLL|D3DCompiler_47_cor3.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\D3DCompiler_47_cor3.dll" SelfReg="false"/>
+    <ROW File="Magick.NativeQ16x64.dll" Component_="Magick.NativeQ16x64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-x64.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\Magick.Native-Q16-x64.dll" SelfReg="false"/>
+    <ROW File="PenImc_cor3.dll" Component_="PenImc_cor3.dll" FileName="PENIMC~1.DLL|PenImc_cor3.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\PenImc_cor3.dll" SelfReg="false"/>
+    <ROW File="PresentationNative_cor3.dll" Component_="PresentationNative_cor3.dll" FileName="PRESEN~1.DLL|PresentationNative_cor3.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\PresentationNative_cor3.dll" SelfReg="false"/>
+    <ROW File="vcruntime140_cor3.dll" Component_="vcruntime140_cor3.dll" FileName="VCRUNT~1.DLL|vcruntime140_cor3.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\vcruntime140_cor3.dll" SelfReg="false"/>
+    <ROW File="wpfgfx_cor3.dll" Component_="wpfgfx_cor3.dll" FileName="WPFGFX~1.DLL|wpfgfx_cor3.dll" Attributes="0" SourcePath="..\TextureMerge\bin\Release\setup_win-x64\wpfgfx_cor3.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1"/>
@@ -149,14 +149,15 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
-    <ROW Feature_="MainFeature" Component_="TextureMerge.runtimeconfig.json"/>
-    <ROW Feature_="MainFeature" Component_="TextureMerge.dll"/>
     <ROW Feature_="MainFeature" Component_="TextureMerge.exe"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
+    <ROW Feature_="MainFeature" Component_="D3DCompiler_47_cor3.dll"/>
     <ROW Feature_="MainFeature" Component_="Magick.NativeQ16x64.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NET.Core.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NETQ16AnyCPU.dll"/>
+    <ROW Feature_="MainFeature" Component_="PenImc_cor3.dll"/>
+    <ROW Feature_="MainFeature" Component_="PresentationNative_cor3.dll"/>
+    <ROW Feature_="MainFeature" Component_="vcruntime140_cor3.dll"/>
+    <ROW Feature_="MainFeature" Component_="wpfgfx_cor3.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
