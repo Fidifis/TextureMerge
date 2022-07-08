@@ -9,14 +9,11 @@ using System;
 
 namespace TextureMerge
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly SolidColorBrush statusBlueColor = new(Color.FromRgb(51, 150, 226));
-        private static readonly SolidColorBrush statusGreenColor = new(Color.FromRgb(51, 226, 110));
-        private readonly Merge merge = new();
+        private static readonly SolidColorBrush statusBlueColor = new SolidColorBrush(Color.FromRgb(51, 150, 226));
+        private static readonly SolidColorBrush statusGreenColor = new SolidColorBrush(Color.FromRgb(51, 226, 110));
+        private readonly Merge merge = new Merge();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
 
@@ -48,7 +45,7 @@ namespace TextureMerge
                 return openFileDialog.FileName;
             return string.Empty;
         }
-        
+
         private void SetSaveImagePath()
         {
             var saveFileDialog = new SaveFileDialog
@@ -74,7 +71,7 @@ namespace TextureMerge
                 hasEditedPath = false;
             }
         }
-        
+
         private async void ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel)
         {
             string path = GetImagePath();
@@ -100,7 +97,7 @@ namespace TextureMerge
         {
             ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
         }
-        
+
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
             ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
@@ -110,7 +107,7 @@ namespace TextureMerge
         {
             ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
         }
-        
+
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
             ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
@@ -136,7 +133,7 @@ namespace TextureMerge
             BlueCh.Source = null;
             blueNoDataLabel.Visibility = Visibility.Visible;
         }
-        
+
         private void ButtonClearA(object sender, RoutedEventArgs e)
         {
             merge.Clear(Channel.Alpha);
@@ -163,7 +160,7 @@ namespace TextureMerge
                 }
             }
 
-            if (Path.GetExtension(SaveImageName.Text) is null or "")
+            if (Path.GetExtension(SaveImageName.Text) is null || Path.GetExtension(SaveImageName.Text) == "")
             {
                 if (
                 MessageBox.Show("File don't have an extension!\n" +
@@ -182,11 +179,11 @@ namespace TextureMerge
                     "File already exist",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question) != MessageBoxResult.Yes)
-                    {
-                        return;
-                    }
+                {
+                    return;
+                }
             }
-            
+
             Merge correct = merge;
 
             if (!merge.CheckResolution(out int width, out int height))
@@ -226,7 +223,7 @@ namespace TextureMerge
             else
                 MessageBox.Show("Save path is not valid!\n" +
                     "Check if the path is correct.");
-            
+
             SetStatus("Done!", statusGreenColor);
             await Task.Delay(5000);
             SetStatus();

@@ -2,9 +2,6 @@
 
 namespace TextureMerge
 {
-    /// <summary>
-    /// Interakční logika pro Resize.xaml
-    /// </summary>
     public partial class Resize : Window
     {
         public int NewWidth { get; private set; }

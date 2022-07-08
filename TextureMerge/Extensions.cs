@@ -15,7 +15,7 @@ namespace TextureMerge
             var stream = new MemoryStream();
             image.Format = MagickFormat.Png;
             image.Write(stream);
-            return (ImageSource)new ImageSourceConverter().ConvertFrom(stream)!;
+            return (ImageSource)new ImageSourceConverter().ConvertFrom(stream);
         }
 
         public static void Save(this MagickImage bitmap, string saveFilePath)
@@ -23,10 +23,11 @@ namespace TextureMerge
             if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
                 throw new ArgumentException("Invalid path");
 
-            using FileStream stream = new(saveFilePath, FileMode.Create);
-            bitmap.Format = GetExtension(Path.GetExtension(saveFilePath));
-            bitmap.Write(stream);
-            stream.Close();
+            using (FileStream stream = new FileStream(saveFilePath, FileMode.Create)) {
+                bitmap.Format = GetExtension(Path.GetExtension(saveFilePath));
+                bitmap.Write(stream);
+                stream.Close();
+            }
         }
 
         public static Task SaveAsync(this MagickImage bitmap, string saveFilePath)
@@ -34,24 +35,27 @@ namespace TextureMerge
             return Task.Run(() => bitmap.Save(saveFilePath));
         }
 
-        private static MagickFormat GetExtension(string ext) => ext switch
+        private static MagickFormat GetExtension(string ext)
         {
-            //This is some formats that are supported by ImageMagick
-            ".png" => MagickFormat.Png,
-            ".jpg" => MagickFormat.Jpeg,
-            ".jpeg" => MagickFormat.Jpeg,
-            ".bmp" => MagickFormat.Bmp,
-            ".gif" => MagickFormat.Gif,
-            ".tiff" => MagickFormat.Tiff,
-            ".tif" => MagickFormat.Tiff,
-            ".tga" => MagickFormat.Tga,
-            ".webp" => MagickFormat.WebP,
-            ".pdf" => MagickFormat.Pdf,
-            ".psd" => MagickFormat.Psd,
-            ".dib" => MagickFormat.Dib,
-            ".ico" => MagickFormat.Ico,
-            ".svg" => MagickFormat.Svg,
-            _ => throw new ArgumentException("Invalid extension"),
-        };
+            switch (ext)
+            {
+                //This is some formats that are supported by ImageMagick
+                case ".png": return MagickFormat.Png;
+                case ".jpg": return MagickFormat.Jpeg;
+                case ".jpeg": return MagickFormat.Jpeg;
+                case ".bmp": return MagickFormat.Bmp;
+                case ".gif": return MagickFormat.Gif;
+                case ".tiff": return MagickFormat.Tiff;
+                case ".tif": return MagickFormat.Tiff;
+                case ".tga": return MagickFormat.Tga;
+                case ".webp": return MagickFormat.WebP;
+                case ".pdf": return MagickFormat.Pdf;
+                case ".psd": return MagickFormat.Psd;
+                case ".dib": return MagickFormat.Dib;
+                case ".ico": return MagickFormat.Ico;
+                case ".svg": return MagickFormat.Svg;
+                default: throw new ArgumentException("Invalid extension");
+            };
+        }
     }
 }
