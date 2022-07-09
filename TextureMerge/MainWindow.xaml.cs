@@ -72,9 +72,11 @@ namespace TextureMerge
             }
         }
 
-        private async void ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel)
+        private async void ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
         {
-            string path = GetImagePath();
+            if (path is null)
+                path = GetImagePath();
+
             if (path != string.Empty)
             {
                 if (!hasEditedPath && !hasSetupPath)
@@ -271,6 +273,42 @@ namespace TextureMerge
         private void SaveImageNameChanged(object sender, TextChangedEventArgs e)
         {
             hasEditedPath = true;
+        }
+
+        private void RedDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]);
+            }
+        }
+
+        private void GreenDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]);
+            }
+        }
+
+        private void BlueDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]);
+            }
+        }
+
+        private void AlphaDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
+            }
         }
     }
 }
