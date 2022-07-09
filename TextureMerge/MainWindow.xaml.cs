@@ -198,6 +198,7 @@ namespace TextureMerge
                     correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
                         resizeDialog.DoStretch.IsChecked == true,
                         GetDefaultFillColor(dummyColorSwap));
+                    SetStatus();
                 }
                 else
                 {
@@ -211,11 +212,29 @@ namespace TextureMerge
                 return;
             }
 
+            int newDepth = -1;
+            if (!correct.IsDepthSame())
+            {
+                var depthDialog = new Depth()
+                {
+                    Owner = this
+                };
+                if (depthDialog.ShowDialog() == true)
+                {
+                    newDepth = depthDialog.NewDepth;
+                }
+                else
+                {
+                    MessageBox.Show("Operation aborted");
+                    return;
+                }
+            }
+
             SetStatus("Merging...", statusBlueColor);
 
             if (Directory.Exists(PathToSave.Text))
             {
-                var result = await correct.DoMergeAsync(GetDefaultFillColor(dummyColorSwap));
+                var result = await correct.DoMergeAsync(GetDefaultFillColor(dummyColorSwap), newDepth);
                 SetStatus("Saving...", statusBlueColor);
                 await result.SaveAsync(path);
             }

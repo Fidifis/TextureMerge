@@ -1,0 +1,17 @@
+﻿<Window x:Class="TextureMerge.Depth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        Title="Depth" Height="258" Width="441" ResizeMode="NoResize" Topmost="True">
+    <Grid>
+        <Label Content="Choose Depth" FontSize="20" Width="auto" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="23,22,0,0"/>
+        <Label Content="Images have a different depth! What depth do you want to use?" Margin="23,140,0,0" HorizontalAlignment="Left" Width="auto" Height="auto" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radio8" Content="8 bit" HorizontalAlignment="Left" Margin="23,74,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radio16" Content="16 bit" HorizontalAlignment="Left" Margin="23,94,0,0" VerticalAlignment="Top"/>
+        <Button Content="OK" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22" Click="OKButton"/>
+        <Button Content="Cancel" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22" Click="CancelButton"/>
+    </Grid>
+</Window>
