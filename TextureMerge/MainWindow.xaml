@@ -94,7 +94,8 @@
         </Grid>
         <Grid Grid.Row="1" Margin="0,0,50,0" VerticalAlignment="Center" HorizontalAlignment="Right">
             <Label Content="Color when no image provided: " HorizontalAlignment="Left" Margin="0,0,100,0" VerticalAlignment="Center"/>
-            <Rectangle x:Name="DefaultColorRect" Fill="Black" Height="20" Width="20" HorizontalAlignment="Right" Margin="0,0,70,0"/>
+            <Rectangle x:Name="DefaultColorRect" Fill="Black" Height="20" Width="20" HorizontalAlignment="Right" Margin="0,0,70,0"
+                       ToolTip="When there is no image loaded in the channel, this color will be used to fill this channel.&#x0a;Also, when some images don't match the aspect ratio of others, the empty space will be filled with this color."/>
             <Button Content="Change" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ChangeDefaultColor"/>
         </Grid>
         <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,0">
