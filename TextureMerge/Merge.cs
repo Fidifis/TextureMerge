@@ -13,15 +13,15 @@ namespace TextureMerge
         Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
-        public Task<MagickImage> DoMergeAsync(MagickColor fillColor)
+        public Task<MagickImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
         {
             return Task.Run(() => {
                 lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
-                    return DoMerge(fillColor);
+                    return DoMerge(fillColor, depth);
             });
         }
 
-        public MagickImage DoMerge(MagickColor fillColor)
+        public MagickImage DoMerge(MagickColor fillColor, int depth = -1)
         {
             if (red is null && green is null && blue is null && alpha is null)
                 throw new InvalidOperationException("No image loaded");
@@ -30,7 +30,7 @@ namespace TextureMerge
                 throw new InvalidOperationException("Resolution missmatch");
 
             var result = new MagickImage(fillColor, width, height);
-            result.Depth = GetHighestDepth();
+            result.Depth = depth == -1 ? GetHighestDepth() : depth;
 
             if (alpha is null)
                 result.Alpha(AlphaOption.Off);
@@ -83,6 +83,35 @@ namespace TextureMerge
             for (int i = 0; i < arr.Length; i++)
                 arr[i] = color;
             return arr;
+        }
+
+        public bool IsDepthSame()
+        {
+            int depth = -1;
+            if (red != null)
+            {
+                depth = red.Depth;
+            }
+            if (green != null)
+            {
+                if (depth == -1)
+                    depth = green.Depth;
+                else if (depth != green.Depth)
+                    return false;
+            }
+            if (blue != null)
+            {
+                if (depth == -1)
+                    depth = blue.Depth;
+                else if (depth != blue.Depth)
+                    return false;
+            }
+            if (alpha != null)
+            {
+                if (depth != alpha.Depth)
+                    return false;
+            }
+            return true;
         }
 
         private int GetHighestDepth()

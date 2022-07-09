@@ -11,10 +11,16 @@
             <Style TargetType="local:Resize">
                 <Setter Property="Background" Value="#FF34363A"/>
             </Style>
+            <Style TargetType="local:Depth">
+                <Setter Property="Background" Value="#FF34363A"/>
+            </Style>
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
             <Style TargetType="CheckBox">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style TargetType="RadioButton">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
             <Style TargetType="TextBox">
