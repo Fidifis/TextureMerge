@@ -1,13 +1,15 @@
 # TextureMerge
-## Software to merge textures into image channels, producing one image with up to four textures.
+## Software to merge or pack textures into image channels, producing one image with up to four textures.
 
 this program is ideal if you want to pack individual grayscale textures in one image.
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img1.jpg)
 
-1. Download the software from [releases](https://github.com/Fidifis/TextureMerge/releases)
+## Usage
+1. Download the software from [releases](https://github.com/Fidifis/TextureMerge/releases) \
+*Install it using setup or extract the zip folder*
 2. Open TextureMerge.exe
-*(optionally you can create shortcut on your desktop to open it faster next time)*
-3. Click load under the color channel into which you want to insert texture.
+3. Click load under the color channel into which you want to insert texture.\
+**You can also *drag and drop* files into the slots.**
 
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img2.jpg)
 
@@ -25,7 +27,7 @@ this program is ideal if you want to pack individual grayscale textures in one i
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img5.jpg)
 
 
-## You now have textures packed.
+## You now have textures packed
 
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img6.jpg)
 
