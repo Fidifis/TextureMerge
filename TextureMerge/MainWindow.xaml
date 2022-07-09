@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="5,0,5,0">
+            <Grid Grid.Column="0" Margin="5,0,5,0" Drop="RedDrop" AllowDrop="true">
                 <Label x:Name="redNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="RedCh" Margin="10,10,10,40"/>
@@ -46,7 +46,7 @@
                     <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearR" />
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1" Margin="5,0,5,0">
+            <Grid Grid.Column="1" Margin="5,0,5,0" Drop="GreenDrop" AllowDrop="true">
                 <Label x:Name="greenNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="GreenCh" Margin="10,10,10,40"/>
@@ -61,7 +61,7 @@
                     <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearG" />
                 </Grid>
             </Grid>
-            <Grid Grid.Column="2" Margin="5,0,5,0">
+            <Grid Grid.Column="2" Margin="5,0,5,0" Drop="BlueDrop" AllowDrop="true">
                 <Label x:Name="blueNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="BlueCh" Margin="10,10,10,40"/>
@@ -76,7 +76,7 @@
                     <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearB" />
                 </Grid>
             </Grid>
-            <Grid Grid.Column="3" Margin="5,0,5,0">
+            <Grid Grid.Column="3" Margin="5,0,5,0" Drop="AlphaDrop" AllowDrop="true">
                 <Label x:Name="alphaNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="AlphaCh" Margin="10,10,10,40"/>
