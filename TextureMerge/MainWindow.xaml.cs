@@ -124,7 +124,8 @@ namespace TextureMerge
             merge.Clear(Channel.Red);
             RedCh.Source = null;
             redNoDataLabel.Visibility = Visibility.Visible;
-            // TODO hide source grid
+            srcGridGsR.Visibility = Visibility.Hidden;
+            srcGridCR.Visibility = Visibility.Hidden;
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
@@ -132,7 +133,8 @@ namespace TextureMerge
             merge.Clear(Channel.Green);
             GreenCh.Source = null;
             greenNoDataLabel.Visibility = Visibility.Visible;
-            // TODO hide source grid
+            srcGridGsG.Visibility = Visibility.Hidden;
+            srcGridCG.Visibility = Visibility.Hidden;
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
@@ -140,7 +142,8 @@ namespace TextureMerge
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
             blueNoDataLabel.Visibility = Visibility.Visible;
-            // TODO hide source grid
+            srcGridGsB.Visibility = Visibility.Hidden;
+            srcGridCB.Visibility = Visibility.Hidden;
         }
 
         private void ButtonClearA(object sender, RoutedEventArgs e)
@@ -148,7 +151,8 @@ namespace TextureMerge
             merge.Clear(Channel.Alpha);
             AlphaCh.Source = null;
             alphaNoDataLabel.Visibility = Visibility.Visible;
-            // TODO hide source grid
+            srcGridGsA.Visibility = Visibility.Hidden;
+            srcGridCA.Visibility = Visibility.Hidden;
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
