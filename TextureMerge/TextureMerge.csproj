@@ -85,6 +85,7 @@
     <Compile Include="Depth.xaml.cs">
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MergeWindowMethods.cs" />
     <Compile Include="Resize.xaml.cs">
       <DependentUpon>Resize.xaml</DependentUpon>
     </Compile>
