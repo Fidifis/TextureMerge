@@ -92,6 +92,17 @@ namespace TextureMerge
                 SetStatus();
                 label.Content = tmpLabelContent;
                 label.Visibility = Visibility.Hidden;
+
+                if (false /*IsGrayScale()*/)
+                {
+                    srcGridGsR.Visibility = Visibility.Visible;
+                    srcGridCR.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    srcGridGsR.Visibility = Visibility.Hidden;
+                    srcGridCR.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -309,6 +320,30 @@ namespace TextureMerge
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
             }
+        }
+
+        private void SrcRR(object sender, RoutedEventArgs e)
+        {
+            srcRR.Background = new SolidColorBrush(Color.FromRgb(204, 0, 0));
+            srcRG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcRB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Red);
+        }
+
+        private void SrcRG(object sender, RoutedEventArgs e)
+        {
+            srcRR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcRG.Background = new SolidColorBrush(Color.FromRgb(0, 204, 0));
+            srcRB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Green);
+        }
+
+        private void SrcRB(object sender, RoutedEventArgs e)
+        {
+            srcRR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcRG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcRB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
+            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Blue);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TextureMerge
     {
         MagickImage red = null, green = null, blue = null, alpha = null;
         readonly object redLock = new object(), greenLock = new object(), blueLock = new object(), alphaLock = new object();
-        Channel redChSource = Channel.Red, greenChSource = Channel.Green,
+        private Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
 
         public Task<MagickImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
@@ -310,6 +310,38 @@ namespace TextureMerge
             }
 
             return MakeChannelThumbnail(source, channelSource).ToImageSource();
+        }
+
+        // TODO This is very similar to LoadChannel. They could be rewriten to avoid duplicit code.
+        public ImageSource SetChannelSource(Channel channel, Channel channelSource)
+        {
+            if (channelSource == Channel.Alpha)
+                throw new ArgumentException("Alpha can't be source channel");
+
+            MagickImage thumbnail;
+            switch (channel)
+            {
+                case Channel.Red:
+                    redChSource = channelSource;
+                    thumbnail = red;
+                    break;
+                case Channel.Green:
+                    greenChSource = channelSource;
+                    thumbnail = green;
+                    break;
+                case Channel.Blue:
+                    blueChSource = channelSource;
+                    thumbnail = blue;
+                    break;
+                case Channel.Alpha:
+                    alphaChSource = channelSource;
+                    thumbnail = alpha;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+
+            return MakeChannelThumbnail(thumbnail, channelSource).ToImageSource();
         }
 
         public void Clear(Channel which)

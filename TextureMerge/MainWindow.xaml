@@ -15,6 +15,11 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
             </Style>
+            <Style x:Key="colorButtonStyle" TargetType="Button">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Width" Value="19"/>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -34,8 +39,17 @@
             <Grid Grid.Column="0" Margin="5,0,5,0" Drop="RedDrop" AllowDrop="true">
                 <Label x:Name="redNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="RedCh" Margin="10,10,10,40"/>
+                    <Image x:Name="RedCh" Margin="10,10,10,70"/>
                 </Border>
+                <Grid x:Name="srcGridCR" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
+                    <Button x:Name="srcRR" Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FFCC0000" Style="{StaticResource colorButtonStyle}" Click="SrcRR"/>
+                    <Button x:Name="srcRG" Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}" Click="SrcRG"/>
+                    <Button x:Name="srcRB" Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}" Click="SrcRB"/>
+                </Grid>
+                <Grid x:Name="srcGridGsR" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="Grayscale" HorizontalAlignment="Left"/>
+                </Grid>
                 <Label Content="R" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCC0000" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
@@ -51,6 +65,15 @@
                 <Border>
                     <Image x:Name="GreenCh" Margin="10,10,10,40"/>
                 </Border>
+                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
+                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF00CC00" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}"/>
+                </Grid>
+                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="Grayscale" HorizontalAlignment="Left"/>
+                </Grid>
                 <Label Content="G" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF00CC00" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
@@ -66,6 +89,15 @@
                 <Border>
                     <Image x:Name="BlueCh" Margin="10,10,10,40"/>
                 </Border>
+                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
+                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF0000CC" Style="{StaticResource colorButtonStyle}"/>
+                </Grid>
+                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="Grayscale" HorizontalAlignment="Left"/>
+                </Grid>
                 <Label Content="B" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF0000CC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
@@ -81,6 +113,15 @@
                 <Border>
                     <Image x:Name="AlphaCh" Margin="10,10,10,40"/>
                 </Border>
+                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
+                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FFCC0000" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}"/>
+                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}"/>
+                </Grid>
+                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                    <Label Content="Grayscale" HorizontalAlignment="Left"/>
+                </Grid>
                 <Label Content="A" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCCCCCC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
