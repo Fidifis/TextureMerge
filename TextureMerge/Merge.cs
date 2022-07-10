@@ -85,6 +85,29 @@ namespace TextureMerge
             return arr;
         }
 
+        public bool IsGrayScale(Channel channel)
+        {
+            MagickImage img;
+            switch (channel)
+            {
+                case Channel.Red: img = red; break;
+                case Channel.Green: img = green; break;
+                case Channel.Blue: img = blue; break;
+                case Channel.Alpha: img = alpha; break;
+                default: throw new ArgumentException("Invalid channel");
+            }
+
+            var pixels = img.GetPixels().ToArray();
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                if (i % 3 != 0)
+                    continue;
+                if (pixels[i] != pixels[i + 1] || pixels[i] != pixels[i + 2])
+                    return false;
+            }
+            return true;
+        }
+
         public bool IsDepthSame()
         {
             int depth = -1;

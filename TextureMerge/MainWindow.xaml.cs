@@ -72,7 +72,7 @@ namespace TextureMerge
             }
         }
 
-        private async void ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
+        private async Task ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
         {
             if (path is null)
                 path = GetImagePath();
@@ -95,27 +95,27 @@ namespace TextureMerge
             }
         }
 
-        private void ButtonLoadR(object sender, RoutedEventArgs e)
+        private async void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
+            await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
             ShowRedSourceGrid();
         }
 
-        private void ButtonLoadG(object sender, RoutedEventArgs e)
+        private async void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
+            await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
             ShowGreenSourceGrid();
         }
 
-        private void ButtonLoadB(object sender, RoutedEventArgs e)
+        private async void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
+            await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
             ShowBlueSourceGrid();
         }
 
-        private void ButtonLoadA(object sender, RoutedEventArgs e)
+        private async void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
+            await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
             ShowAlphaSourceGrid();
         }
 
@@ -287,49 +287,49 @@ namespace TextureMerge
             hasEditedPath = true;
         }
 
-        private void RedDrop(object sender, DragEventArgs e)
+        private async void RedDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]);
+                await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]);
                 ShowRedSourceGrid();
             }
         }
 
-        private void GreenDrop(object sender, DragEventArgs e)
+        private async void GreenDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]);
+                await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]);
                 ShowGreenSourceGrid();
             }
         }
 
-        private void BlueDrop(object sender, DragEventArgs e)
+        private async void BlueDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]);
+                await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]);
                 ShowBlueSourceGrid();
             }
         }
 
-        private void AlphaDrop(object sender, DragEventArgs e)
+        private async void AlphaDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
+                await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
                 ShowAlphaSourceGrid();
             }
         }
 
         private void ShowRedSourceGrid()
         {
-            if (false /*IsGrayScale()*/)
+            if (merge.IsGrayScale(Channel.Red))
             {
                 srcGridGsR.Visibility = Visibility.Visible;
                 srcGridCR.Visibility = Visibility.Hidden;
@@ -343,7 +343,7 @@ namespace TextureMerge
 
         private void ShowGreenSourceGrid()
         {
-            if (false /*IsGrayScale()*/)
+            if (merge.IsGrayScale(Channel.Green))
             {
                 srcGridGsG.Visibility = Visibility.Visible;
                 srcGridCG.Visibility = Visibility.Hidden;
@@ -357,7 +357,7 @@ namespace TextureMerge
 
         private void ShowBlueSourceGrid()
         {
-            if (false /*IsGrayScale()*/)
+            if (merge.IsGrayScale(Channel.Blue))
             {
                 srcGridGsB.Visibility = Visibility.Visible;
                 srcGridCB.Visibility = Visibility.Hidden;
@@ -371,7 +371,7 @@ namespace TextureMerge
 
         private void ShowAlphaSourceGrid()
         {
-            if (false /*IsGrayScale()*/)
+            if (merge.IsGrayScale(Channel.Alpha))
             {
                 srcGridGsA.Visibility = Visibility.Visible;
                 srcGridCA.Visibility = Visibility.Hidden;
