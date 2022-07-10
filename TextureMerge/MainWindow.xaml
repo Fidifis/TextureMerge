@@ -63,15 +63,15 @@
             <Grid Grid.Column="1" Margin="5,0,5,0" Drop="GreenDrop" AllowDrop="true">
                 <Label x:Name="greenNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="GreenCh" Margin="10,10,10,40"/>
+                    <Image x:Name="GreenCh" Margin="10,10,10,70"/>
                 </Border>
-                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridCG" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
-                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF00CC00" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}"/>
+                    <Button x:Name="srcGR"  Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}" Click="SrcGR"/>
+                    <Button x:Name="srcGG" Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF00CC00" Style="{StaticResource colorButtonStyle}" Click="SrcGG"/>
+                    <Button x:Name="srcGB" Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}" Click="SrcGB"/>
                 </Grid>
-                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridGsG" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="Grayscale" HorizontalAlignment="Left"/>
                 </Grid>
                 <Label Content="G" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF00CC00" FontSize="16"/>
@@ -87,15 +87,15 @@
             <Grid Grid.Column="2" Margin="5,0,5,0" Drop="BlueDrop" AllowDrop="true">
                 <Label x:Name="blueNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="BlueCh" Margin="10,10,10,40"/>
+                    <Image x:Name="BlueCh" Margin="10,10,10,70"/>
                 </Border>
-                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridCB" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
-                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF0000CC" Style="{StaticResource colorButtonStyle}"/>
+                    <Button x:Name="srcBR" Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FF440000" Style="{StaticResource colorButtonStyle}" Click="SrcBR"/>
+                    <Button x:Name="srcBG" Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}" Click="SrcBG"/>
+                    <Button x:Name="srcBB" Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF0000CC" Style="{StaticResource colorButtonStyle}" Click="SrcBB"/>
                 </Grid>
-                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridGsB" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="Grayscale" HorizontalAlignment="Left"/>
                 </Grid>
                 <Label Content="B" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF0000CC" FontSize="16"/>
@@ -111,15 +111,15 @@
             <Grid Grid.Column="3" Margin="5,0,5,0" Drop="AlphaDrop" AllowDrop="true">
                 <Label x:Name="alphaNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="AlphaCh" Margin="10,10,10,40"/>
+                    <Image x:Name="AlphaCh" Margin="10,10,10,70"/>
                 </Border>
-                <Grid Visibility="Visible" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridCA" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
-                    <Button Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FFCC0000" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}"/>
-                    <Button Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}"/>
+                    <Button x:Name="srcAR" Content="R" Margin="0,0,40,0" HorizontalAlignment="Right" Background="#FFCC0000" Style="{StaticResource colorButtonStyle}" Click="SrcAR"/>
+                    <Button x:Name="srcAG" Content="G" Margin="0,0,20,0" HorizontalAlignment="Right" Background="#FF004400" Style="{StaticResource colorButtonStyle}" Click="SrcAG"/>
+                    <Button x:Name="srcAB" Content="B" Margin="0,0,00,0" HorizontalAlignment="Right" Background="#FF000044" Style="{StaticResource colorButtonStyle}" Click="SrcAB"/>
                 </Grid>
-                <Grid Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
+                <Grid x:Name="srcGridGsA" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="Grayscale" HorizontalAlignment="Left"/>
                 </Grid>
                 <Label Content="A" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCCCCCC" FontSize="16"/>

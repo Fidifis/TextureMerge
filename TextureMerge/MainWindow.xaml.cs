@@ -92,38 +92,31 @@ namespace TextureMerge
                 SetStatus();
                 label.Content = tmpLabelContent;
                 label.Visibility = Visibility.Hidden;
-
-                if (false /*IsGrayScale()*/)
-                {
-                    srcGridGsR.Visibility = Visibility.Visible;
-                    srcGridCR.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    srcGridGsR.Visibility = Visibility.Hidden;
-                    srcGridCR.Visibility = Visibility.Visible;
-                }
             }
         }
 
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
             ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
+            ShowRedSourceGrid();
         }
 
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
             ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
+            ShowGreenSourceGrid();
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
             ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
+            ShowBlueSourceGrid();
         }
 
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
             ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
+            ShowAlphaSourceGrid();
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
@@ -131,6 +124,7 @@ namespace TextureMerge
             merge.Clear(Channel.Red);
             RedCh.Source = null;
             redNoDataLabel.Visibility = Visibility.Visible;
+            // TODO hide source grid
         }
 
         private void ButtonClearG(object sender, RoutedEventArgs e)
@@ -138,6 +132,7 @@ namespace TextureMerge
             merge.Clear(Channel.Green);
             GreenCh.Source = null;
             greenNoDataLabel.Visibility = Visibility.Visible;
+            // TODO hide source grid
         }
 
         private void ButtonClearB(object sender, RoutedEventArgs e)
@@ -145,6 +140,7 @@ namespace TextureMerge
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
             blueNoDataLabel.Visibility = Visibility.Visible;
+            // TODO hide source grid
         }
 
         private void ButtonClearA(object sender, RoutedEventArgs e)
@@ -152,6 +148,7 @@ namespace TextureMerge
             merge.Clear(Channel.Alpha);
             AlphaCh.Source = null;
             alphaNoDataLabel.Visibility = Visibility.Visible;
+            // TODO hide source grid
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
@@ -292,6 +289,7 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]);
+                ShowRedSourceGrid();
             }
         }
 
@@ -301,6 +299,7 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]);
+                ShowGreenSourceGrid();
             }
         }
 
@@ -310,6 +309,7 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]);
+                ShowBlueSourceGrid();
             }
         }
 
@@ -319,9 +319,66 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
+                ShowAlphaSourceGrid();
             }
         }
 
+        private void ShowRedSourceGrid()
+        {
+            if (false /*IsGrayScale()*/)
+            {
+                srcGridGsR.Visibility = Visibility.Visible;
+                srcGridCR.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                srcGridGsR.Visibility = Visibility.Hidden;
+                srcGridCR.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowGreenSourceGrid()
+        {
+            if (false /*IsGrayScale()*/)
+            {
+                srcGridGsG.Visibility = Visibility.Visible;
+                srcGridCG.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                srcGridGsG.Visibility = Visibility.Hidden;
+                srcGridCG.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowBlueSourceGrid()
+        {
+            if (false /*IsGrayScale()*/)
+            {
+                srcGridGsB.Visibility = Visibility.Visible;
+                srcGridCB.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                srcGridGsB.Visibility = Visibility.Hidden;
+                srcGridCB.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowAlphaSourceGrid()
+        {
+            if (false /*IsGrayScale()*/)
+            {
+                srcGridGsA.Visibility = Visibility.Visible;
+                srcGridCA.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                srcGridGsA.Visibility = Visibility.Hidden;
+                srcGridCA.Visibility = Visibility.Visible;
+            }
+        }
+        // TODO make constants for colors
         private void SrcRR(object sender, RoutedEventArgs e)
         {
             srcRR.Background = new SolidColorBrush(Color.FromRgb(204, 0, 0));
@@ -344,6 +401,78 @@ namespace TextureMerge
             srcRG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
             srcRB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
             RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Blue);
+        }
+
+        private void SrcGR(object sender, RoutedEventArgs e)
+        {
+            srcGR.Background = new SolidColorBrush(Color.FromRgb(204, 0, 0));
+            srcGG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcGB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Red);
+        }
+
+        private void SrcGG(object sender, RoutedEventArgs e)
+        {
+            srcGR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcGG.Background = new SolidColorBrush(Color.FromRgb(0, 204, 0));
+            srcGB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Green);
+        }
+
+        private void SrcGB(object sender, RoutedEventArgs e)
+        {
+            srcGR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcGG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcGB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
+            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Blue);
+        }
+
+        private void SrcBR(object sender, RoutedEventArgs e)
+        {
+            srcBR.Background = new SolidColorBrush(Color.FromRgb(204, 0, 0));
+            srcBG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcBB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Red);
+        }
+
+        private void SrcBG(object sender, RoutedEventArgs e)
+        {
+            srcBR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcBG.Background = new SolidColorBrush(Color.FromRgb(0, 204, 0));
+            srcBB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Green);
+        }
+
+        private void SrcBB(object sender, RoutedEventArgs e)
+        {
+            srcBR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcBG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcBB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
+            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Blue);
+        }
+
+        private void SrcAR(object sender, RoutedEventArgs e)
+        {
+            srcAR.Background = new SolidColorBrush(Color.FromRgb(204, 0, 0));
+            srcAG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcAB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Red);
+        }
+
+        private void SrcAG(object sender, RoutedEventArgs e)
+        {
+            srcAR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcAG.Background = new SolidColorBrush(Color.FromRgb(0, 204, 0));
+            srcAB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 68));
+            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Green);
+        }
+
+        private void SrcAB(object sender, RoutedEventArgs e)
+        {
+            srcAR.Background = new SolidColorBrush(Color.FromRgb(68, 0, 0));
+            srcAG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
+            srcAB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
+            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Blue);
         }
     }
 }
