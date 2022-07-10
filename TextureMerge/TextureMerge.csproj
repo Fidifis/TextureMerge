@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config.cs" />
     <Compile Include="Depth.xaml.cs">
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>

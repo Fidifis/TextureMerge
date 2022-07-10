@@ -20,6 +20,7 @@ namespace TextureMerge
             PathToSave.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             hasEditedPath = false;
             MagickNET.Initialize();
+            Config.Load();
         }
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)
@@ -302,6 +303,11 @@ namespace TextureMerge
             srcAG.Background = new SolidColorBrush(Color.FromRgb(0, 68, 0));
             srcAB.Background = new SolidColorBrush(Color.FromRgb(0, 0, 204));
             AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Blue);
+        }
+
+        private void MainWindowClosed(object sender, EventArgs e)
+        {
+            Config.Save();
         }
     }
 }
