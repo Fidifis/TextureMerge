@@ -90,6 +90,7 @@
     <Compile Include="Resize.xaml.cs">
       <DependentUpon>Resize.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateCheck.cs" />
     <Page Include="Depth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

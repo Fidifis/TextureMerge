@@ -23,6 +23,19 @@ namespace TextureMerge
             hasEditedPath = false;
         }
 
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            if (Config.Current.CheckForUpdates)
+            {
+                try
+                {
+                    // TODO async
+                    UpdateCheck.CheckForUpdate();
+                }
+                catch { }
+            }
+        }
+
         private void ApplyConfig()
         {
             PathToSave.Text = Config.Current.PathToSave.Expand();
