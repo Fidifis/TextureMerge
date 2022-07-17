@@ -8,7 +8,7 @@
         Title="Texture Merge"
         Height="500" Width="1100"
         MinWidth="600" MinHeight="350"
-        Closed="MainWindowClosed">
+        Closed="MainWindowClosed" Loaded="WindowLoaded">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="bigLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
