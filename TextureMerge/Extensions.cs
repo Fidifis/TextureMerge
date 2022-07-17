@@ -10,6 +10,8 @@ namespace TextureMerge
 
     public static class Extensions
     {
+        public static string Expand(this string path) => Environment.ExpandEnvironmentVariables(path);
+
         public static ImageSource ToImageSource(this MagickImage image)
         {
             var stream = new MemoryStream();
