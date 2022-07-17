@@ -31,6 +31,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="AppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="APPDAT~1|AppDataFolder" IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
@@ -45,6 +46,7 @@
     <ROW Component="SHORTCUTDIR" ComponentId="{8A26E398-F74D-41DB-B07A-95C0D5E2C67B}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="TextureMerge.exe" ComponentId="{F633563F-624E-48D1-B726-F22038F15C66}" Directory_="APPDIR" Attributes="0" KeyPath="TextureMerge.exe"/>
     <ROW Component="TextureMerge.exe.config" ComponentId="{FE82E758-8825-440E-A9A2-7DDE3669FF93}" Directory_="APPDIR" Attributes="0" KeyPath="TextureMerge.exe.config" Type="0"/>
+    <ROW Component="config.xml" ComponentId="{E4E178B9-FDEE-47EE-962B-A5E784274273}" Directory_="AppDataFolder" Attributes="0" KeyPath="config.xml_1" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -56,6 +58,8 @@
     <ROW File="TextureMerge.exe" Component_="TextureMerge.exe" FileName="TEXTUR~1.EXE|TextureMerge.exe" Attributes="0" SourcePath="..\TextureMerge\bin\x64\Release\TextureMerge.exe" SelfReg="false" DigSign="true"/>
     <ROW File="TextureMerge.exe.config" Component_="TextureMerge.exe.config" FileName="TEXTUR~1.CON|TextureMerge.exe.config" Attributes="0" SourcePath="..\TextureMerge\bin\x64\Release\TextureMerge.exe.config" SelfReg="false"/>
     <ROW File="Magick.NETQ16x64.dll" Component_="Magick.NETQ16x64.dll" FileName="MAGICK~6.DLL|Magick.NET-Q16-x64.dll" Attributes="0" SourcePath="..\TextureMerge\bin\x64\Release\Magick.NET-Q16-x64.dll" SelfReg="false"/>
+    <ROW File="config.xml" Component_="TextureMerge.exe.config" FileName="config.xml" Attributes="0" SourcePath="Config files\config.xml" SelfReg="false"/>
+    <ROW File="config.xml_1" Component_="config.xml" FileName="config.xml" Attributes="0" SourcePath="Config files\config.xml" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1"/>
@@ -154,6 +158,7 @@
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
     <ROW Feature_="MainFeature" Component_="Magick.NETQ16x64.dll"/>
+    <ROW Feature_="MainFeature" Component_="config.xml"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
