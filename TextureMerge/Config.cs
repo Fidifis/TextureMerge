@@ -15,7 +15,7 @@ namespace TextureMerge
 
         // Config related
         public string Redirect { get; set; } = "config.xml";
-        public bool UseLastWindowSize { get; set; } = true;
+        public bool UseLastWindowSize { get; set; } = false;
         public bool UseLastPathToSave { get; set; } = true;
         public bool UseLastSaveImageName { get; set; } = true;
         public bool CheckForUpdates { get; set; } = true;
@@ -23,8 +23,9 @@ namespace TextureMerge
         // State related
         public int WindowWidth { get; set; } = -1;
         public int WindowHeight { get; set; } = -1;
-        public string PathToSave { get; set; } = "documents";
+        public string PathToSave { get; set; } = @"%UserProfile%\Documents";
         public string SaveImageName { get; set; } = "Pack.png";
+        public bool DefaultColor { get; set; } = false;
 
         public static void Load()
         {
@@ -32,12 +33,12 @@ namespace TextureMerge
             int redirected = 0;
             do
             {
-                if (!File.Exists(lastRedirect))
+                if (!File.Exists(lastRedirect.Expand()))
                     return;
 
                 var serializer = new XmlSerializer(typeof(Config));
 
-                var stream = new FileStream(lastRedirect, FileMode.Open);
+                var stream = new FileStream(lastRedirect.Expand(), FileMode.Open);
                 var config = (Config)serializer.Deserialize(stream);
                 stream.Close();
 
@@ -58,9 +59,9 @@ namespace TextureMerge
 
         public static void Save()
         {
-            if (!Current.Redirect.Contains('\\') || Directory.Exists(Path.GetDirectoryName(Current.Redirect)))
+            if (!Current.Redirect.Contains('\\') || Directory.Exists(Path.GetDirectoryName(Current.Redirect.Expand())))
             {
-                var stream = new FileStream(Current.Redirect, FileMode.Create);
+                var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create);
                 var serializer = new XmlSerializer(typeof(Config));
                 serializer.Serialize(stream, Current);
             }

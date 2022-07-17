@@ -17,10 +17,38 @@ namespace TextureMerge
         public MainWindow()
         {
             InitializeComponent();
-            PathToSave.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            hasEditedPath = false;
             MagickNET.Initialize();
             Config.Load();
+            ApplyConfig();
+            hasEditedPath = false;
+        }
+
+        private void ApplyConfig()
+        {
+            PathToSave.Text = Config.Current.PathToSave.Expand();
+            SaveImageName.Text = Config.Current.SaveImageName;
+            dummyColorSwap = Config.Current.DefaultColor;
+            if (dummyColorSwap)
+                DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
+
+            if (Config.Current.UseLastWindowSize)
+            {
+                Width = Config.Current.WindowWidth;
+                Height = Config.Current.WindowHeight;
+            }
+        }
+
+        private void UpdateConfig()
+        {
+            Config.Current.WindowWidth = Convert.ToInt32(Width);
+            Config.Current.WindowHeight = Convert.ToInt32(Height);
+            Config.Current.DefaultColor = dummyColorSwap;
+
+            if (Config.Current.UseLastPathToSave)
+                Config.Current.PathToSave = PathToSave.Text;
+
+            if (Config.Current.UseLastSaveImageName)
+                Config.Current.SaveImageName = SaveImageName.Text;
         }
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)
@@ -307,6 +335,7 @@ namespace TextureMerge
 
         private void MainWindowClosed(object sender, EventArgs e)
         {
+            UpdateConfig();
             Config.Save();
         }
     }
