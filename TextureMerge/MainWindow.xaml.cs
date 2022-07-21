@@ -65,26 +65,26 @@ namespace TextureMerge
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red);
-            ShowRedSourceGrid();
+            if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red))
+                ShowRedSourceGrid();
         }
 
         private async void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green);
-            ShowGreenSourceGrid();
+            if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green))
+                ShowGreenSourceGrid();
         }
 
         private async void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue);
-            ShowBlueSourceGrid();
+            if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue))
+                ShowBlueSourceGrid();
         }
 
         private async void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red);
-            ShowAlphaSourceGrid();
+            if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red))
+                ShowAlphaSourceGrid();
         }
 
         private void ButtonClearR(object sender, RoutedEventArgs e)
@@ -158,8 +158,8 @@ namespace TextureMerge
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]);
-                ShowRedSourceGrid();
+                if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]))
+                    ShowRedSourceGrid();
             }
         }
 
@@ -168,8 +168,8 @@ namespace TextureMerge
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]);
-                ShowGreenSourceGrid();
+                if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]))
+                    ShowGreenSourceGrid();
             }
         }
 
@@ -178,8 +178,8 @@ namespace TextureMerge
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]);
-                ShowBlueSourceGrid();
+                if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]))
+                    ShowBlueSourceGrid();
             }
         }
 
@@ -188,8 +188,8 @@ namespace TextureMerge
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]);
-                ShowAlphaSourceGrid();
+                if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]))
+                    ShowAlphaSourceGrid();
             }
         }
 

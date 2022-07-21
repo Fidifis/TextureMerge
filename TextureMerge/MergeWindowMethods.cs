@@ -158,7 +158,7 @@ namespace TextureMerge
             }
         }
 
-        private async Task ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
+        private async Task<bool> ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
         {
             if (path is null)
                 path = GetImagePath();
@@ -178,7 +178,9 @@ namespace TextureMerge
                 SetStatus();
                 label.Content = tmpLabelContent;
                 label.Visibility = Visibility.Hidden;
+                return true;
             }
+            else return false;
         }
     }
 }
