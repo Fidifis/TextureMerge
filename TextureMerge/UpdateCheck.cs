@@ -35,6 +35,10 @@ namespace TextureMerge
                     Config.Current.SkipVersion = latestVersion;
                 }
             }
+            else if (forced)
+            {
+                MessageBox.Show("No updates");
+            }
         }
 
         private static string GetValue(string content, string key)
