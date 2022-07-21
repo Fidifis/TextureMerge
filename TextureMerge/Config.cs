@@ -53,7 +53,7 @@ namespace TextureMerge
 
                 var serializer = new XmlSerializer(typeof(Config));
 
-                var stream = new FileStream(lastRedirect.Expand(), FileMode.Open);
+                var stream = new FileStream(lastRedirect.Expand(), FileMode.Open, FileAccess.Read);
                 var config = (Config)serializer.Deserialize(stream);
                 stream.Close();
 
