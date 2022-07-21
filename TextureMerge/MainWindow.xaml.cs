@@ -25,14 +25,7 @@ namespace TextureMerge
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            if (Config.Current.CheckForUpdates)
-            {
-                try
-                {
-                    UpdateCheck.CheckForUpdateAsync();
-                }
-                catch { }
-            }
+            UpdateAvailable.ShowUpdateIfAvailable();
         }
 
         private void ApplyConfig()
@@ -43,7 +36,9 @@ namespace TextureMerge
             if (dummyColorSwap)
                 DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
 
-            if (Config.Current.UseLastWindowSize)
+            if (Config.Current.UseLastWindowSize &&
+                Config.Current.WindowWidth > 0 &&
+                Config.Current.WindowHeight > 0)
             {
                 Width = Config.Current.WindowWidth;
                 Height = Config.Current.WindowHeight;
@@ -349,6 +344,17 @@ namespace TextureMerge
         {
             UpdateConfig();
             Config.Save();
+        }
+
+        private void SettingsButton(object sender, RoutedEventArgs e)
+        {
+            var settings = new Settings(Config.Current);
+            settings.ShowDialog();
+            if (settings.DialogResult == true && settings.SavedConfig != null)
+            {
+                Config.ApplyConfig(settings.SavedConfig);
+                Config.Save();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TextureMerge
 {
     internal class UpdateCheck
     {
-        public static async void CheckForUpdateAsync()
+        public static async void CheckForUpdateAsync(bool forced = false)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -22,7 +22,7 @@ namespace TextureMerge
             }
 
             string latestVersion = GetValue(content, "tag_name");
-            if (version != latestVersion && Config.Current.SkipVersion != latestVersion)
+            if (version != latestVersion && (forced || Config.Current.SkipVersion != latestVersion))
             {
                 var updateDialog = new UpdateAvailable(latestVersion);
                 updateDialog.ShowDialog();

@@ -17,6 +17,9 @@
             <Style TargetType="local:UpdateAvailable">
                 <Setter Property="Background" Value="#FF34363A"/>
             </Style>
+            <Style TargetType="local:Settings">
+                <Setter Property="Background" Value="#FF34363A"/>
+            </Style>
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="White"/>
             </Style>

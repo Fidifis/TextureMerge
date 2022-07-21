@@ -11,6 +11,18 @@ namespace TextureMerge
 
         public bool Skip { get; private set; } = false;
 
+        public static void ShowUpdateIfAvailable(bool forced = false)
+        {
+            if (Config.Current.CheckForUpdates)
+            {
+                try
+                {
+                    UpdateCheck.CheckForUpdateAsync(forced);
+                }
+                catch { }
+            }
+        }
+        
         public UpdateAvailable(string version)
         {
             InitializeComponent();

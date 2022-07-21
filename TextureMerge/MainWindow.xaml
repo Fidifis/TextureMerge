@@ -30,7 +30,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="50,30,50,10">
+        <Grid Grid.Row="0" Margin="50,30,60,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -142,14 +142,14 @@
         </Grid>
         <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
                 <TextBox x:Name="PathToSave" Margin="0,0,90,0" TextAlignment="Right" Text="C:\Users\user\Documents" TextChanged="PathToSaveChanged"/>
                 <Button Content="Browse" HorizontalAlignment="Right" Width="80" Click="ButtonBrowse"/>
             </Grid>
-            <Grid Grid.Column="1" Margin="20,0,10,0" Height="25" VerticalAlignment="Center">
+            <Grid Grid.Column="1" Margin="20,0,40,0" Height="25" VerticalAlignment="Center">
                 <TextBox x:Name="SaveImageName" Margin="0,0,90,0" TextAlignment="Right" Text="Pack.png" TextChanged="SaveImageNameChanged"/>
                 <Button Content="Merge" HorizontalAlignment="Right" Width="80" Click="ButtonMerge"/>
             </Grid>
@@ -157,5 +157,6 @@
         <Grid Grid.Row="3">
             <Label x:Name="StatusLabel" Content="" Margin="0,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold"/>
         </Grid>
+        <Button Content="⚙" Width="40" Height="40" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SettingsButton"/>
     </Grid>
 </Window>
