@@ -5,7 +5,7 @@ namespace TextureMerge
     public partial class UpdateAvailable : Window
     {
         const string MessageTemplate =
-            "New version available.\n" +
+            "New version available!\n" +
             "{0}\n" +
             "Do you want to download it?";
 
