@@ -22,12 +22,17 @@ namespace TextureMerge
             }
 
             string latestVersion = GetValue(content, "tag_name");
-            if (version != latestVersion)
+            if (version != latestVersion && Config.Current.SkipVersion != latestVersion)
             {
-                if (MessageBox.Show("New version available.\n" + latestVersion +
-                    "\nDo you want to download it?", "Update", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                var updateDialog = new UpdateAvailable(latestVersion);
+                updateDialog.ShowDialog();
+                if (updateDialog.DialogResult == true)
                 {
                     Process.Start("https://github.com/Fidifis/TextureMerge/releases/latest");
+                }
+                else if (updateDialog.Skip)
+                {
+                    Config.Current.SkipVersion = latestVersion;
                 }
             }
         }
