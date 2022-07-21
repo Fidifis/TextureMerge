@@ -1,0 +1,15 @@
+﻿<Window x:Class="TextureMerge.UpdateAvailable"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        Title="Update Available" Height="200" Width="400" ResizeMode="NoResize" Topmost="True">
+    <Grid>
+        <Label x:Name="MessageText" Content="" Margin="19,10,0,52"/>
+        <Button Content="Yes" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,255,22" Click="YesButton" />
+        <Button Content="No" HorizontalAlignment="Right" Width="90" Height="25" VerticalAlignment="Bottom" Margin="0,0,155,22" Click="NoButton" />
+        <Button Content="Skip this version" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Margin="0,0,25,22" Click="SkipButton" />
+    </Grid>
+</Window>

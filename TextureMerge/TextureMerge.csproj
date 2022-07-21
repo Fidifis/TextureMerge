@@ -90,6 +90,9 @@
     <Compile Include="Resize.xaml.cs">
       <DependentUpon>Resize.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateAvailable.xaml.cs">
+      <DependentUpon>UpdateAvailable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UpdateCheck.cs" />
     <Page Include="Depth.xaml">
       <SubType>Designer</SubType>
@@ -109,6 +112,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateAvailable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

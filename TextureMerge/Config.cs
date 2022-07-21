@@ -19,6 +19,7 @@ namespace TextureMerge
         public bool UseLastPathToSave { get; set; } = true;
         public bool UseLastSaveImageName { get; set; } = true;
         public bool CheckForUpdates { get; set; } = true;
+        public string SkipVersion { get; set; } = "";
 
         // State related
         public int WindowWidth { get; set; } = -1;
