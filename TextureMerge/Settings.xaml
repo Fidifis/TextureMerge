@@ -23,7 +23,7 @@
                 <TextBox x:Name="CustomSaveImageNameBox" TextChanged="CustomSaveImageNameChanged" />
             </StackPanel>
             <Button Content="Check for updates" Width="200" Margin="0,10,0,0" Click="CheckUpdatesButton"/>
-            <Button Content="Report a bug" Width="200" Margin="0,10,0,10"/>
+            <Button Content="Report a bug" Width="200" Margin="0,10,0,10" Click="ReportButton"/>
         </StackPanel>
         <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,25,17" Click="CancelButton"/>
         <Button Content="Save" HorizontalAlignment="Right" Width="90" Margin="0,0,120,17" Height="25" VerticalAlignment="Bottom" Click="SaveButton"/>
