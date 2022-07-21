@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -15,7 +16,7 @@ namespace TextureMerge
 
         // Config related
         public string Redirect { get; set; } = "config.xml";
-        public bool UseLastWindowSize { get; set; } = false;
+        public bool UseLastWindowSize { get; set; } = true;
         public bool UseLastPathToSave { get; set; } = true;
         public bool UseLastSaveImageName { get; set; } = true;
         public bool CheckForUpdates { get; set; } = true;
@@ -27,6 +28,19 @@ namespace TextureMerge
         public string PathToSave { get; set; } = @"%UserProfile%\Documents";
         public string SaveImageName { get; set; } = "Pack.png";
         public bool DefaultColor { get; set; } = false;
+
+        public static void ApplyConfig(Config config) => Current = config;
+
+        public Config Copy()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(ms, this);
+                ms.Position = 0;
+                return (Config)formatter.Deserialize(ms);
+            }
+        }
 
         public static void Load()
         {

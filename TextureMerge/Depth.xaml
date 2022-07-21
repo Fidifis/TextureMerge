@@ -11,7 +11,7 @@
         <Label Content="Images have a different depth! What depth do you want to use?" Margin="23,140,0,0" HorizontalAlignment="Left" Width="auto" Height="auto" VerticalAlignment="Top"/>
         <RadioButton x:Name="radio8" Content="8 bit" HorizontalAlignment="Left" Margin="23,74,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="radio16" Content="16 bit" HorizontalAlignment="Left" Margin="23,94,0,0" VerticalAlignment="Top"/>
-        <Button Content="OK" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22" Click="OKButton"/>
-        <Button Content="Cancel" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22" Click="CancelButton"/>
+        <Button Content="OK" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,26,22" Click="OKButton"/>
+        <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,132,22" Click="CancelButton"/>
     </Grid>
 </Window>

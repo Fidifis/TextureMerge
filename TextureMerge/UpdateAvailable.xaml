@@ -8,8 +8,8 @@
         Title="Update Available" Height="200" Width="400" ResizeMode="NoResize" Topmost="True">
     <Grid>
         <Label x:Name="MessageText" Content="" Margin="19,10,0,52"/>
-        <Button Content="Yes" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,255,22" Click="YesButton" />
-        <Button Content="No" HorizontalAlignment="Right" Width="90" Height="25" VerticalAlignment="Bottom" Margin="0,0,155,22" Click="NoButton" />
-        <Button Content="Skip this version" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Margin="0,0,25,22" Click="SkipButton" />
+        <Button Content="Yes" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,255,22" Click="YesButton" />
+        <Button Content="No" HorizontalAlignment="Right" Width="90" VerticalAlignment="Bottom" Margin="0,0,155,22" Click="NoButton" />
+        <Button Content="Skip this version" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Margin="0,0,25,22" Click="SkipButton" />
     </Grid>
 </Window>
