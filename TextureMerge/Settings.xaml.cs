@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +88,11 @@ namespace TextureMerge
         private void CheckUpdatesButton(object sender, RoutedEventArgs e)
         {
             UpdateAvailable.ShowUpdateIfAvailable(forced: true);
+        }
+
+        private void ReportButton(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/Fidifis/TextureMerge/issues");
         }
     }
 }
