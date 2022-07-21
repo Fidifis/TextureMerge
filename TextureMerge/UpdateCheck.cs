@@ -1,13 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace TextureMerge
 {
     internal class UpdateCheck
     {
-        public static void CheckForUpdate()
+        public static async void CheckForUpdateAsync()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -16,7 +18,7 @@ namespace TextureMerge
             using (WebClient client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.UserAgent, "TextureMerge_webclient");
-                content = client.DownloadString("https://api.github.com/repos/Fidifis/TextureMerge/releases/latest");
+                content = await client.DownloadStringTaskAsync(new Uri("https://api.github.com/repos/Fidifis/TextureMerge/releases/latest"));
             }
 
             string latestVersion = GetValue(content, "tag_name");

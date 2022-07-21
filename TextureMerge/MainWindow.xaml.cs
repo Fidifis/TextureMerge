@@ -29,8 +29,7 @@ namespace TextureMerge
             {
                 try
                 {
-                    // TODO async
-                    UpdateCheck.CheckForUpdate();
+                    UpdateCheck.CheckForUpdateAsync();
                 }
                 catch { }
             }
