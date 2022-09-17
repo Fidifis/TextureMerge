@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Texture Merge"
         Height="500" Width="1300"
-        MinWidth="600" MinHeight="350"
+        MinWidth="725" MinHeight="350"
         Closed="MainWindowClosed" Loaded="WindowLoaded">
     <Window.Resources>
         <ResourceDictionary>
@@ -30,7 +30,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="50,30,60,10">
+        <Grid Grid.Row="0" Margin="50,30,30,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -112,7 +112,7 @@
                     <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearB" />
                 </Grid>
             </Grid>
-            <Grid Grid.Column="3" Margin="5,0,5,0" Drop="AlphaDrop" AllowDrop="true">
+            <Grid Grid.Column="3" Margin="5,0,40,0" Drop="AlphaDrop" AllowDrop="true">
                 <Label x:Name="alphaNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
                     <Image x:Name="AlphaCh" Margin="10,10,10,70"/>
