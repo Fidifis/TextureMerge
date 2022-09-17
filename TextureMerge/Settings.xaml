@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Settings" Height="450" Width="350" ResizeMode="NoResize" Topmost="True">
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="22,10,22,47">
+        <StackPanel Orientation="Vertical" Margin="22,10,22,65">
             <CheckBox x:Name="CheckForUpdates" Content="Check for updates on start" Margin="0,0,0,5"/>
             <CheckBox x:Name="UseLastWindowSize" Content="Use last window size" Margin="0,5,0,0"/>
             <StackPanel Orientation="Vertical" Margin="0,10,0,10">
@@ -25,7 +25,8 @@
             <Button Content="Check for updates" Width="200" Margin="0,10,0,0" Click="CheckUpdatesButton"/>
             <Button Content="Report a bug" Width="200" Margin="0,10,0,10" Click="ReportButton"/>
         </StackPanel>
-        <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,25,17" Click="CancelButton"/>
-        <Button Content="Save" HorizontalAlignment="Right" Width="90" Margin="0,0,120,17" Height="25" VerticalAlignment="Bottom" Click="SaveButton"/>
+        <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="90" Margin="0,0,25,30" Click="CancelButton"/>
+        <Button Content="Save" HorizontalAlignment="Right" Width="90" Margin="0,0,120,30" Height="25" VerticalAlignment="Bottom" Click="SaveButton"/>
+        <Label x:Name="versionString" Content="Version: undefined" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="DarkGray"/>
     </Grid>
 </Window>

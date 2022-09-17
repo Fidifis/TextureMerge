@@ -27,6 +27,7 @@ namespace TextureMerge
         {
             this.config = config;
             InitializeComponent();
+            GenerateVersionString();
 
             CustomPathToSaveBox.Text = config.PathToSave;
             CustomSaveImageNameBox.Text = config.SaveImageName;
@@ -38,6 +39,14 @@ namespace TextureMerge
             if (config.UseLastSaveImageName)
                 UseLastSaveImageName.IsChecked = true;
             else CustomSaveImageName.IsChecked = true;
+        }
+
+        private void GenerateVersionString()
+        {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            versionString.Content = "Version: v" + version;
         }
 
         private void CustomPathToSaveChanged(object sender, TextChangedEventArgs e)
