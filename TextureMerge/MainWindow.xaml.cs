@@ -21,6 +21,7 @@ namespace TextureMerge
             Config.Load();
             ApplyConfig();
             hasEditedPath = false;
+            LoadArgs();
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -56,6 +57,34 @@ namespace TextureMerge
 
             if (Config.Current.UseLastSaveImageName)
                 Config.Current.SaveImageName = SaveImageName.Text;
+        }
+
+        private async void LoadArgs()
+        {
+            if (Program.cmdArgs != null && Program.cmdArgs.Length > 0)
+            {
+                for (int i = 0; i < Program.cmdArgs.Length; ++i)
+                {
+                    switch (i) {
+                        case 0:
+                        if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, Program.cmdArgs[i]))
+                                ShowRedSourceGrid();
+                            break;
+                        case 1:
+                            if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, Program.cmdArgs[i]))
+                                ShowGreenSourceGrid();
+                            break;
+                        case 2:
+                            if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, Program.cmdArgs[i]))
+                                ShowBlueSourceGrid();
+                            break;
+                        case 3:
+                            if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, Program.cmdArgs[i]))
+                                ShowAlphaSourceGrid();
+                            break;
+                    }
+                }
+            }
         }
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)

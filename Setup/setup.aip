@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="19.6" version="19.6" Modules="simple" RootPath="." Language="en" Id="{441A1EFB-2FFB-4A85-B61F-3417A77D0D6F}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.6" version="19.7" Modules="simple" RootPath="." Language="en" Id="{441A1EFB-2FFB-4A85-B61F-3417A77D0D6F}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
-    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.6 build bf52c98e" ValueLocId="-"/>
+    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.7 build b6fe2030" ValueLocId="-"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_DOTNET_VERSION;AI_DETECTED_ADMIN_USER"/>
     <ROW Property="AI_REQUIRED_DOTNET_DISPLAY" MultiBuildValue="DefaultBuild:4.8" ValueLocId="-"/>
     <ROW Property="AI_REQUIRED_DOTNET_VERSION" MultiBuildValue="DefaultBuild:4.8" ValueLocId="-"/>
@@ -34,6 +34,7 @@
     <ROW Directory="AppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="APPDAT~1|AppDataFolder" IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
+    <ROW Directory="SendToFolder" Directory_Parent="TARGETDIR" DefaultDir="SENDTO~1|SendToFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="TextureMerge_Dir" Directory_Parent="AppDataFolder" DefaultDir="TEXTUR~1|TextureMerge"/>
   </COMPONENT>
@@ -202,6 +203,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="TextureMerge" Directory_="SHORTCUTDIR" Name="TEXTUR~1|TextureMerge" Component_="TextureMerge.exe" Target="[#TextureMerge.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="TextureMerge_1" Directory_="DesktopFolder" Name="TEXTUR~1|TextureMerge" Component_="TextureMerge.exe" Target="[#TextureMerge.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="TextureMerge_2" Directory_="SendToFolder" Name="TEXTUR~1|Texture Merge" Component_="TextureMerge.exe" Target="[#TextureMerge.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
