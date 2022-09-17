@@ -367,6 +367,64 @@ namespace TextureMerge
             return MakeChannelThumbnail(thumbnail, channelSource).ToImageSource();
         }
 
+        public void Swap(Channel ch1, Channel ch2)
+        {
+            MagickImage[] imgs = { red, green, blue, alpha, null };
+            Channel[] channels = { redChSource, greenChSource, blueChSource, alphaChSource, 0 };
+
+            imgs[4] = imgs[(int)ch1];
+            imgs[(int)ch1] = imgs[(int)ch2];
+            imgs[(int)ch2] = imgs[4];
+
+            channels[4] = channels[(int)ch1];
+            channels[(int)ch1] = channels[(int)ch2];
+            channels[(int)ch2] = channels[4];
+
+            red = imgs[0];
+            green = imgs[1];
+            blue = imgs[2];
+            alpha = imgs[3];
+
+            redChSource = channels[0];
+            greenChSource = channels[1];
+            blueChSource = channels[2];
+            alphaChSource = channels[3];
+        }
+
+        public bool isEmpty(Channel which)
+        {
+            switch (which)
+            {
+                case Channel.Red:
+                    return red is null;
+                case Channel.Green:
+                    return green is null;
+                case Channel.Blue:
+                    return blue is null;
+                case Channel.Alpha:
+                    return alpha is null;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+        }
+
+        public Channel GetSourceChannel(Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.Red:
+                    return redChSource;
+                case Channel.Green:
+                    return greenChSource;
+                case Channel.Blue:
+                    return blueChSource;
+                case Channel.Alpha:
+                    return alphaChSource;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+        }
+
         public void Clear(Channel which)
         {
             switch (which)

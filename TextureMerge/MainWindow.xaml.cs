@@ -386,5 +386,26 @@ namespace TextureMerge
                 Config.Save();
             }
         }
+
+        private void SwapRG(object sender, RoutedEventArgs e)
+        {
+            merge.Swap(Channel.Red, Channel.Green);
+            RefreshState(Channel.Red);
+            RefreshState(Channel.Green);
+        }
+
+        private void SwapGB(object sender, RoutedEventArgs e)
+        {
+            merge.Swap(Channel.Green, Channel.Blue);
+            RefreshState(Channel.Green);
+            RefreshState(Channel.Blue);
+        }
+
+        private void SwapBA(object sender, RoutedEventArgs e)
+        {
+            merge.Swap(Channel.Blue, Channel.Alpha);
+            RefreshState(Channel.Blue);
+            RefreshState(Channel.Alpha);
+        }
     }
 }

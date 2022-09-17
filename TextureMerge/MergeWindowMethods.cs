@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -181,6 +182,125 @@ namespace TextureMerge
                 return true;
             }
             else return false;
+        }
+
+        private void RefreshState(Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.Red:
+                    if (merge.isEmpty(Channel.Red))
+                    {
+                        RedCh.Source = null;
+                        redNoDataLabel.Visibility = Visibility.Visible;
+                        srcGridGsR.Visibility = Visibility.Hidden;
+                        srcGridCR.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        redNoDataLabel.Visibility = Visibility.Hidden;
+                        ShowRedSourceGrid();
+                        switch (merge.GetSourceChannel(Channel.Red))
+                        {
+                            // TODO Not optimal to call this methods, because they call SetSourceChannel
+                            case Channel.Red:
+                                SrcRR(null, null);
+                                break;
+                            case Channel.Green:
+                                SrcRG(null, null);
+                                break;
+                            case Channel.Blue:
+                                SrcRB(null, null);
+                                break;
+                            default: throw new ArgumentException("Invalid channel");
+                        }
+                    }
+                    break;
+                case Channel.Green:
+                    if (merge.isEmpty(Channel.Green))
+                    {
+                        GreenCh.Source = null;
+                        greenNoDataLabel.Visibility = Visibility.Visible;
+                        srcGridGsG.Visibility = Visibility.Hidden;
+                        srcGridCG.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        greenNoDataLabel.Visibility = Visibility.Hidden;
+                        ShowGreenSourceGrid();
+                        switch (merge.GetSourceChannel(Channel.Green))
+                        {
+                            // TODO Not optimal to call this methods, because they call SetSourceChannel
+                            case Channel.Red:
+                                SrcGR(null, null);
+                                break;
+                            case Channel.Green:
+                                SrcGG(null, null);
+                                break;
+                            case Channel.Blue:
+                                SrcGB(null, null);
+                                break;
+                            default: throw new ArgumentException("Invalid channel");
+                        }
+                    }
+                    break;
+                case Channel.Blue:
+                    if (merge.isEmpty(Channel.Blue))
+                    {
+                        BlueCh.Source = null;
+                        blueNoDataLabel.Visibility = Visibility.Visible;
+                        srcGridGsB.Visibility = Visibility.Hidden;
+                        srcGridCB.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        blueNoDataLabel.Visibility = Visibility.Hidden;
+                        ShowBlueSourceGrid();
+                        switch (merge.GetSourceChannel(Channel.Blue))
+                        {
+                            // TODO Not optimal to call this methods, because they call SetSourceChannel
+                            case Channel.Red:
+                                SrcBR(null, null);
+                                break;
+                            case Channel.Green:
+                                SrcBG(null, null);
+                                break;
+                            case Channel.Blue:
+                                SrcBB(null, null);
+                                break;
+                            default: throw new ArgumentException("Invalid channel");
+                        }
+                    }
+                    break;
+                case Channel.Alpha:
+                    if (merge.isEmpty(Channel.Alpha))
+                    {
+                        AlphaCh.Source = null;
+                        alphaNoDataLabel.Visibility = Visibility.Visible;
+                        srcGridGsA.Visibility = Visibility.Hidden;
+                        srcGridCA.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        alphaNoDataLabel.Visibility = Visibility.Hidden;
+                        ShowAlphaSourceGrid();
+                        switch (merge.GetSourceChannel(Channel.Alpha))
+                        {
+                            // TODO Not optimal to call this methods, because they call SetSourceChannel
+                            case Channel.Red:
+                                SrcAR(null, null);
+                                break;
+                            case Channel.Green:
+                                SrcAG(null, null);
+                                break;
+                            case Channel.Blue:
+                                SrcAB(null, null);
+                                break;
+                            default: throw new ArgumentException("Invalid channel");
+                        }
+                    }
+                    break;
+            }
         }
     }
 }
