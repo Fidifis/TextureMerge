@@ -61,25 +61,26 @@ namespace TextureMerge
 
         private async void LoadArgs()
         {
-            if (Program.cmdArgs != null && Program.cmdArgs.Length > 0)
+            string[] args = Environment.GetCommandLineArgs();
+            if (args != null && args.Length > 0)
             {
-                for (int i = 0; i < Program.cmdArgs.Length; ++i)
+                for (int i = 1; i < args.Length; ++i)
                 {
-                    switch (i) {
+                    switch (i-1) {
                         case 0:
-                        if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, Program.cmdArgs[i]))
+                        if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, args[i]))
                                 ShowRedSourceGrid();
                             break;
                         case 1:
-                            if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, Program.cmdArgs[i]))
+                            if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, args[i]))
                                 ShowGreenSourceGrid();
                             break;
                         case 2:
-                            if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, Program.cmdArgs[i]))
+                            if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, args[i]))
                                 ShowBlueSourceGrid();
                             break;
                         case 3:
-                            if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, Program.cmdArgs[i]))
+                            if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, args[i]))
                                 ShowAlphaSourceGrid();
                             break;
                     }
