@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ImageMagick;
 using System;
+using System.Threading.Tasks;
 
 namespace TextureMerge
 {
@@ -406,6 +407,21 @@ namespace TextureMerge
             merge.Swap(Channel.Blue, Channel.Alpha);
             RefreshState(Channel.Blue);
             RefreshState(Channel.Alpha);
+        }
+
+        private async void LoadWholeImage(object sender, RoutedEventArgs e)
+        {
+            string path = GetImagePath();
+            if (path != string.Empty)
+            {
+                var r = ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, path);
+                var g = ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, path);
+                var b = ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, path);
+                await r; await g; await b;
+                ShowRedSourceGrid();
+                ShowGreenSourceGrid();
+                ShowBlueSourceGrid();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,12 @@ namespace TextureMerge
             if (config.UseLastSaveImageName)
                 UseLastSaveImageName.IsChecked = true;
             else CustomSaveImageName.IsChecked = true;
+
+            if (config.EnableSendTo)
+            {
+                EnableSendTo.IsChecked = true;
+                EnableSendTo.Visibility = Visibility.Visible;
+            }
         }
 
         private void GenerateVersionString()
@@ -87,8 +94,17 @@ namespace TextureMerge
                 SavedConfig.SaveImageName = CustomSaveImageNameBox.Text;
             }
 
+            if (EnableSendTo.IsChecked == true)
+                SavedConfig.EnableSendTo = true;
+            else
+            {
+                SavedConfig.EnableSendTo = false;
+                DeleteFromSendTo();
+            }
+
             SavedConfig.CheckForUpdates = CheckForUpdates.IsChecked == true;
             SavedConfig.UseLastWindowSize = UseLastWindowSize.IsChecked == true;
+            
 
             DialogResult = true;
             Close();
@@ -102,6 +118,26 @@ namespace TextureMerge
         private void ReportButton(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/Fidifis/TextureMerge/issues");
+        }
+
+        private void DeleteFromSendTo()
+        {
+            try
+            {
+                string sendtoPath = Environment.GetFolderPath(Environment.SpecialFolder.SendTo);
+                string filelnk = sendtoPath + "Texture Merge.lnk";
+                if (File.Exists(filelnk))
+                    File.Delete(filelnk);
+                else
+                    throw new FileNotFoundException("No shortcut file found. It could be renamed or deleted.\n" +
+                        "If you want to manually remove it from context menu, go to SendTo folder and remove the shortcut\n" +
+                        sendtoPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to remove from context menu\nMessage:\n" + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

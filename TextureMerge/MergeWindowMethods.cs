@@ -159,6 +159,7 @@ namespace TextureMerge
             }
         }
 
+        //TODO this method should be reworked
         private async Task<bool> ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
         {
             if (path is null)
