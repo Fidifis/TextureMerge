@@ -12,6 +12,12 @@ namespace TextureMerge
     {
         public static string Expand(this string path) => Environment.ExpandEnvironmentVariables(path);
 
+        public static string ToStringRounded(this double value, int decimalPlaces)
+        {
+            double p = Math.Pow(10, decimalPlaces);
+            return ((long)(value * p) / p).ToString();
+        }
+
         public static ImageSource ToImageSource(this MagickImage image)
         {
             var stream = new MemoryStream();

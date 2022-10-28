@@ -31,9 +31,9 @@ namespace TextureMerge
                 canChange = false;
                 RGBToHSV(R, G, B, out double H, out double S, out double V);
                 RGBToHex(R, G, B, out string hex);
-                HValue.Text = DoubleToString(H);
-                SValue.Text = DoubleToString(S);
-                VValue.Text = DoubleToString(V);
+                HValue.Text = H.ToStringRounded(3);
+                SValue.Text = S.ToStringRounded(3);
+                VValue.Text = V.ToStringRounded(3);
                 HexValue.Text = hex;
                 canChange = true;
             }
@@ -65,9 +65,9 @@ namespace TextureMerge
                 RValue.Text = R.ToString();
                 GValue.Text = G.ToString();
                 BValue.Text = B.ToString();
-                HValue.Text = DoubleToString(H);
-                SValue.Text = DoubleToString(S);
-                VValue.Text = DoubleToString(V);
+                HValue.Text = H.ToStringRounded(3);
+                SValue.Text = S.ToStringRounded(3);
+                VValue.Text = V.ToStringRounded(3);
                 canChange = true;
             }
         }
@@ -243,8 +243,5 @@ namespace TextureMerge
             G = (byte)(g * 255.0);
             B = (byte)(b * 255.0);
         }
-
-        private string DoubleToString(double value) =>
-            ((long)(value * 1000) / 1000.0).ToString();
     }
 }
