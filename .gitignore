@@ -2,5 +2,6 @@
 bin
 obj
 packages
-Setup/setup*-SetupFiles
-Setup/setup-cache
+Setup/*-SetupFiles
+Setup/*-cache
+Setup/*.back.aip
