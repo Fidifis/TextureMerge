@@ -14,6 +14,7 @@ namespace TextureMerge
         private readonly Merge merge = new Merge();
         private bool hasSetupPath = false;
         private bool hasEditedPath = false;
+        private Color defaultColor;
 
         public MainWindow()
         {
@@ -34,9 +35,8 @@ namespace TextureMerge
         {
             PathToSave.Text = Config.Current.PathToSave.Expand();
             SaveImageName.Text = Config.Current.SaveImageName;
-            dummyColorSwap = Config.Current.DefaultColor;
-            if (dummyColorSwap)
-                DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
+            defaultColor = IntToColor(Config.Current.DefaultColorInt);
+            DefaultColorRect.Fill = new SolidColorBrush(defaultColor);
 
             if (Config.Current.UseLastWindowSize &&
                 Config.Current.WindowWidth > 0 &&
@@ -51,7 +51,7 @@ namespace TextureMerge
         {
             Config.Current.WindowWidth = Convert.ToInt32(Width);
             Config.Current.WindowHeight = Convert.ToInt32(Height);
-            Config.Current.DefaultColor = dummyColorSwap;
+            Config.Current.DefaultColorInt = ColorToInt(defaultColor);
 
             if (Config.Current.UseLastPathToSave)
                 Config.Current.PathToSave = PathToSave.Text;
@@ -154,19 +154,24 @@ namespace TextureMerge
             SetSaveImagePath();
         }
         
-        private bool dummyColorSwap = false;
         private void ChangeDefaultColor(object sender, RoutedEventArgs e)
         {
-            //TODO: Implement color picker
-            if (dummyColorSwap)
-                DefaultColorRect.Fill = new SolidColorBrush(Colors.Black);
-            else
-                DefaultColorRect.Fill = new SolidColorBrush(Colors.White);
-            dummyColorSwap = !dummyColorSwap;
+            ColorPicker picker = new ColorPicker(defaultColor);
+            if (picker.ShowDialog() == true)
+                DefaultColorRect.Fill = new SolidColorBrush(picker.PickedColor);
+
+            defaultColor = picker.PickedColor;
         }
 
-        private MagickColor GetDefaultFillColor(bool useWhite) =>
-            useWhite ? new MagickColor(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue) : new MagickColor(0, 0, 0);
+        private ushort ByteToUshortKeepRatio(byte value) => 
+            (ushort)((value * ushort.MaxValue) / 255);
+
+
+        private MagickColor ColorToMagick(Color color) =>
+            new MagickColor(
+                ByteToUshortKeepRatio(color.R),
+                ByteToUshortKeepRatio(color.G),
+                ByteToUshortKeepRatio(color.B));
 
         private void PathToSaveChanged(object sender, TextChangedEventArgs e)
         {
@@ -422,6 +427,30 @@ namespace TextureMerge
                 ShowGreenSourceGrid();
                 ShowBlueSourceGrid();
             }
+        }
+
+        private Color IntToColor(int color)
+        {
+            int r, g, b;
+            r = (color & 0x00FF0000) >> 16;
+            g = (color & 0x0000FF00) >> 8;
+            b = (color & 0x000000FF);
+            return new Color()
+            {
+                R = (byte)r,
+                G = (byte)g,
+                B = (byte)b,
+                A = 255
+            };
+        }
+
+        private int ColorToInt(Color color)
+        {
+            int r = color.R,
+                g = color.G,
+                b = color.B;
+
+            return (r << 16) | (g << 8) | b;
         }
     }
 }

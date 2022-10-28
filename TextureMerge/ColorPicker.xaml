@@ -1,0 +1,74 @@
+﻿<Window x:Class="TextureMerge.ColorPicker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        Title="ColorPicker" Height="375" Width="300" Topmost="True" MinHeight="375" MinWidth="250">
+    <Grid>
+        <Grid>
+            <Rectangle x:Name="ColorView" Fill="Black" Height="60" Width="60" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+            <StackPanel Orientation="Vertical" Margin="20,100,20,50">
+                <Grid Margin="0,10,0,10">
+                    <Button Content="Black" Width="80" Height="25" HorizontalAlignment="Center" Margin="-100,0,0,0" Click="ButtonBlack"/>
+                    <Button Content="White" Width="80" Height="25" HorizontalAlignment="Center" Margin="100,0,0,0" Click="ButtonWhite"/>
+                </Grid>
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Label Content="R"/>
+                        <TextBox x:Name="RValue" Margin="20,0,0,0" TextChanged="RGBChanged"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label Content="G"/>
+                        <TextBox x:Name="GValue" Margin="20,0,0,0" TextChanged="RGBChanged"/>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Label Content="B"/>
+                        <TextBox x:Name="BValue" Margin="20,0,0,0" TextChanged="RGBChanged"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Label Content="H"/>
+                        <TextBox x:Name="HValue" Margin="20,0,0,0" TextChanged="HSVChanged"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label Content="S"/>
+                        <TextBox x:Name="SValue" Margin="20,0,0,0" TextChanged="HSVChanged"/>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Label Content="V"/>
+                        <TextBox x:Name="VValue" Margin="20,0,0,0" TextChanged="HSVChanged"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Label Content="Hex"/>
+                        <TextBox x:Name="HexValue" Margin="30,0,0,0" TextChanged="HEXChanged"/>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+            <Button Content="OK" Height="25" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,15" Click="ButtonOk"/>
+            <Button Content="Cancel" Height="25" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,100,15" Click="ButtonCancel"/>
+        </Grid>
+    </Grid>
+</Window>

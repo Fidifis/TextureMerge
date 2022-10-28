@@ -28,7 +28,7 @@ namespace TextureMerge
         public int WindowHeight { get; set; } = -1;
         public string PathToSave { get; set; } = @"%UserProfile%\Documents";
         public string SaveImageName { get; set; } = "Pack.png";
-        public bool DefaultColor { get; set; } = false;
+        public int DefaultColorInt { get; set; } = 0;
 
         public static void ApplyConfig(Config config) => Current = config;
 

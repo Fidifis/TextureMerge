@@ -61,7 +61,7 @@ namespace TextureMerge
                     SetStatus("Resizeing...", statusBlueColor);
                     correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
                         resizeDialog.DoStretch.IsChecked == true,
-                        GetDefaultFillColor(dummyColorSwap));
+                        ColorToMagick(defaultColor));
                     SetStatus();
                 }
                 else
@@ -98,7 +98,7 @@ namespace TextureMerge
 
             if (Directory.Exists(PathToSave.Text))
             {
-                var result = await correct.DoMergeAsync(GetDefaultFillColor(dummyColorSwap), newDepth);
+                var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
                 SetStatus("Saving...", statusBlueColor);
                 await result.SaveAsync(path);
             }
