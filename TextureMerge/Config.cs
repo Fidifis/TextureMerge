@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace TextureMerge
@@ -34,52 +32,72 @@ namespace TextureMerge
 
         public Config Copy()
         {
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(ms, this);
-                ms.Position = 0;
-                return (Config)formatter.Deserialize(ms);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(ms, this);
+                    ms.Position = 0;
+                    return (Config)formatter.Deserialize(ms);
+                }
             }
+            catch (Exception) { return null; }
         }
 
         public static void Load()
         {
             string lastRedirect = Current.Redirect;
             int redirected = 0;
-            do
+            try
             {
-                if (!File.Exists(lastRedirect.Expand()))
-                    return;
-
-                var serializer = new XmlSerializer(typeof(Config));
-
-                var stream = new FileStream(lastRedirect.Expand(), FileMode.Open, FileAccess.Read);
-                var config = (Config)serializer.Deserialize(stream);
-                stream.Close();
-
-                if (config.Redirect == lastRedirect)
+                do
                 {
-                    Current = config;
-                    return;
-                }
+                    if (!File.Exists(lastRedirect.Expand()))
+                        return;
 
-                else
-                {
-                    lastRedirect = config.Redirect;
-                    redirected++;
-                }
+                    var serializer = new XmlSerializer(typeof(Config));
 
-            } while (redirected < 2);
+                    var stream = new FileStream(lastRedirect.Expand(), FileMode.Open, FileAccess.Read);
+                    var config = (Config)serializer.Deserialize(stream);
+                    stream.Close();
+
+                    if (config.Redirect == lastRedirect)
+                    {
+                        Current = config;
+                        return;
+                    }
+
+                    else
+                    {
+                        lastRedirect = config.Redirect;
+                        redirected++;
+                    }
+
+                } while (redirected < 2);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to load configuration" + Environment.NewLine + e.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public static void Save()
         {
             if (!Current.Redirect.Contains('\\') || Directory.Exists(Path.GetDirectoryName(Current.Redirect.Expand())))
             {
-                var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create);
-                var serializer = new XmlSerializer(typeof(Config));
-                serializer.Serialize(stream, Current);
+                try
+                {
+                    var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create);
+                    var serializer = new XmlSerializer(typeof(Config));
+                    serializer.Serialize(stream, Current);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unable to save configuration" + Environment.NewLine + e.Message,
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }
