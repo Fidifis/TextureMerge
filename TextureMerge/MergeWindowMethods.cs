@@ -192,6 +192,7 @@ namespace TextureMerge
                 case Channel.Red:
                     if (merge.isEmpty(Channel.Red))
                     {
+                        LoadR.Content = LOAD_TEXT;
                         RedCh.Source = null;
                         redNoDataLabel.Visibility = Visibility.Visible;
                         srcGridGsR.Visibility = Visibility.Hidden;
@@ -199,6 +200,7 @@ namespace TextureMerge
                     }
                     else
                     {
+                        LoadR.Content = CLEAR_TEXT;
                         redNoDataLabel.Visibility = Visibility.Hidden;
                         ShowRedSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Red))
@@ -220,6 +222,7 @@ namespace TextureMerge
                 case Channel.Green:
                     if (merge.isEmpty(Channel.Green))
                     {
+                        LoadG.Content = LOAD_TEXT;
                         GreenCh.Source = null;
                         greenNoDataLabel.Visibility = Visibility.Visible;
                         srcGridGsG.Visibility = Visibility.Hidden;
@@ -227,6 +230,7 @@ namespace TextureMerge
                     }
                     else
                     {
+                        LoadG.Content = CLEAR_TEXT;
                         greenNoDataLabel.Visibility = Visibility.Hidden;
                         ShowGreenSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Green))
@@ -248,6 +252,7 @@ namespace TextureMerge
                 case Channel.Blue:
                     if (merge.isEmpty(Channel.Blue))
                     {
+                        LoadB.Content = LOAD_TEXT;
                         BlueCh.Source = null;
                         blueNoDataLabel.Visibility = Visibility.Visible;
                         srcGridGsB.Visibility = Visibility.Hidden;
@@ -255,6 +260,7 @@ namespace TextureMerge
                     }
                     else
                     {
+                        LoadB.Content = CLEAR_TEXT;
                         blueNoDataLabel.Visibility = Visibility.Hidden;
                         ShowBlueSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Blue))
@@ -276,6 +282,7 @@ namespace TextureMerge
                 case Channel.Alpha:
                     if (merge.isEmpty(Channel.Alpha))
                     {
+                        LoadA.Content = LOAD_TEXT;
                         AlphaCh.Source = null;
                         alphaNoDataLabel.Visibility = Visibility.Visible;
                         srcGridGsA.Visibility = Visibility.Hidden;
@@ -283,6 +290,7 @@ namespace TextureMerge
                     }
                     else
                     {
+                        LoadA.Content = CLEAR_TEXT;
                         alphaNoDataLabel.Visibility = Visibility.Hidden;
                         ShowAlphaSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Alpha))

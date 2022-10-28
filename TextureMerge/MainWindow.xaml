@@ -54,12 +54,7 @@
                 </Grid>
                 <Label Content="R" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCC0000" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
-                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearR" />
+                    <Button x:Name="LoadR" Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
                 </Grid>
             </Grid>
             <Button Grid.Column="1" Content="⇄" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Click="SwapGB"/>
@@ -79,12 +74,7 @@
                 </Grid>
                 <Label Content="G" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF00CC00" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadG" />
-                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearG" />
+                    <Button x:Name="LoadG" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadG" />
                 </Grid>
             </Grid>
             <Button Grid.Column="2" Content="⇄" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Click="SwapBA"/>
@@ -104,12 +94,7 @@
                 </Grid>
                 <Label Content="B" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF0000CC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadB" />
-                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearB" />
+                    <Button x:Name="LoadB" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadB" />
                 </Grid>
             </Grid>
             <Grid Grid.Column="3" Margin="5,0,40,0" Drop="AlphaDrop" AllowDrop="true">
@@ -128,12 +113,7 @@
                 </Grid>
                 <Label Content="A" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCCCCCC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadA" />
-                    <Button Content="Clear"  Grid.Column="1" Margin="5,10,10,10" Click="ButtonClearA" />
+                    <Button x:Name="LoadA" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadA" />
                 </Grid>
             </Grid>
         </Grid>

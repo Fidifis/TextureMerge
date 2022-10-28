@@ -16,6 +16,9 @@ namespace TextureMerge
         private bool hasEditedPath = false;
         private Color defaultColor;
 
+        private const string LOAD_TEXT = "Load";
+        private const string CLEAR_TEXT = "Clear";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -67,9 +70,10 @@ namespace TextureMerge
             {
                 for (int i = 1; i < args.Length; ++i)
                 {
-                    switch (i-1) {
+                    switch (i - 1)
+                    {
                         case 0:
-                        if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, args[i]))
+                            if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, args[i]))
                                 ShowRedSourceGrid();
                             break;
                         case 1:
@@ -91,29 +95,73 @@ namespace TextureMerge
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red))
-                ShowRedSourceGrid();
+            if (merge.isEmpty(Channel.Red))
+            {
+                if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red))
+                {
+                    ShowRedSourceGrid();
+                    LoadR.Content = CLEAR_TEXT;
+                }
+            }
+            else
+            {
+                ClearR();
+                LoadR.Content = LOAD_TEXT;
+            }
         }
 
         private async void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green))
-                ShowGreenSourceGrid();
+            if (merge.isEmpty(Channel.Green))
+            {
+                if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green))
+                {
+                    ShowGreenSourceGrid();
+                    LoadG.Content = CLEAR_TEXT;
+                }
+            }
+            else
+            {
+                ClearG();
+                LoadG.Content = LOAD_TEXT;
+            }
         }
 
         private async void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue))
-                ShowBlueSourceGrid();
+            if (merge.isEmpty(Channel.Blue))
+            {
+                if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue))
+                {
+                    ShowBlueSourceGrid();
+                    LoadB.Content = CLEAR_TEXT;
+                }
+            }
+            else
+            {
+                ClearB();
+                LoadB.Content = LOAD_TEXT;
+            }
         }
 
         private async void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red))
-                ShowAlphaSourceGrid();
+            if (merge.isEmpty(Channel.Alpha))
+            {
+                if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red))
+                {
+                    ShowAlphaSourceGrid();
+                    LoadA.Content = CLEAR_TEXT;
+                }
+            }
+            else
+            {
+                ClearA();
+                LoadA.Content = LOAD_TEXT;
+            }
         }
 
-        private void ButtonClearR(object sender, RoutedEventArgs e)
+        private void ClearR()
         {
             merge.Clear(Channel.Red);
             RedCh.Source = null;
@@ -122,7 +170,7 @@ namespace TextureMerge
             srcGridCR.Visibility = Visibility.Hidden;
         }
 
-        private void ButtonClearG(object sender, RoutedEventArgs e)
+        private void ClearG()
         {
             merge.Clear(Channel.Green);
             GreenCh.Source = null;
@@ -131,7 +179,7 @@ namespace TextureMerge
             srcGridCG.Visibility = Visibility.Hidden;
         }
 
-        private void ButtonClearB(object sender, RoutedEventArgs e)
+        private void ClearB()
         {
             merge.Clear(Channel.Blue);
             BlueCh.Source = null;
@@ -140,7 +188,7 @@ namespace TextureMerge
             srcGridCB.Visibility = Visibility.Hidden;
         }
 
-        private void ButtonClearA(object sender, RoutedEventArgs e)
+        private void ClearA()
         {
             merge.Clear(Channel.Alpha);
             AlphaCh.Source = null;
@@ -153,7 +201,7 @@ namespace TextureMerge
         {
             SetSaveImagePath();
         }
-        
+
         private void ChangeDefaultColor(object sender, RoutedEventArgs e)
         {
             ColorPicker picker = new ColorPicker(defaultColor);
@@ -163,7 +211,7 @@ namespace TextureMerge
             defaultColor = picker.PickedColor;
         }
 
-        private ushort ByteToUshortKeepRatio(byte value) => 
+        private ushort ByteToUshortKeepRatio(byte value) =>
             (ushort)((value * ushort.MaxValue) / 255);
 
 
@@ -190,7 +238,10 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]))
+                {
                     ShowRedSourceGrid();
+                    LoadR.Content = CLEAR_TEXT;
+                }
             }
         }
 
@@ -200,7 +251,10 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]))
+                {
                     ShowGreenSourceGrid();
+                    LoadG.Content = CLEAR_TEXT;
+                }
             }
         }
 
@@ -210,7 +264,10 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]))
+                {
                     ShowBlueSourceGrid();
+                    LoadB.Content = CLEAR_TEXT;
+                }
             }
         }
 
@@ -220,7 +277,10 @@ namespace TextureMerge
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]))
+                {
                     ShowAlphaSourceGrid();
+                    LoadA.Content = CLEAR_TEXT;
+                }
             }
         }
 
@@ -426,6 +486,9 @@ namespace TextureMerge
                 ShowRedSourceGrid();
                 ShowGreenSourceGrid();
                 ShowBlueSourceGrid();
+                LoadR.Content = CLEAR_TEXT;
+                LoadG.Content = CLEAR_TEXT;
+                LoadB.Content = CLEAR_TEXT;
             }
         }
 
