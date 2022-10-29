@@ -1,4 +1,8 @@
 # TextureMerge
+
+[![Main](https://github.com/Fidifis/TextureMerge/actions/workflows/main.yml/badge.svg)](https://github.com/Fidifis/TextureMerge/actions/workflows/main.yml)
+[![CodeQL](https://github.com/Fidifis/TextureMerge/actions/workflows/codeql.yml/badge.svg)](https://github.com/Fidifis/TextureMerge/actions/workflows/codeql.yml)
+
 ## Software to merge or pack textures into image channels, producing one image with up to four textures.
 
 this program is ideal if you want to pack individual grayscale textures in one image.
