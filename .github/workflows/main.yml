@@ -1,0 +1,45 @@
+name: Main
+
+on:
+  push:
+    tags:
+    - 'v*'
+      
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Setup Msbuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+      
+    - name: Restore NuGets
+      run: nuget restore TextureMerge.sln
+      
+    - name: Build x64
+      run: msbuild TextureMerge.sln /p:Configuration=Release /p:Platform=x64
+      
+    - name: Zip
+      run: Compress-Archive -Path .\TextureMerge\bin\x64\Release\* -DestinationPath .\TextureMerge\bin\x64\TextureMerge.zip
+      
+    - name: Build AIP
+      uses: caphyon/advinst-github-action@v1.0
+      with:
+        advinst-enable-automation: 'true'
+        aip-path: ${{ github.workspace }}\Setup\setup.aip
+        aip-package-name: setup.msi
+        aip-build-name: DefaultBuild
+        aip-output-dir: ${{ github.workspace }}\Setup\setup-SetupFiles
+      
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          .\TextureMerge\bin\x64\TextureMerge.zip
+          .\Setup\setup-SetupFiles\setup.msi
