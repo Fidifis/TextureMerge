@@ -9,7 +9,7 @@ this program is ideal if you want to pack individual grayscale textures in one i
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img1.jpg)
 
 ## Requirements
-Run this program you need [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) (installed by default on most computers)
+To run this program you need [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) (installed by default on most windows computers)
 
 ## Usage
 1. Download the software from [releases](https://github.com/Fidifis/TextureMerge/releases) \
@@ -41,3 +41,6 @@ Run this program you need [.NET Framework 4.8](https://dotnet.microsoft.com/en-u
 
 ## Example of use in Unreal Engine
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img7.jpg)
+
+## Questions
+If you have any questions, suggestions or something don't work, create [issue](https://github.com/Fidifis/TextureMerge/issues).
