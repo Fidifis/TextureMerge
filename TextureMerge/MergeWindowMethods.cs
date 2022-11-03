@@ -24,15 +24,25 @@ namespace TextureMerge
                 }
             }
 
-            if (Path.GetExtension(SaveImageName.Text) is null || Path.GetExtension(SaveImageName.Text) == "")
+            switch (Path.GetExtension(SaveImageName.Text))
             {
-                if (
-                MessageBox.Show("File don't have an extension!\n" +
-                                "Do you want to continue?",
-                                "No extension",
-                                MessageBoxButton.YesNo)
-                != MessageBoxResult.Yes)
-                    return;
+                case null:
+                case "":
+                    if (MessageBox.Show("File don't have an extension!\n" +
+                                        "Do you want to continue?",
+                                        "No extension",
+                                        MessageBoxButton.YesNo)
+                            != MessageBoxResult.Yes)
+                        return;
+                    break;
+                case ".jpeg":
+                case ".jpg":
+                    if (!merge.isEmpty(Channel.Alpha))
+                    {
+                        MessageBox.Show("This image format do not support alpha channel.");
+                        return;
+                    }
+                    break;
             }
 
             string path = PathToSave.Text + "\\" + SaveImageName.Text;

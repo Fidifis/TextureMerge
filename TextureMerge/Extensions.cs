@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using ImageMagick;
 
@@ -14,8 +15,7 @@ namespace TextureMerge
 
         public static string ToStringRounded(this double value, int decimalPlaces)
         {
-            double p = Math.Pow(10, decimalPlaces);
-            return ((long)(value * p) / p).ToString();
+            return Math.Round(value, decimalPlaces).ToString();
         }
 
         public static ImageSource ToImageSource(this MagickImage image)
@@ -31,8 +31,9 @@ namespace TextureMerge
             if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
                 throw new ArgumentException("Invalid path");
 
+            bitmap.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
+
             using (FileStream stream = new FileStream(saveFilePath, FileMode.Create)) {
-                bitmap.Format = GetExtension(Path.GetExtension(saveFilePath));
                 bitmap.Write(stream);
                 stream.Close();
             }
@@ -43,7 +44,7 @@ namespace TextureMerge
             return Task.Run(() => bitmap.Save(saveFilePath));
         }
 
-        private static MagickFormat GetExtension(string ext)
+        private static MagickFormat GetMagickExtension(this string ext)
         {
             switch (ext)
             {

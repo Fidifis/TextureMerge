@@ -11,6 +11,7 @@ namespace TextureMerge
     /// </summary>
     public partial class ColorPicker : Window
     {
+        private const int decimalPlaces = 1;
         public Color PickedColor { get; private set; }
 
         private bool canChange = true;
@@ -31,9 +32,9 @@ namespace TextureMerge
                 canChange = false;
                 RGBToHSV(R, G, B, out double H, out double S, out double V);
                 RGBToHex(R, G, B, out string hex);
-                HValue.Text = H.ToStringRounded(3);
-                SValue.Text = S.ToStringRounded(3);
-                VValue.Text = V.ToStringRounded(3);
+                HValue.Text = H.ToStringRounded(decimalPlaces);
+                SValue.Text = S.ToStringRounded(decimalPlaces);
+                VValue.Text = V.ToStringRounded(decimalPlaces);
                 HexValue.Text = hex;
                 canChange = true;
             }
@@ -65,9 +66,9 @@ namespace TextureMerge
                 RValue.Text = R.ToString();
                 GValue.Text = G.ToString();
                 BValue.Text = B.ToString();
-                HValue.Text = H.ToStringRounded(3);
-                SValue.Text = S.ToStringRounded(3);
-                VValue.Text = V.ToStringRounded(3);
+                HValue.Text = H.ToStringRounded(decimalPlaces);
+                SValue.Text = S.ToStringRounded(decimalPlaces);
+                VValue.Text = V.ToStringRounded(decimalPlaces);
                 canChange = true;
             }
         }
