@@ -8,6 +8,9 @@
 this program is ideal if you want to pack individual grayscale textures in one image.
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img1.jpg)
 
+## Requirements
+Run this program you need [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) (installed by default on most computers)
+
 ## Usage
 1. Download the software from [releases](https://github.com/Fidifis/TextureMerge/releases) \
 *Install it using setup or extract the zip folder*
