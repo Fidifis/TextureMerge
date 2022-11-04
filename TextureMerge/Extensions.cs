@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 using ImageMagick;
 
@@ -33,7 +32,7 @@ namespace TextureMerge
 
             bitmap.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
 
-            using (FileStream stream = new FileStream(saveFilePath, FileMode.Create)) {
+            using (FileStream stream = new FileStream(saveFilePath, FileMode.Create, FileAccess.Write)) {
                 bitmap.Write(stream);
                 stream.Close();
             }

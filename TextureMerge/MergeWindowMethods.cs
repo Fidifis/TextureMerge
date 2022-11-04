@@ -37,7 +37,7 @@ namespace TextureMerge
                     break;
                 case ".jpeg":
                 case ".jpg":
-                    if (!merge.isEmpty(Channel.Alpha))
+                    if (!merge.IsEmpty(Channel.Alpha))
                     {
                         MessageBox.Show("This image format do not support alpha channel.");
                         return;
@@ -200,7 +200,7 @@ namespace TextureMerge
             switch (channel)
             {
                 case Channel.Red:
-                    if (merge.isEmpty(Channel.Red))
+                    if (merge.IsEmpty(Channel.Red))
                     {
                         LoadR.Content = LOAD_TEXT;
                         RedCh.Source = null;
@@ -230,7 +230,7 @@ namespace TextureMerge
                     }
                     break;
                 case Channel.Green:
-                    if (merge.isEmpty(Channel.Green))
+                    if (merge.IsEmpty(Channel.Green))
                     {
                         LoadG.Content = LOAD_TEXT;
                         GreenCh.Source = null;
@@ -260,7 +260,7 @@ namespace TextureMerge
                     }
                     break;
                 case Channel.Blue:
-                    if (merge.isEmpty(Channel.Blue))
+                    if (merge.IsEmpty(Channel.Blue))
                     {
                         LoadB.Content = LOAD_TEXT;
                         BlueCh.Source = null;
@@ -290,7 +290,7 @@ namespace TextureMerge
                     }
                     break;
                 case Channel.Alpha:
-                    if (merge.isEmpty(Channel.Alpha))
+                    if (merge.IsEmpty(Channel.Alpha))
                     {
                         LoadA.Content = LOAD_TEXT;
                         AlphaCh.Source = null;

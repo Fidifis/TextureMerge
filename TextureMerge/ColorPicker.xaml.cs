@@ -240,9 +240,9 @@ namespace TextureMerge
                     b = q;
                     break;
             }
-            R = (byte)(r * 255.0);
-            G = (byte)(g * 255.0);
-            B = (byte)(b * 255.0);
+            R = (byte)Math.Round(r * 255.0, 0);
+            G = (byte)Math.Round(g * 255.0, 0);
+            B = (byte)Math.Round(b * 255.0, 0);
         }
     }
 }

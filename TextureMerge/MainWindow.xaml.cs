@@ -95,7 +95,7 @@ namespace TextureMerge
 
         private async void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            if (merge.isEmpty(Channel.Red))
+            if (merge.IsEmpty(Channel.Red))
             {
                 if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red))
                 {
@@ -112,7 +112,7 @@ namespace TextureMerge
 
         private async void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            if (merge.isEmpty(Channel.Green))
+            if (merge.IsEmpty(Channel.Green))
             {
                 if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green))
                 {
@@ -129,7 +129,7 @@ namespace TextureMerge
 
         private async void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            if (merge.isEmpty(Channel.Blue))
+            if (merge.IsEmpty(Channel.Blue))
             {
                 if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue))
                 {
@@ -146,7 +146,7 @@ namespace TextureMerge
 
         private async void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            if (merge.isEmpty(Channel.Alpha))
+            if (merge.IsEmpty(Channel.Alpha))
             {
                 if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red))
                 {

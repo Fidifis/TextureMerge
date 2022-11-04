@@ -89,7 +89,7 @@ namespace TextureMerge
             {
                 try
                 {
-                    var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create);
+                    var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create, FileAccess.Write);
                     var serializer = new XmlSerializer(typeof(Config));
                     serializer.Serialize(stream, Current);
                 }

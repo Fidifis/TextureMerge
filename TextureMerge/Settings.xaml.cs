@@ -13,7 +13,8 @@ namespace TextureMerge
     {
         public Config SavedConfig { get; private set; }
 
-        private Config config;
+        private readonly Config config;
+        private readonly bool enableSendToOriginalState = false;
         public Settings(Config config)
         {
             this.config = config;
@@ -33,6 +34,7 @@ namespace TextureMerge
 
             if (config.EnableSendTo)
             {
+                enableSendToOriginalState = true;
                 EnableSendTo.IsChecked = true;
                 EnableSendTo.Visibility = Visibility.Visible;
             }
@@ -89,7 +91,8 @@ namespace TextureMerge
             else
             {
                 SavedConfig.EnableSendTo = false;
-                DeleteFromSendTo();
+                if (enableSendToOriginalState)
+                    DeleteFromSendTo();
             }
 
             SavedConfig.CheckForUpdates = CheckForUpdates.IsChecked == true;

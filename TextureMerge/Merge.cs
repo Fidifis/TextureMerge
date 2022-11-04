@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ImageMagick;
@@ -131,6 +130,8 @@ namespace TextureMerge
             }
             if (alpha != null)
             {
+                if (depth == -1)
+                    depth = alpha.Depth;
                 if (depth != alpha.Depth)
                     return false;
             }
@@ -391,7 +392,7 @@ namespace TextureMerge
             alphaChSource = channels[3];
         }
 
-        public bool isEmpty(Channel which)
+        public bool IsEmpty(Channel which)
         {
             switch (which)
             {
