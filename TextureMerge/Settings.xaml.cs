@@ -118,7 +118,7 @@ namespace TextureMerge
             try
             {
                 string sendtoPath = Environment.GetFolderPath(Environment.SpecialFolder.SendTo);
-                string filelnk = sendtoPath + "Texture Merge.lnk";
+                string filelnk = sendtoPath + "\\Texture Merge.lnk";
                 if (File.Exists(filelnk))
                     File.Delete(filelnk);
                 else
