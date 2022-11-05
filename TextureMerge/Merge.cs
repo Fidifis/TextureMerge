@@ -96,6 +96,11 @@ namespace TextureMerge
                 default: throw new ArgumentException("Invalid channel");
             }
 
+            if (img == null)
+            {
+                throw new NullReferenceException("Cannot check grayscale on empty image");
+            }
+
             var pixels = img.GetPixels().ToArray();
             for (int i = 0; i < pixels.Length; i++)
             {
@@ -303,6 +308,7 @@ namespace TextureMerge
 
             if (channelSource == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
+
 
             var source = new MagickImage(path);
 

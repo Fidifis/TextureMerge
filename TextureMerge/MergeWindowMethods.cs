@@ -111,7 +111,15 @@ namespace TextureMerge
             {
                 var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
                 SetStatus("Saving...", statusBlueColor);
-                await result.SaveAsync(path);
+                try
+                {
+                    await result.SaveAsync(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
+                        "Error", MessageDialog.Type.Error);
+                }
             }
 
             else
@@ -188,10 +196,21 @@ namespace TextureMerge
                 var tmpLabelContent = label.Content;
                 label.Content = "Loading...";
                 SetStatus("Loading...", statusBlueColor);
-                WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
-                SetStatus();
-                label.Content = tmpLabelContent;
-                label.Visibility = Visibility.Hidden;
+                try
+                {
+                    WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
+                    SetStatus();
+                    label.Content = tmpLabelContent;
+                    label.Visibility = Visibility.Hidden;
+                    RefreshState(channel); // Reason for this is Bugfix of: Bug description: load image, change source, load image again, source channel is changed to original but UI doesnt refreshed source button
+                }
+                catch (Exception ex)
+                {
+                    SetStatus();
+                    label.Content = tmpLabelContent;
+                    MessageDialog.Show("Failed to load image." + Environment.NewLine + ex.Message,
+                        "Error", MessageDialog.Type.Error);
+                }
                 return true;
             }
             else return false;
@@ -212,7 +231,6 @@ namespace TextureMerge
                     }
                     else
                     {
-                        LoadR.Content = CLEAR_TEXT;
                         redNoDataLabel.Visibility = Visibility.Hidden;
                         ShowRedSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Red))
@@ -242,7 +260,6 @@ namespace TextureMerge
                     }
                     else
                     {
-                        LoadG.Content = CLEAR_TEXT;
                         greenNoDataLabel.Visibility = Visibility.Hidden;
                         ShowGreenSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Green))
@@ -272,7 +289,6 @@ namespace TextureMerge
                     }
                     else
                     {
-                        LoadB.Content = CLEAR_TEXT;
                         blueNoDataLabel.Visibility = Visibility.Hidden;
                         ShowBlueSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Blue))
@@ -302,7 +318,6 @@ namespace TextureMerge
                     }
                     else
                     {
-                        LoadA.Content = CLEAR_TEXT;
                         alphaNoDataLabel.Visibility = Visibility.Hidden;
                         ShowAlphaSourceGrid();
                         switch (merge.GetSourceChannel(Channel.Alpha))

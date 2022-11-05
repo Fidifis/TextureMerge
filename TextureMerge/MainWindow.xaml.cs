@@ -100,7 +100,6 @@ namespace TextureMerge
                 if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red))
                 {
                     ShowRedSourceGrid();
-                    LoadR.Content = CLEAR_TEXT;
                 }
             }
             else
@@ -117,7 +116,6 @@ namespace TextureMerge
                 if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green))
                 {
                     ShowGreenSourceGrid();
-                    LoadG.Content = CLEAR_TEXT;
                 }
             }
             else
@@ -134,7 +132,6 @@ namespace TextureMerge
                 if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue))
                 {
                     ShowBlueSourceGrid();
-                    LoadB.Content = CLEAR_TEXT;
                 }
             }
             else
@@ -151,7 +148,6 @@ namespace TextureMerge
                 if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red))
                 {
                     ShowAlphaSourceGrid();
-                    LoadA.Content = CLEAR_TEXT;
                 }
             }
             else
@@ -240,7 +236,6 @@ namespace TextureMerge
                 if (await ButtonLoad(RedCh, redNoDataLabel, Channel.Red, Channel.Red, files[0]))
                 {
                     ShowRedSourceGrid();
-                    LoadR.Content = CLEAR_TEXT;
                 }
             }
         }
@@ -253,7 +248,6 @@ namespace TextureMerge
                 if (await ButtonLoad(GreenCh, greenNoDataLabel, Channel.Green, Channel.Green, files[0]))
                 {
                     ShowGreenSourceGrid();
-                    LoadG.Content = CLEAR_TEXT;
                 }
             }
         }
@@ -266,7 +260,6 @@ namespace TextureMerge
                 if (await ButtonLoad(BlueCh, blueNoDataLabel, Channel.Blue, Channel.Blue, files[0]))
                 {
                     ShowBlueSourceGrid();
-                    LoadB.Content = CLEAR_TEXT;
                 }
             }
         }
@@ -279,13 +272,13 @@ namespace TextureMerge
                 if (await ButtonLoad(AlphaCh, alphaNoDataLabel, Channel.Alpha, Channel.Red, files[0]))
                 {
                     ShowAlphaSourceGrid();
-                    LoadA.Content = CLEAR_TEXT;
                 }
             }
         }
 
         private void ShowRedSourceGrid()
         {
+            LoadR.Content = CLEAR_TEXT;
             if (merge.IsGrayScale(Channel.Red))
             {
                 srcGridGsR.Visibility = Visibility.Visible;
@@ -300,6 +293,7 @@ namespace TextureMerge
 
         private void ShowGreenSourceGrid()
         {
+            LoadG.Content = CLEAR_TEXT;
             if (merge.IsGrayScale(Channel.Green))
             {
                 srcGridGsG.Visibility = Visibility.Visible;
@@ -314,6 +308,7 @@ namespace TextureMerge
 
         private void ShowBlueSourceGrid()
         {
+            LoadB.Content = CLEAR_TEXT;
             if (merge.IsGrayScale(Channel.Blue))
             {
                 srcGridGsB.Visibility = Visibility.Visible;
@@ -328,6 +323,7 @@ namespace TextureMerge
 
         private void ShowAlphaSourceGrid()
         {
+            LoadA.Content = CLEAR_TEXT;
             if (merge.IsGrayScale(Channel.Alpha))
             {
                 srcGridGsA.Visibility = Visibility.Visible;
@@ -486,9 +482,6 @@ namespace TextureMerge
                 ShowRedSourceGrid();
                 ShowGreenSourceGrid();
                 ShowBlueSourceGrid();
-                LoadR.Content = CLEAR_TEXT;
-                LoadG.Content = CLEAR_TEXT;
-                LoadB.Content = CLEAR_TEXT;
             }
         }
 

@@ -17,8 +17,28 @@ namespace TextureMerge
             string content;
             using (WebClient client = new WebClient())
             {
-                client.Headers.Add(HttpRequestHeader.UserAgent, "TextureMerge_webclient");
-                content = await client.DownloadStringTaskAsync(new Uri("https://api.github.com/repos/Fidifis/TextureMerge/releases/latest"));
+                try
+                {
+                    client.Headers.Add(HttpRequestHeader.UserAgent, "TextureMerge_webclient");
+                    content = await client.DownloadStringTaskAsync(new Uri("https://api.github.com/repos/Fidifis/TextureMerge/releases/latest"));
+                }
+                catch (WebException ex)
+                {
+                    // Probbably no internet connection - dont show error message if not forcced
+                    if (forced)
+                    {
+                        MessageDialog.Show("Error when trying to check latest version. Check your internet connection." +
+                            Environment.NewLine + ex.Message,
+                            "Error", MessageDialog.Type.Error);
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageDialog.Show("Error when trying to check latest version" + Environment.NewLine + ex.Message,
+                        "Error", MessageDialog.Type.Error);
+                    return;
+                }
             }
 
             string latestVersion = GetValue(content, "tag_name");
@@ -28,7 +48,15 @@ namespace TextureMerge
                 updateDialog.ShowDialog();
                 if (updateDialog.DialogResult == true)
                 {
-                    Process.Start("https://github.com/Fidifis/TextureMerge/releases/latest");
+                    try
+                    {
+                        Process.Start("https://github.com/Fidifis/TextureMerge/releases/latest");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageDialog.Show("Failed to open web browser." + Environment.NewLine + ex.Message,
+                            "Error", MessageDialog.Type.Error);
+                    }
                 }
                 else if (updateDialog.Skip)
                 {
