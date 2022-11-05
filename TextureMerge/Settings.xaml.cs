@@ -128,8 +128,8 @@ namespace TextureMerge
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to remove from context menu\nMessage:\n" + ex.Message,
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageDialog.Show("Unable to remove from context menu\nMessage:\n" + ex.Message,
+                    "Error", MessageDialog.Type.Error);
             }
         }
     }

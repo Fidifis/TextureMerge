@@ -25,7 +25,7 @@ namespace TextureMerge
             }
             else
             {
-                MessageBox.Show("Invalid input");
+                MessageDialog.Show("Invalid input", type: MessageDialog.Type.Error);
             }
         }
 

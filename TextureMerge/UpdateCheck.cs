@@ -37,7 +37,7 @@ namespace TextureMerge
             }
             else if (forced)
             {
-                MessageBox.Show("No updates");
+                MessageDialog.Show("No updates");
             }
         }
 

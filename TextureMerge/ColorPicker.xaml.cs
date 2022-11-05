@@ -97,7 +97,7 @@ namespace TextureMerge
             }
             else
             {
-                MessageBox.Show("Entered value is not a number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageDialog.Show("Entered value is not a number", "Error", MessageDialog.Type.Error);
             }
         }
 
@@ -177,9 +177,24 @@ namespace TextureMerge
                 R = G = B = 0;
                 return;
             }
-            R = Convert.ToByte(hex.Substring(1, 2), 16);
-            G = Convert.ToByte(hex.Substring(3, 2), 16);
-            B = Convert.ToByte(hex.Substring(5, 2), 16);
+
+            if (hex.Length == 9)
+            {
+                hex = hex.Remove(1, 2);
+            }
+
+            try
+            {
+                R = Convert.ToByte(hex.Substring(1, 2), 16);
+                G = Convert.ToByte(hex.Substring(3, 2), 16);
+                B = Convert.ToByte(hex.Substring(5, 2), 16);
+            }
+            catch (Exception ex)
+            {
+                R = G = B = 0;
+                MessageDialog.Show("Error when converting from Hex." + Environment.NewLine + ex.Message,
+                    "Error", MessageDialog.Type.Error);
+            }
         }
 
         private static void HSVToRGB(double H, double S, double V, out byte R, out byte G, out byte B)

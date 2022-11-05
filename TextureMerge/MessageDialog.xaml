@@ -1,0 +1,15 @@
+﻿<Window x:Class="TextureMerge.MessageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextureMerge"
+        mc:Ignorable="d"
+        x:Name="ThisDialog"
+        Title="MessageDialog" Height="200" Width="400" ResizeMode="NoResize" Topmost="True">
+    <Grid>
+        <TextBox x:Name="MessageText" Text="Empty message" Margin="30,10,30,60" IsReadOnly="True" BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Button Content="OK" x:Name="PositiveButton" Height="25" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,15" Click="ButtonPossitive"/>
+        <Button Content="Cancel" x:Name="NegativeButton" Height="25" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,106,15" Click="ButtonNegative"/>
+    </Grid>
+</Window>

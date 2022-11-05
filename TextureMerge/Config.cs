@@ -78,8 +78,8 @@ namespace TextureMerge
             }
             catch (Exception e)
             {
-                MessageBox.Show("Unable to load configuration" + Environment.NewLine + e.Message,
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageDialog.Show("Unable to load configuration" + Environment.NewLine + e.Message,
+                    "Error", MessageDialog.Type.Error);
             }
         }
 
@@ -95,8 +95,8 @@ namespace TextureMerge
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Unable to save configuration" + Environment.NewLine + e.Message,
-                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageDialog.Show("Unable to save configuration" + Environment.NewLine + e.Message,
+                        "Error", MessageDialog.Type.Error);
                 }
             }
         }

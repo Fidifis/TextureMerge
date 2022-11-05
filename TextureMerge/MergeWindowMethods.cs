@@ -19,7 +19,7 @@ namespace TextureMerge
                 SetSaveImagePath();
                 if (!hasSetupPath)
                 {
-                    MessageBox.Show("Operation aborted");
+                    MessageDialog.Show("Operation aborted");
                     return;
                 }
             }
@@ -28,18 +28,19 @@ namespace TextureMerge
             {
                 case null:
                 case "":
-                    if (MessageBox.Show("File don't have an extension!\n" +
+                    if (MessageDialog.Show("File don't have an extension!\n" +
                                         "Do you want to continue?",
                                         "No extension",
-                                        MessageBoxButton.YesNo)
-                            != MessageBoxResult.Yes)
+                                        MessageDialog.Type.Warning,
+                                        MessageDialog.Buttons.YesNo)
+                            != true)
                         return;
                     break;
                 case ".jpeg":
                 case ".jpg":
                     if (!merge.IsEmpty(Channel.Alpha))
                     {
-                        MessageBox.Show("This image format do not support alpha channel.");
+                        MessageDialog.Show("This image format do not support alpha channel.", "Error", MessageDialog.Type.Error);
                         return;
                     }
                     break;
@@ -48,11 +49,11 @@ namespace TextureMerge
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
             if (File.Exists(path))
             {
-                if (MessageBox.Show("File already exist!\n" +
+                if (MessageDialog.Show("File already exist!\n" +
                     "Do you want to overwrite it?",
                     "File already exist",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                    MessageDialog.Type.Warning,
+                    MessageDialog.Buttons.YesNo) != true)
                 {
                     return;
                 }
@@ -76,13 +77,13 @@ namespace TextureMerge
                 }
                 else
                 {
-                    MessageBox.Show("Operation aborted");
+                    MessageDialog.Show("Operation aborted");
                     return;
                 }
             }
             else if (width == 0 || height == 0)
             {
-                MessageBox.Show("No images loaded", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageDialog.Show("No images loaded", type: MessageDialog.Type.Error);
                 return;
             }
 
@@ -99,7 +100,7 @@ namespace TextureMerge
                 }
                 else
                 {
-                    MessageBox.Show("Operation aborted");
+                    MessageDialog.Show("Operation aborted");
                     return;
                 }
             }
@@ -114,8 +115,9 @@ namespace TextureMerge
             }
 
             else
-                MessageBox.Show("Save path is not valid!\n" +
-                    "Check if the path is correct.");
+                MessageDialog.Show("Save path is not valid!\n" +
+                    "Check if the path is correct.",
+                    type: MessageDialog.Type.Error);
 
             SetStatus("Done!", statusGreenColor);
             await Task.Delay(5000);

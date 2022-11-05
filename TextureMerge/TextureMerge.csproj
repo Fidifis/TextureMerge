@@ -90,6 +90,9 @@
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>
     <Compile Include="MergeWindowMethods.cs" />
+    <Compile Include="MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resize.xaml.cs">
       <DependentUpon>Resize.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
