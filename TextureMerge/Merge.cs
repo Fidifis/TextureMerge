@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using ImageMagick;
 
 namespace TextureMerge
@@ -295,15 +294,7 @@ namespace TextureMerge
             return result;
         }
 
-        private static ImageSource MakeChannelThumbnail_MemorySafe(MagickImage sourceBitmap, Channel channel)
-        {
-            var t = MakeChannelThumbnail(sourceBitmap, channel);
-            var i = t.ToImageSource();
-            t.Dispose();
-            return i;
-        }
-
-        public Task<ImageSource> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
+        public Task<MagickImage> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
         {
             switch (channelSlot)
             {
@@ -320,7 +311,7 @@ namespace TextureMerge
             }
         }
 
-        public ImageSource LoadChannel(string path, Channel channelSlot, Channel channelSource)
+        public MagickImage LoadChannel(string path, Channel channelSlot, Channel channelSource)
         {
             if (path == string.Empty)
                 throw new ArgumentException("Invalid path");
@@ -362,11 +353,11 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            return MakeChannelThumbnail_MemorySafe(source, channelSource);
+            return MakeChannelThumbnail(source, channelSource);
         }
 
         // TODO This is very similar to LoadChannel. They could be rewriten to avoid duplicit code.
-        public ImageSource SetChannelSource(Channel channel, Channel channelSource)
+        public MagickImage SetChannelSource(Channel channel, Channel channelSource)
         {
             if (channelSource == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
@@ -394,10 +385,10 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            return MakeChannelThumbnail_MemorySafe(thumbnail, channelSource);
+            return MakeChannelThumbnail(thumbnail, channelSource);
         }
 
-        public ImageSource GetChannelThumbnail(Channel channel)
+        public MagickImage GetChannelThumbnail(Channel channel)
         {
             MagickImage thumbnail;
             switch (channel)
@@ -421,7 +412,7 @@ namespace TextureMerge
             if (thumbnail == null)
                 return null;
             else
-                return MakeChannelThumbnail_MemorySafe(thumbnail, GetSourceChannel(channel));
+                return MakeChannelThumbnail(thumbnail, GetSourceChannel(channel));
         }
 
         public void Swap(Channel ch1, Channel ch2)

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ImageMagick;
 
 namespace TextureMerge
@@ -17,17 +19,28 @@ namespace TextureMerge
             return Math.Round(value, decimalPlaces).ToString();
         }
 
-        public static ImageSource ToImageSource(this MagickImage image)
+        public static void SetImageThumbnail(this Image element, MagickImage image)
         {
-            //return null;
-            // TODO This is memory leak. But it dont work when stream is disposed.
+            if (image == null)
+            {
+                element.Source = null;
+                return;
+            }
+
             using (var stream = new MemoryStream())
             {
                 image.Format = MagickFormat.Png;
                 image.Write(stream);
-                return (ImageSource)new ImageSourceConverter().ConvertFrom(stream);
-            }
+                image.Dispose();
 
+                var imageSource = new BitmapImage();
+                imageSource.BeginInit();
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
+                imageSource.StreamSource = stream;
+                imageSource.EndInit();
+
+                element.Source = imageSource;
+            }
         }
 
         public static void Save(this MagickImage bitmap, string saveFilePath)
