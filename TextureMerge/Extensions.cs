@@ -19,12 +19,14 @@ namespace TextureMerge
 
         public static ImageSource ToImageSource(this MagickImage image)
         {
-            return null;
+            //return null;
             // TODO This is memory leak. But it dont work when stream is disposed.
-            //var stream = new MemoryStream();
-            //image.Format = MagickFormat.Png;
-            //image.Write(stream);
-            //return (ImageSource)new ImageSourceConverter().ConvertFrom(stream);
+            using (var stream = new MemoryStream())
+            {
+                image.Format = MagickFormat.Png;
+                image.Write(stream);
+                return (ImageSource)new ImageSourceConverter().ConvertFrom(stream);
+            }
 
         }
 

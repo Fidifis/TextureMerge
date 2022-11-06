@@ -102,7 +102,9 @@ namespace TextureMerge
                 throw new NullReferenceException("Cannot check grayscale on empty image");
             }
 
-            var pixels = img.GetPixels().ToArray();
+            var pixs = img.GetPixels();
+            var pixels = pixs.ToArray();
+            pixs.Dispose();
             for (int i = 0; i < pixels.Length; i++)
             {
                 if (i % 3 != 0)
