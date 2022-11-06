@@ -6,6 +6,7 @@
 ## Software to merge or pack textures into image channels, producing one image with up to four textures.
 
 this program is ideal if you want to pack individual grayscale textures in one image.
+
 ![image](https://github.com/Fidifis/TextureMerge/raw/master/Tutorial-images/img1.jpg)
 
 ## Requirements
