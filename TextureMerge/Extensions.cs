@@ -6,7 +6,7 @@ using ImageMagick;
 
 namespace TextureMerge
 {
-    public enum Channel : int { Red, Green, Blue, Alpha }
+    public enum Channel : int { Red = 0, Green = 1, Blue = 2, Alpha = 3 }
 
     public static class Extensions
     {
@@ -19,6 +19,7 @@ namespace TextureMerge
 
         public static ImageSource ToImageSource(this MagickImage image)
         {
+            // TODO This is memory leak. But it dont work when stream is disposed.
             var stream = new MemoryStream();
             image.Format = MagickFormat.Png;
             image.Write(stream);
@@ -41,6 +42,29 @@ namespace TextureMerge
         public static Task SaveAsync(this MagickImage bitmap, string saveFilePath)
         {
             return Task.Run(() => bitmap.Save(saveFilePath));
+        }
+
+        public static Color ToColor(this int color)
+        {
+            int r, g, b;
+            r = (color & 0x00FF0000) >> 16;
+            g = (color & 0x0000FF00) >> 8;
+            b = (color & 0x000000FF);
+            return Color.FromRgb
+            (
+                (byte)r,
+                (byte)g,
+                (byte)b
+            );
+        }
+
+        public static int ToInt(this Color color)
+        {
+            int r = color.R,
+                g = color.G,
+                b = color.B;
+
+            return (r << 16) | (g << 8) | b;
         }
 
         private static MagickFormat GetMagickExtension(this string ext)

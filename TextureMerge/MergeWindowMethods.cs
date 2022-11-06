@@ -1,9 +1,9 @@
-﻿using Microsoft.Win32;
+﻿using ImageMagick;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace TextureMerge
@@ -140,7 +140,7 @@ namespace TextureMerge
             StatusLabel.Content = message;
         }
 
-        private string GetImagePath()
+        private bool? AskForImagePath(out string path)
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -148,9 +148,9 @@ namespace TextureMerge
                 Title = "Select an image file",
                 Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*" //TODO: Add more formats
             };
-            if (openFileDialog.ShowDialog() == true)
-                return openFileDialog.FileName;
-            return string.Empty;
+            bool? r = openFileDialog.ShowDialog();
+            path = openFileDialog.FileName;
+            return r;
         }
 
         private void SetSaveImagePath()
@@ -179,164 +179,110 @@ namespace TextureMerge
             }
         }
 
-        //TODO this method should be reworked
-        private async Task<bool> ButtonLoad(Image WPFElement, Label label, Channel channel, Channel sourceChannel, string path = null)
+        private async void LoadToChannelAsync(Channel channel, string path)
         {
-            if (path is null)
-                path = GetImagePath();
-
-            if (path != string.Empty)
+            if (path == null || path.Length == 0)
             {
-                if (!hasEditedPath && !hasSetupPath)
-                {
-                    PathToSave.Text = Path.GetDirectoryName(path);
-                    hasEditedPath = false;
-                }
-
-                var tmpLabelContent = label.Content;
-                label.Content = "Loading...";
-                SetStatus("Loading...", statusBlueColor);
-                try
-                {
-                    WPFElement.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
-                    SetStatus();
-                    label.Content = tmpLabelContent;
-                    label.Visibility = Visibility.Hidden;
-                    RefreshState(channel); // Reason for this is Bugfix of: Bug description: load image, change source, load image again, source channel is changed to original but UI doesnt refreshed source button
-                }
-                catch (Exception ex)
-                {
-                    SetStatus();
-                    label.Content = tmpLabelContent;
-                    MessageDialog.Show("Failed to load image." + Environment.NewLine + ex.Message,
-                        "Error", MessageDialog.Type.Error);
-                }
-                return true;
+                throw new ArgumentException("Invalid path");
             }
-            else return false;
+
+            int ichannel = (int)channel;
+            var label = mapper.slots[ichannel].label;
+            var image = mapper.slots[ichannel].image;
+
+            if (!hasEditedPath && !hasSetupPath)
+            {
+                PathToSave.Text = Path.GetDirectoryName(path);
+                hasEditedPath = false;
+            }
+
+            var tmpLabelContent = label.Content;
+            label.Content = "Loading...";
+            SetStatus("Loading...", statusBlueColor);
+            try
+            {
+                var sourceChannel = channel == Channel.Alpha ? Channel.Red : channel;
+                image.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
+                label.Visibility = Visibility.Hidden;
+                UpdateSourceGrid(channel);
+            }
+            catch (Exception ex)
+            {
+                MessageDialog.Show("Failed to load image." + Environment.NewLine + ex.Message,
+                    "Error", MessageDialog.Type.Error);
+            }
+            finally
+            {
+                SetStatus();
+                label.Content = tmpLabelContent;
+            }
         }
 
-        private void RefreshState(Channel channel)
+        private SolidColorBrush GetColorBrushFor(Channel channel, bool highlight)
         {
+            byte value = highlight ? (byte)204 : (byte)68;
             switch (channel)
             {
                 case Channel.Red:
-                    if (merge.IsEmpty(Channel.Red))
-                    {
-                        LoadR.Content = LOAD_TEXT;
-                        RedCh.Source = null;
-                        redNoDataLabel.Visibility = Visibility.Visible;
-                        srcGridGsR.Visibility = Visibility.Hidden;
-                        srcGridCR.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        redNoDataLabel.Visibility = Visibility.Hidden;
-                        ShowRedSourceGrid();
-                        switch (merge.GetSourceChannel(Channel.Red))
-                        {
-                            // TODO Not optimal to call this methods, because they call SetSourceChannel
-                            case Channel.Red:
-                                SrcRR(null, null);
-                                break;
-                            case Channel.Green:
-                                SrcRG(null, null);
-                                break;
-                            case Channel.Blue:
-                                SrcRB(null, null);
-                                break;
-                            default: throw new ArgumentException("Invalid channel");
-                        }
-                    }
-                    break;
+                    return new SolidColorBrush(Color.FromRgb(value, 0, 0));
                 case Channel.Green:
-                    if (merge.IsEmpty(Channel.Green))
-                    {
-                        LoadG.Content = LOAD_TEXT;
-                        GreenCh.Source = null;
-                        greenNoDataLabel.Visibility = Visibility.Visible;
-                        srcGridGsG.Visibility = Visibility.Hidden;
-                        srcGridCG.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        greenNoDataLabel.Visibility = Visibility.Hidden;
-                        ShowGreenSourceGrid();
-                        switch (merge.GetSourceChannel(Channel.Green))
-                        {
-                            // TODO Not optimal to call this methods, because they call SetSourceChannel
-                            case Channel.Red:
-                                SrcGR(null, null);
-                                break;
-                            case Channel.Green:
-                                SrcGG(null, null);
-                                break;
-                            case Channel.Blue:
-                                SrcGB(null, null);
-                                break;
-                            default: throw new ArgumentException("Invalid channel");
-                        }
-                    }
-                    break;
+                    return new SolidColorBrush(Color.FromRgb(0, value, 0));
                 case Channel.Blue:
-                    if (merge.IsEmpty(Channel.Blue))
-                    {
-                        LoadB.Content = LOAD_TEXT;
-                        BlueCh.Source = null;
-                        blueNoDataLabel.Visibility = Visibility.Visible;
-                        srcGridGsB.Visibility = Visibility.Hidden;
-                        srcGridCB.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        blueNoDataLabel.Visibility = Visibility.Hidden;
-                        ShowBlueSourceGrid();
-                        switch (merge.GetSourceChannel(Channel.Blue))
-                        {
-                            // TODO Not optimal to call this methods, because they call SetSourceChannel
-                            case Channel.Red:
-                                SrcBR(null, null);
-                                break;
-                            case Channel.Green:
-                                SrcBG(null, null);
-                                break;
-                            case Channel.Blue:
-                                SrcBB(null, null);
-                                break;
-                            default: throw new ArgumentException("Invalid channel");
-                        }
-                    }
-                    break;
-                case Channel.Alpha:
-                    if (merge.IsEmpty(Channel.Alpha))
-                    {
-                        LoadA.Content = LOAD_TEXT;
-                        AlphaCh.Source = null;
-                        alphaNoDataLabel.Visibility = Visibility.Visible;
-                        srcGridGsA.Visibility = Visibility.Hidden;
-                        srcGridCA.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        alphaNoDataLabel.Visibility = Visibility.Hidden;
-                        ShowAlphaSourceGrid();
-                        switch (merge.GetSourceChannel(Channel.Alpha))
-                        {
-                            // TODO Not optimal to call this methods, because they call SetSourceChannel
-                            case Channel.Red:
-                                SrcAR(null, null);
-                                break;
-                            case Channel.Green:
-                                SrcAG(null, null);
-                                break;
-                            case Channel.Blue:
-                                SrcAB(null, null);
-                                break;
-                            default: throw new ArgumentException("Invalid channel");
-                        }
-                    }
-                    break;
+                    return new SolidColorBrush(Color.FromRgb(0, 0, value));
+                default:
+                    throw new ArgumentException("Invalid channel. Only R, G, B are allowed");
             }
         }
+
+        private void UpdateSourceGrid(Channel channel)
+        {
+            int ichannel = (int)channel;
+            var load = mapper.slots[ichannel].loadButton;
+            var image = mapper.slots[ichannel].image;
+            var label = mapper.slots[ichannel].label;
+            var grayscaleGrid = mapper.slots[ichannel].grayscaleSourceGrid;
+            var colorGrid = mapper.slots[ichannel].colorSourceGrid;
+
+            if (merge.IsEmpty(channel))
+            {
+                load.Content = LOAD_TEXT;
+                label.Visibility = Visibility.Visible;
+                grayscaleGrid.Visibility = Visibility.Hidden;
+                colorGrid.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                load.Content = CLEAR_TEXT;
+                label.Visibility = Visibility.Hidden;
+                if (merge.IsGrayScale(channel))
+                {
+                    grayscaleGrid.Visibility = Visibility.Visible;
+                    colorGrid.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    grayscaleGrid.Visibility = Visibility.Hidden;
+                    colorGrid.Visibility = Visibility.Visible;
+
+                    int source = (int)merge.GetSourceChannel(channel);
+                    if (source >= 3)
+                        throw new InvalidOperationException("Source channel is something else than R, G, B. (Alpha cannot be source channel)");
+                    for (int i = 0; i < 3; i++)
+                    {
+                        mapper.slots[ichannel].sourceChannelButton[i].Background = GetColorBrushFor((Channel)i, source == i);
+                    }
+                }
+            }
+        }
+
+        private ushort ByteToUshortKeepRatio(byte value) =>
+            (ushort)((value * ushort.MaxValue) / 255);
+
+
+        private MagickColor ColorToMagick(Color color) =>
+            new MagickColor(
+                ByteToUshortKeepRatio(color.R),
+                ByteToUshortKeepRatio(color.G),
+                ByteToUshortKeepRatio(color.B));
     }
 }

@@ -10,7 +10,7 @@ namespace TextureMerge
         MagickImage red = null, green = null, blue = null, alpha = null;
         readonly object redLock = new object(), greenLock = new object(), blueLock = new object(), alphaLock = new object();
         private Channel redChSource = Channel.Red, greenChSource = Channel.Green,
-            blueChSource = Channel.Blue, alphaChSource = Channel.Alpha;
+            blueChSource = Channel.Blue, alphaChSource = Channel.Red;
 
         public Task<MagickImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
         {
@@ -265,6 +265,12 @@ namespace TextureMerge
 
         private static MagickImage MakeChannelThumbnail(MagickImage sourceBitmap, Channel channel)
         {
+            if (channel == Channel.Alpha)
+                throw new ArgumentException("Alpha can't be source channel");
+
+            if (sourceBitmap == null)
+                throw new ArgumentException("Source bitmap is null");
+
             if (sourceBitmap.HasAlpha)
                 throw new ArgumentException("Source bitmap has alpha channel");
 
@@ -372,6 +378,33 @@ namespace TextureMerge
             }
 
             return MakeChannelThumbnail(thumbnail, channelSource).ToImageSource();
+        }
+
+        public ImageSource GetChannelThumbnail(Channel channel)
+        {
+            MagickImage thumbnail;
+            switch (channel)
+            {
+                case Channel.Red:
+                    thumbnail = red;
+                    break;
+                case Channel.Green:
+                    thumbnail = green;
+                    break;
+                case Channel.Blue:
+                    thumbnail = blue;
+                    break;
+                case Channel.Alpha:
+                    thumbnail = alpha;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+
+            if (thumbnail == null)
+                return null;
+            else
+                return MakeChannelThumbnail(thumbnail, GetSourceChannel(channel)).ToImageSource();
         }
 
         public void Swap(Channel ch1, Channel ch2)

@@ -91,7 +91,7 @@ namespace TextureMerge
         {
             if (GetRGB(out byte R, out byte G, out byte B))
             {
-                PickedColor = new Color() { R = R, G = G, B = B, A = 255 };
+                PickedColor = Color.FromRgb(R, G, B);
                 DialogResult = true;
                 Close();
             }
@@ -111,7 +111,7 @@ namespace TextureMerge
         {
             if (GetRGB(out byte R, out byte G, out byte B))
             {
-                ColorView.Fill = new SolidColorBrush(new Color() { R = R, G = G, B = B, A = 255 });
+                ColorView.Fill = new SolidColorBrush(Color.FromRgb(R, G, B));
             }
         }
 

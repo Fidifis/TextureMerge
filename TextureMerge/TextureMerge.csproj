@@ -89,6 +89,7 @@
     <Compile Include="Depth.xaml.cs">
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MergeWindowMapper.cs" />
     <Compile Include="MergeWindowMethods.cs" />
     <Compile Include="MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
