@@ -73,6 +73,7 @@ namespace TextureMerge
                 }
             }
             resultPix.SetPixels(resultPixels);
+            resultPix.Dispose();
             return result;
         }
 
@@ -279,7 +280,8 @@ namespace TextureMerge
             var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
             var resPix = result.GetPixels();
             var pixels = resPix.ToArray();
-            var sourcePixels = thumb.GetPixels().ToArray();
+            var sourcePix = thumb.GetPixels();
+            var sourcePixels = sourcePix.ToArray();
             for (int i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = sourcePixels[i - (i % 3) + (int)channel];
@@ -287,7 +289,16 @@ namespace TextureMerge
             resPix.SetPixels(pixels);
             thumb.Dispose();
             resPix.Dispose();
+            sourcePix.Dispose();
             return result;
+        }
+
+        private static ImageSource MakeChannelThumbnail_MemorySafe(MagickImage sourceBitmap, Channel channel)
+        {
+            var t = MakeChannelThumbnail(sourceBitmap, channel);
+            var i = t.ToImageSource();
+            t.Dispose();
+            return i;
         }
 
         public Task<ImageSource> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
@@ -326,18 +337,22 @@ namespace TextureMerge
             switch (channelSlot)
             {
                 case Channel.Red:
+                    red?.Dispose();
                     red = source;
                     redChSource = channelSource;
                     break;
                 case Channel.Green:
+                    green?.Dispose();
                     green = source;
                     greenChSource = channelSource;
                     break;
                 case Channel.Blue:
+                    blue?.Dispose();
                     blue = source;
                     blueChSource = channelSource;
                     break;
                 case Channel.Alpha:
+                    alpha?.Dispose();
                     alpha = source;
                     alphaChSource = channelSource;
                     break;
@@ -345,7 +360,7 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            return MakeChannelThumbnail(source, channelSource).ToImageSource();
+            return MakeChannelThumbnail_MemorySafe(source, channelSource);
         }
 
         // TODO This is very similar to LoadChannel. They could be rewriten to avoid duplicit code.
@@ -377,7 +392,7 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            return MakeChannelThumbnail(thumbnail, channelSource).ToImageSource();
+            return MakeChannelThumbnail_MemorySafe(thumbnail, channelSource);
         }
 
         public ImageSource GetChannelThumbnail(Channel channel)
@@ -404,7 +419,7 @@ namespace TextureMerge
             if (thumbnail == null)
                 return null;
             else
-                return MakeChannelThumbnail(thumbnail, GetSourceChannel(channel)).ToImageSource();
+                return MakeChannelThumbnail_MemorySafe(thumbnail, GetSourceChannel(channel));
         }
 
         public void Swap(Channel ch1, Channel ch2)
@@ -470,15 +485,19 @@ namespace TextureMerge
             switch (which)
             {
                 case Channel.Red:
+                    red.Dispose();
                     red = null;
                     break;
                 case Channel.Green:
+                    green.Dispose();
                     green = null;
                     break;
                 case Channel.Blue:
+                    blue.Dispose();
                     blue = null;
                     break;
                 case Channel.Alpha:
+                    alpha.Dispose();
                     alpha = null;
                     break;
                 default:
@@ -491,6 +510,7 @@ namespace TextureMerge
             red?.Dispose();
             green?.Dispose();
             blue?.Dispose();
+            alpha?.Dispose();
         }
     }
 }

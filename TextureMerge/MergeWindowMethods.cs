@@ -59,6 +59,7 @@ namespace TextureMerge
                 }
             }
 
+            // TODO possible memory leak
             Merge correct = merge;
 
             if (!merge.CheckResolution(out int width, out int height))
@@ -109,16 +110,18 @@ namespace TextureMerge
 
             if (Directory.Exists(PathToSave.Text))
             {
-                var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
-                SetStatus("Saving...", statusBlueColor);
-                try
+                using (var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth))
                 {
-                    await result.SaveAsync(path);
-                }
-                catch (Exception ex)
-                {
-                    MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
-                        "Error", MessageDialog.Type.Error);
+                    SetStatus("Saving...", statusBlueColor);
+                    try
+                    {
+                        await result.SaveAsync(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
+                            "Error", MessageDialog.Type.Error);
+                    }
                 }
             }
 
@@ -126,6 +129,7 @@ namespace TextureMerge
                 MessageDialog.Show("Save path is not valid!\n" +
                     "Check if the path is correct.",
                     type: MessageDialog.Type.Error);
+
 
             SetStatus("Done!", statusGreenColor);
             await Task.Delay(5000);
