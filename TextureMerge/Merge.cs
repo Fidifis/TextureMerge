@@ -4,14 +4,14 @@ using ImageMagick;
 
 namespace TextureMerge
 {
-    internal class Merge : IDisposable
+    internal class Merge
     {
-        MagickImage red = null, green = null, blue = null, alpha = null;
+        TMImage red = null, green = null, blue = null, alpha = null;
         readonly object redLock = new object(), greenLock = new object(), blueLock = new object(), alphaLock = new object();
         private Channel redChSource = Channel.Red, greenChSource = Channel.Green,
             blueChSource = Channel.Blue, alphaChSource = Channel.Red;
 
-        public Task<MagickImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
+        public Task<TMImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
         {
             return Task.Run(() => {
                 lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
@@ -19,7 +19,7 @@ namespace TextureMerge
             });
         }
 
-        public MagickImage DoMerge(MagickColor fillColor, int depth = -1)
+        public TMImage DoMerge(MagickColor fillColor, int depth = -1)
         {
             if (red is null && green is null && blue is null && alpha is null)
                 throw new InvalidOperationException("No image loaded");
@@ -27,20 +27,19 @@ namespace TextureMerge
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
 
-            var result = new MagickImage(fillColor, width, height);
-            result.Depth = depth == -1 ? GetHighestDepth() : depth;
+            var result = new TMImage(new MagickImage(fillColor, width, height));
+            result.Image.Depth = depth == -1 ? GetHighestDepth() : depth;
 
             if (alpha is null)
-                result.Alpha(AlphaOption.Off);
+                result.Image.Alpha(AlphaOption.Off);
             else
-                result.Alpha(AlphaOption.On);
+                result.Image.Alpha(AlphaOption.On);
 
-            var resultPix = result.GetPixels();
-            var resultPixels = resultPix.ToArray();
-            var redPixels = red is null ? CreateArrayWithColor(width * height * 3, fillColor.R) : red.GetPixels().ToArray();
-            var greenPixels = green is null ? CreateArrayWithColor(width * height * 3, fillColor.G) : green.GetPixels().ToArray();
-            var bluePixels = blue is null ? CreateArrayWithColor(width * height * 3, fillColor.B) : blue.GetPixels().ToArray();
-            var alphaPixels = alpha is null ? CreateArrayWithColor(width * height * 3, fillColor.A) : alpha.GetPixels().ToArray();
+            var resultPixels = result.GetPixArray();
+            var redPixels = red is null ? CreateArrayWithColor(width * height * 3, fillColor.R) : red.GetPixArray();
+            var greenPixels = green is null ? CreateArrayWithColor(width * height * 3, fillColor.G) : green.GetPixArray();
+            var bluePixels = blue is null ? CreateArrayWithColor(width * height * 3, fillColor.B) : blue.GetPixArray();
+            var alphaPixels = alpha is null ? CreateArrayWithColor(width * height * 3, fillColor.A) : alpha.GetPixArray();
 
             for (int i = 0; i < resultPixels.Length; i++)
             {
@@ -71,8 +70,7 @@ namespace TextureMerge
                     };
                 }
             }
-            resultPix.SetPixels(resultPixels);
-            resultPix.Dispose();
+            result.SetPixels(resultPixels);
             return result;
         }
 
@@ -86,7 +84,7 @@ namespace TextureMerge
 
         public bool IsGrayScale(Channel channel)
         {
-            MagickImage img;
+            TMImage img;
             switch (channel)
             {
                 case Channel.Red: img = red; break;
@@ -101,9 +99,7 @@ namespace TextureMerge
                 throw new NullReferenceException("Cannot check grayscale on empty image");
             }
 
-            var pixs = img.GetPixels();
-            var pixels = pixs.ToArray();
-            pixs.Dispose();
+            var pixels = img.GetPixArray();
             for (int i = 0; i < pixels.Length; i++)
             {
                 if (i % 3 != 0)
@@ -119,27 +115,27 @@ namespace TextureMerge
             int depth = -1;
             if (red != null)
             {
-                depth = red.Depth;
+                depth = red.Image.Depth;
             }
             if (green != null)
             {
                 if (depth == -1)
-                    depth = green.Depth;
-                else if (depth != green.Depth)
+                    depth = green.Image.Depth;
+                else if (depth != green.Image.Depth)
                     return false;
             }
             if (blue != null)
             {
                 if (depth == -1)
-                    depth = blue.Depth;
-                else if (depth != blue.Depth)
+                    depth = blue.Image.Depth;
+                else if (depth != blue.Image.Depth)
                     return false;
             }
             if (alpha != null)
             {
                 if (depth == -1)
-                    depth = alpha.Depth;
-                if (depth != alpha.Depth)
+                    depth = alpha.Image.Depth;
+                if (depth != alpha.Image.Depth)
                     return false;
             }
             return true;
@@ -149,13 +145,13 @@ namespace TextureMerge
         {
             int max = 0;
             if (red != null)
-                max = red.Depth > max ? red.Depth : max;
+                max = red.Image.Depth > max ? red.Image.Depth : max;
             if (green != null)
-                max = green.Depth > max ? green.Depth : max;
+                max = green.Image.Depth > max ? green.Image.Depth : max;
             if (blue != null)
-                max = blue.Depth > max ? blue.Depth : max;
+                max = blue.Image.Depth > max ? blue.Image.Depth : max;
             if (alpha != null)
-                max = alpha.Depth > max ? alpha.Depth : max;
+                max = alpha.Image.Depth > max ? alpha.Image.Depth : max;
 
             return max;
         }
@@ -166,46 +162,46 @@ namespace TextureMerge
 
             if (red != null)
             {
-                width = red.Width;
-                height = red.Height;
+                width = red.Image.Width;
+                height = red.Image.Height;
             }
             if (green != null)
             {
                 if (width != 0)
                 {
-                    if (width != green.Width || height != green.Height)
+                    if (width != green.Image.Width || height != green.Image.Height)
                         return false;
                 }
                 else
                 {
-                    width = green.Width;
-                    height = green.Height;
+                    width = green.Image.Width;
+                    height = green.Image.Height;
                 }
             }
             if (blue != null)
             {
                 if (width != 0)
                 {
-                    if (width != blue.Width || height != blue.Height)
+                    if (width != blue.Image.Width || height != blue.Image.Height)
                         return false;
                 }
                 else
                 {
-                    width = blue.Width;
-                    height = blue.Height;
+                    width = blue.Image.Width;
+                    height = blue.Image.Height;
                 }
             }
             if (alpha != null)
             {
                 if (width != 0)
                 {
-                    if (width != alpha.Width || height != alpha.Height)
+                    if (width != alpha.Image.Width || height != alpha.Image.Height)
                         return false;
                 }
                 else
                 {
-                    width = alpha.Width;
-                    height = alpha.Height;
+                    width = alpha.Image.Width;
+                    height = alpha.Image.Height;
                 }
             }
             return true;
@@ -244,28 +240,28 @@ namespace TextureMerge
             return newInst;
         }
 
-        private static MagickImage ResizeImage(MagickImage source, int width, int height, bool stretch, MagickColor fillColor = null)
+        private static TMImage ResizeImage(TMImage source, int width, int height, bool stretch, MagickColor fillColor = null)
         {
-            var result = (MagickImage)source.Clone();
+            var result = new TMImage((MagickImage)source.Image.Clone());
             if (stretch)
             {
                 var geo = new MagickGeometry(width, height)
                 {
                     IgnoreAspectRatio = true
                 };
-                result.Resize(geo);
+                result.Image.Resize(geo);
             }
             else
             {
-                result.Resize(width, height);
-                result.Extent(width, height, Gravity.Center,
+                result.Image.Resize(width, height);
+                result.Image.Extent(width, height, Gravity.Center,
                     fillColor ?? new MagickColor(0, 0, 0));
             }
 
             return result;
         }
 
-        private static MagickImage MakeChannelThumbnail(MagickImage sourceBitmap, Channel channel)
+        private static TMImage MakeChannelThumbnail(TMImage sourceBitmap, Channel channel)
         {
             if (channel == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
@@ -273,28 +269,23 @@ namespace TextureMerge
             if (sourceBitmap == null)
                 throw new ArgumentException("Source bitmap is null");
 
-            if (sourceBitmap.HasAlpha)
+            if (sourceBitmap.Image.HasAlpha)
                 throw new ArgumentException("Source bitmap has alpha channel");
 
-            var thumb = (MagickImage)sourceBitmap.Clone();
-            thumb.Thumbnail(512, 512);
-            var result = new MagickImage(new MagickColor(0, 0, 0), thumb.Width, thumb.Height);
-            var resPix = result.GetPixels();
-            var pixels = resPix.ToArray();
-            var sourcePix = thumb.GetPixels();
-            var sourcePixels = sourcePix.ToArray();
+            var thumb = new TMImage((MagickImage)sourceBitmap.Image.Clone());
+            thumb.Image.Thumbnail(512, 512);
+            var result = new TMImage(new MagickImage(new MagickColor(0, 0, 0), thumb.Image.Width, thumb.Image.Height));
+            var pixels = result.GetPixArray();
+            var sourcePixels = thumb.GetPixArray();
             for (int i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = sourcePixels[i - (i % 3) + (int)channel];
             }
-            resPix.SetPixels(pixels);
-            thumb.Dispose();
-            resPix.Dispose();
-            sourcePix.Dispose();
+            result.SetPixels(pixels);
             return result;
         }
 
-        public Task<MagickImage> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
+        public Task<TMImage> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
         {
             switch (channelSlot)
             {
@@ -311,7 +302,7 @@ namespace TextureMerge
             }
         }
 
-        public MagickImage LoadChannel(string path, Channel channelSlot, Channel channelSource)
+        public TMImage LoadChannel(string path, Channel channelSlot, Channel channelSource)
         {
             if (path == string.Empty)
                 throw new ArgumentException("Invalid path");
@@ -320,32 +311,28 @@ namespace TextureMerge
                 throw new ArgumentException("Alpha can't be source channel");
 
 
-            var source = new MagickImage(path);
+            var source = new TMImage(new MagickImage(path));
 
             if (source is null)
                 throw new ArgumentException("Failed to load image");
 
-            source.Alpha(AlphaOption.Off);
+            source.Image.Alpha(AlphaOption.Off);
 
             switch (channelSlot)
             {
                 case Channel.Red:
-                    red?.Dispose();
                     red = source;
                     redChSource = channelSource;
                     break;
                 case Channel.Green:
-                    green?.Dispose();
                     green = source;
                     greenChSource = channelSource;
                     break;
                 case Channel.Blue:
-                    blue?.Dispose();
                     blue = source;
                     blueChSource = channelSource;
                     break;
                 case Channel.Alpha:
-                    alpha?.Dispose();
                     alpha = source;
                     alphaChSource = channelSource;
                     break;
@@ -357,12 +344,12 @@ namespace TextureMerge
         }
 
         // TODO This is very similar to LoadChannel. They could be rewriten to avoid duplicit code.
-        public MagickImage SetChannelSource(Channel channel, Channel channelSource)
+        public TMImage SetChannelSource(Channel channel, Channel channelSource)
         {
             if (channelSource == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
 
-            MagickImage thumbnail;
+            TMImage thumbnail;
             switch (channel)
             {
                 case Channel.Red:
@@ -388,9 +375,9 @@ namespace TextureMerge
             return MakeChannelThumbnail(thumbnail, channelSource);
         }
 
-        public MagickImage GetChannelThumbnail(Channel channel)
+        public TMImage GetChannelThumbnail(Channel channel)
         {
-            MagickImage thumbnail;
+            TMImage thumbnail;
             switch (channel)
             {
                 case Channel.Red:
@@ -417,7 +404,7 @@ namespace TextureMerge
 
         public void Swap(Channel ch1, Channel ch2)
         {
-            MagickImage[] imgs = { red, green, blue, alpha, null };
+            TMImage[] imgs = { red, green, blue, alpha, null };
             Channel[] channels = { redChSource, greenChSource, blueChSource, alphaChSource, 0 };
 
             imgs[4] = imgs[(int)ch1];
@@ -478,32 +465,20 @@ namespace TextureMerge
             switch (which)
             {
                 case Channel.Red:
-                    red.Dispose();
                     red = null;
                     break;
                 case Channel.Green:
-                    green.Dispose();
                     green = null;
                     break;
                 case Channel.Blue:
-                    blue.Dispose();
                     blue = null;
                     break;
                 case Channel.Alpha:
-                    alpha.Dispose();
                     alpha = null;
                     break;
                 default:
                     throw new ArgumentException("Invalid channel");
             }
-        }
-
-        public void Dispose()
-        {
-            red?.Dispose();
-            green?.Dispose();
-            blue?.Dispose();
-            alpha?.Dispose();
         }
     }
 }

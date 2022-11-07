@@ -110,19 +110,19 @@ namespace TextureMerge
 
             if (Directory.Exists(PathToSave.Text))
             {
-                using (var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth))
+                var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
+                
+                SetStatus("Saving...", statusBlueColor);
+                try
                 {
-                    SetStatus("Saving...", statusBlueColor);
-                    try
-                    {
-                        await result.SaveAsync(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
-                            "Error", MessageDialog.Type.Error);
-                    }
+                    await result.SaveAsync(path);
                 }
+                catch (Exception ex)
+                {
+                    MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
+                        "Error", MessageDialog.Type.Error);
+                }
+                
             }
 
             else

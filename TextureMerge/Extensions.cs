@@ -19,7 +19,7 @@ namespace TextureMerge
             return Math.Round(value, decimalPlaces).ToString();
         }
 
-        public static void SetImageThumbnail(this Image element, MagickImage image)
+        public static void SetImageThumbnail(this Image element, TMImage image)
         {
             if (image == null)
             {
@@ -29,9 +29,8 @@ namespace TextureMerge
 
             using (var stream = new MemoryStream())
             {
-                image.Format = MagickFormat.Png;
-                image.Write(stream);
-                image.Dispose();
+                image.Image.Format = MagickFormat.Png;
+                image.Image.Write(stream);
 
                 var imageSource = new BitmapImage();
                 imageSource.BeginInit();
@@ -43,20 +42,20 @@ namespace TextureMerge
             }
         }
 
-        public static void Save(this MagickImage bitmap, string saveFilePath)
+        public static void Save(this TMImage bitmap, string saveFilePath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
                 throw new ArgumentException("Invalid path");
 
-            bitmap.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
+            bitmap.Image.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
 
             using (FileStream stream = new FileStream(saveFilePath, FileMode.Create, FileAccess.Write)) {
-                bitmap.Write(stream);
+                bitmap.Image.Write(stream);
                 stream.Close();
             }
         }
 
-        public static Task SaveAsync(this MagickImage bitmap, string saveFilePath)
+        public static Task SaveAsync(this TMImage bitmap, string saveFilePath)
         {
             return Task.Run(() => bitmap.Save(saveFilePath));
         }
