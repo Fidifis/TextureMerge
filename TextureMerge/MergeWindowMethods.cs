@@ -110,6 +110,7 @@ namespace TextureMerge
             if (Directory.Exists(PathToSave.Text))
             {
                 var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
+                
                 SetStatus("Saving...", statusBlueColor);
                 try
                 {
@@ -120,12 +121,14 @@ namespace TextureMerge
                     MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
                         "Error", MessageDialog.Type.Error);
                 }
+                
             }
 
             else
                 MessageDialog.Show("Save path is not valid!\n" +
                     "Check if the path is correct.",
                     type: MessageDialog.Type.Error);
+
 
             SetStatus("Done!", statusGreenColor);
             await Task.Delay(5000);
@@ -179,6 +182,32 @@ namespace TextureMerge
             }
         }
 
+        private void ButtonLoad(Channel channel)
+        {
+            if (merge.IsEmpty(channel))
+            {
+                if (AskForImagePath(out string path) == true)
+                {
+                    LoadToChannelAsync(channel, path);
+                }
+            }
+            else
+            {
+                ClearChannel(channel);
+                mapper.slots[(int)channel].loadButton.Content = LOAD_TEXT;
+            }
+        }
+
+        private void ClearChannel(Channel channel)
+        {
+            int ichannel = (int)channel;
+            merge.Clear(channel);
+            mapper.slots[ichannel].image.Source = null;
+            mapper.slots[ichannel].label.Visibility = Visibility.Visible;
+            mapper.slots[ichannel].grayscaleSourceGrid.Visibility = Visibility.Hidden;
+            mapper.slots[ichannel].colorSourceGrid.Visibility = Visibility.Hidden;
+        }
+
         private async void LoadToChannelAsync(Channel channel, string path)
         {
             if (path == null || path.Length == 0)
@@ -202,7 +231,7 @@ namespace TextureMerge
             try
             {
                 var sourceChannel = channel == Channel.Alpha ? Channel.Red : channel;
-                image.Source = await merge.LoadChannelAsync(path, channel, sourceChannel);
+                image.SetImageThumbnail (await merge.LoadChannelAsync(path, channel, sourceChannel));
                 label.Visibility = Visibility.Hidden;
                 UpdateSourceGrid(channel);
             }
@@ -238,7 +267,6 @@ namespace TextureMerge
         {
             int ichannel = (int)channel;
             var load = mapper.slots[ichannel].loadButton;
-            var image = mapper.slots[ichannel].image;
             var label = mapper.slots[ichannel].label;
             var grayscaleGrid = mapper.slots[ichannel].grayscaleSourceGrid;
             var colorGrid = mapper.slots[ichannel].colorSourceGrid;

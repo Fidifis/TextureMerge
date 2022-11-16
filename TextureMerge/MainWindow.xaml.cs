@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ImageMagick;
 using System;
+using System.Windows.Media.TextFormatting;
 
 namespace TextureMerge
 {
@@ -92,102 +93,22 @@ namespace TextureMerge
 
         private void ButtonLoadR(object sender, RoutedEventArgs e)
         {
-            if (merge.IsEmpty(Channel.Red))
-            {
-                if (AskForImagePath(out string path) == true)
-                {
-                    LoadToChannelAsync(Channel.Red, path);
-                }
-            }
-            else
-            {
-                ClearR();
-                LoadR.Content = LOAD_TEXT;
-            }
+            ButtonLoad(Channel.Red);
         }
 
         private void ButtonLoadG(object sender, RoutedEventArgs e)
         {
-            if (merge.IsEmpty(Channel.Green))
-            {
-                if (AskForImagePath(out string path) == true)
-                {
-                    LoadToChannelAsync(Channel.Green, path);
-                }
-            }
-            else
-            {
-                ClearG();
-                LoadG.Content = LOAD_TEXT;
-            }
+            ButtonLoad(Channel.Green);
         }
 
         private void ButtonLoadB(object sender, RoutedEventArgs e)
         {
-            if (merge.IsEmpty(Channel.Blue))
-            {
-                if (AskForImagePath(out string path) == true)
-                {
-                    LoadToChannelAsync(Channel.Blue, path);
-                }
-            }
-            else
-            {
-                ClearB();
-                LoadB.Content = LOAD_TEXT;
-            }
+            ButtonLoad(Channel.Blue);
         }
 
         private void ButtonLoadA(object sender, RoutedEventArgs e)
         {
-            if (merge.IsEmpty(Channel.Alpha))
-            {
-                if (AskForImagePath(out string path) == true)
-                {
-                    LoadToChannelAsync(Channel.Alpha, path);
-                }
-            }
-            else
-            {
-                ClearA();
-                LoadA.Content = LOAD_TEXT;
-            }
-        }
-
-        private void ClearR()
-        {
-            merge.Clear(Channel.Red);
-            RedCh.Source = null;
-            redNoDataLabel.Visibility = Visibility.Visible;
-            srcGridGsR.Visibility = Visibility.Hidden;
-            srcGridCR.Visibility = Visibility.Hidden;
-        }
-
-        private void ClearG()
-        {
-            merge.Clear(Channel.Green);
-            GreenCh.Source = null;
-            greenNoDataLabel.Visibility = Visibility.Visible;
-            srcGridGsG.Visibility = Visibility.Hidden;
-            srcGridCG.Visibility = Visibility.Hidden;
-        }
-
-        private void ClearB()
-        {
-            merge.Clear(Channel.Blue);
-            BlueCh.Source = null;
-            blueNoDataLabel.Visibility = Visibility.Visible;
-            srcGridGsB.Visibility = Visibility.Hidden;
-            srcGridCB.Visibility = Visibility.Hidden;
-        }
-
-        private void ClearA()
-        {
-            merge.Clear(Channel.Alpha);
-            AlphaCh.Source = null;
-            alphaNoDataLabel.Visibility = Visibility.Visible;
-            srcGridGsA.Visibility = Visibility.Hidden;
-            srcGridCA.Visibility = Visibility.Hidden;
+            ButtonLoad(Channel.Alpha);
         }
 
         private void ButtonBrowse(object sender, RoutedEventArgs e)
@@ -253,73 +174,73 @@ namespace TextureMerge
 
         private void SrcRR(object sender, RoutedEventArgs e)
         {
-            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Red);
+            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Red));
             UpdateSourceGrid(Channel.Red);
         }
 
         private void SrcRG(object sender, RoutedEventArgs e)
         {
-            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Green);
+            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Green));
             UpdateSourceGrid(Channel.Red);
         }
 
         private void SrcRB(object sender, RoutedEventArgs e)
         {
-            RedCh.Source = merge.SetChannelSource(Channel.Red, Channel.Blue);
+            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Blue));
             UpdateSourceGrid(Channel.Red);
         }
 
         private void SrcGR(object sender, RoutedEventArgs e)
         {
-            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Red);
+            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Red));
             UpdateSourceGrid(Channel.Green);
         }
 
         private void SrcGG(object sender, RoutedEventArgs e)
         {
-            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Green);
+            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Green));
             UpdateSourceGrid(Channel.Green);
         }
 
         private void SrcGB(object sender, RoutedEventArgs e)
         {
-            GreenCh.Source = merge.SetChannelSource(Channel.Green, Channel.Blue);
+            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Blue));
             UpdateSourceGrid(Channel.Green);
         }
 
         private void SrcBR(object sender, RoutedEventArgs e)
         {
-            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Red);
+            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Red));
             UpdateSourceGrid(Channel.Blue);
         }
 
         private void SrcBG(object sender, RoutedEventArgs e)
         {
-            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Green);
+            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Green));
             UpdateSourceGrid(Channel.Blue);
         }
 
         private void SrcBB(object sender, RoutedEventArgs e)
         {
-            BlueCh.Source = merge.SetChannelSource(Channel.Blue, Channel.Blue);
+            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Blue));
             UpdateSourceGrid(Channel.Blue);
         }
 
         private void SrcAR(object sender, RoutedEventArgs e)
         {
-            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Red);
+            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Red));
             UpdateSourceGrid(Channel.Alpha);
         }
 
         private void SrcAG(object sender, RoutedEventArgs e)
         {
-            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Green);
+            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Green));
             UpdateSourceGrid(Channel.Alpha);
         }
 
         private void SrcAB(object sender, RoutedEventArgs e)
         {
-            AlphaCh.Source = merge.SetChannelSource(Channel.Alpha, Channel.Blue);
+            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Blue));
             UpdateSourceGrid(Channel.Alpha);
         }
 
@@ -343,8 +264,8 @@ namespace TextureMerge
         private void SwapRG(object sender, RoutedEventArgs e)
         {
             merge.Swap(Channel.Red, Channel.Green);
-            RedCh.Source = merge.GetChannelThumbnail(Channel.Red);
-            GreenCh.Source = merge.GetChannelThumbnail(Channel.Green);
+            RedCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Red));
+            GreenCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Green));
             UpdateSourceGrid(Channel.Red);
             UpdateSourceGrid(Channel.Green);
         }
@@ -352,8 +273,8 @@ namespace TextureMerge
         private void SwapGB(object sender, RoutedEventArgs e)
         {
             merge.Swap(Channel.Green, Channel.Blue);
-            GreenCh.Source = merge.GetChannelThumbnail(Channel.Green);
-            BlueCh.Source = merge.GetChannelThumbnail(Channel.Blue);
+            GreenCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Green));
+            BlueCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Blue));
             UpdateSourceGrid(Channel.Green);
             UpdateSourceGrid(Channel.Blue);
         }
@@ -361,8 +282,8 @@ namespace TextureMerge
         private void SwapBA(object sender, RoutedEventArgs e)
         {
             merge.Swap(Channel.Blue, Channel.Alpha);
-            BlueCh.Source = merge.GetChannelThumbnail(Channel.Blue);
-            AlphaCh.Source = merge.GetChannelThumbnail(Channel.Alpha);
+            BlueCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Blue));
+            AlphaCh.SetImageThumbnail(merge.GetChannelThumbnail(Channel.Alpha));
             UpdateSourceGrid(Channel.Blue);
             UpdateSourceGrid(Channel.Alpha);
         }

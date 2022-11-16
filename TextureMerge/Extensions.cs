@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ImageMagick;
 
 namespace TextureMerge
@@ -17,29 +19,43 @@ namespace TextureMerge
             return Math.Round(value, decimalPlaces).ToString();
         }
 
-        public static ImageSource ToImageSource(this MagickImage image)
+        public static void SetImageThumbnail(this Image element, TMImage image)
         {
-            // TODO This is memory leak. But it dont work when stream is disposed.
-            var stream = new MemoryStream();
-            image.Format = MagickFormat.Png;
-            image.Write(stream);
-            return (ImageSource)new ImageSourceConverter().ConvertFrom(stream);
+            if (image == null)
+            {
+                element.Source = null;
+                return;
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                image.Image.Format = MagickFormat.Png;
+                image.Image.Write(stream);
+
+                var imageSource = new BitmapImage();
+                imageSource.BeginInit();
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
+                imageSource.StreamSource = stream;
+                imageSource.EndInit();
+
+                element.Source = imageSource;
+            }
         }
 
-        public static void Save(this MagickImage bitmap, string saveFilePath)
+        public static void Save(this TMImage bitmap, string saveFilePath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(saveFilePath)))
                 throw new ArgumentException("Invalid path");
 
-            bitmap.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
+            bitmap.Image.Format = Path.GetExtension(saveFilePath).GetMagickExtension();
 
             using (FileStream stream = new FileStream(saveFilePath, FileMode.Create, FileAccess.Write)) {
-                bitmap.Write(stream);
+                bitmap.Image.Write(stream);
                 stream.Close();
             }
         }
 
-        public static Task SaveAsync(this MagickImage bitmap, string saveFilePath)
+        public static Task SaveAsync(this TMImage bitmap, string saveFilePath)
         {
             return Task.Run(() => bitmap.Save(saveFilePath));
         }
