@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using ImageMagick;
 
@@ -219,6 +220,9 @@ namespace TextureMerge
 
         public Merge Resize(int width, int height, bool stretch, MagickColor fillColor = null)
         {
+            if (width < 1 || height < 1)
+                throw new ArgumentException("width and height must be greater than 0");
+
             Merge merge = this;
             var newInst = new Merge()
             {

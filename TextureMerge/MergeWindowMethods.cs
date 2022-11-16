@@ -69,11 +69,23 @@ namespace TextureMerge
                 };
                 if (resizeDialog.ShowDialog() == true)
                 {
-                    SetStatus("Resizeing...", statusBlueColor);
-                    correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
-                        resizeDialog.DoStretch.IsChecked == true,
-                        ColorToMagick(defaultColor));
-                    SetStatus();
+                    try
+                    {
+                        SetStatus("Resizeing...", statusBlueColor);
+                        correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
+                            resizeDialog.DoStretch.IsChecked == true,
+                            ColorToMagick(defaultColor));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        MessageDialog.Show("Failed to resize." + Environment.NewLine + ex.Message,
+                        "Error", MessageDialog.Type.Error);
+                        return;
+                    }
+                    finally
+                    {
+                        SetStatus();
+                    }
                 }
                 else
                 {
@@ -109,11 +121,11 @@ namespace TextureMerge
 
             if (Directory.Exists(PathToSave.Text))
             {
-                var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
-                
-                SetStatus("Saving...", statusBlueColor);
                 try
                 {
+                    var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
+                
+                    SetStatus("Saving...", statusBlueColor);
                     await result.SaveAsync(path);
                 }
                 catch (Exception ex)
@@ -121,7 +133,6 @@ namespace TextureMerge
                     MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
                         "Error", MessageDialog.Type.Error);
                 }
-                
             }
 
             else

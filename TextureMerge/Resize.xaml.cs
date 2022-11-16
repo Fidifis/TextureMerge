@@ -16,7 +16,7 @@ namespace TextureMerge
 
         private void OKButton(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(WidthBox.Text, out int width) && int.TryParse(HeightBox.Text, out int height))
+            if (int.TryParse(WidthBox.Text, out int width) && int.TryParse(HeightBox.Text, out int height) && width > 0 && height > 0)
             {
                 NewWidth = width;
                 NewHeight = height;
