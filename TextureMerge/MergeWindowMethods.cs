@@ -12,27 +12,23 @@ namespace TextureMerge
     {
         private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
-            if (!hasEditedPath || !Directory.Exists(PathToSave.Text))
+            if ((!hasEditedPath || !Directory.Exists(PathToSave.Text)) &&
+                !SetSaveImagePath())
             {
-                if (!SetSaveImagePath())
-                {
-                    MessageDialog.Show("Operation aborted");
-                    return;
-                }
+                MessageDialog.Show("Operation aborted");
+                return;
             }
 
             switch (Path.GetExtension(SaveImageName.Text))
             {
                 case null:
                 case "":
-                    if (MessageDialog.Show("File don't have an extension!\n" +
-                                        "Do you want to continue?",
-                                        "No extension",
-                                        MessageDialog.Type.Warning,
-                                        MessageDialog.Buttons.YesNo)
-                            != true)
-                        return;
-                    break;
+                    MessageDialog.Show("File don't have an extension!\n",
+                                       "No extension",
+                                       MessageDialog.Type.Error,
+                                       MessageDialog.Buttons.Ok);
+
+                    return;
                 case ".jpeg":
                 case ".jpg":
                     if (!merge.IsEmpty(Channel.Alpha))
@@ -44,16 +40,15 @@ namespace TextureMerge
             }
 
             string path = PathToSave.Text + "\\" + SaveImageName.Text;
-            if (File.Exists(path))
-            {
-                if (MessageDialog.Show("File already exist!\n" +
+            if (File.Exists(path) &&
+                MessageDialog.Show("File already exist!\n" +
                     "Do you want to overwrite it?",
                     "File already exist",
                     MessageDialog.Type.Warning,
                     MessageDialog.Buttons.YesNo) != true)
-                {
+            {
                     return;
-                }
+
             }
 
             Merge correct = merge;

@@ -157,10 +157,7 @@ namespace TextureMerge
             else if (cmax == b)
                 H = (60 * ((r - g) / diff) + 240) % 360;
 
-            if (cmax <= 0.9 / 255.0)
-                S = 0;
-            else
-                S = (diff / cmax) * 100;
+            S = cmax <= 0.9 / 255.0 ? 0 : (diff / cmax) * 100;
 
             V = cmax * 100;
         }

@@ -403,10 +403,7 @@ namespace TextureMerge
                     throw new ArgumentException("Invalid channel");
             }
 
-            if (thumbnail == null)
-                return null;
-            else
-                return MakeChannelThumbnail(thumbnail, GetSourceChannel(channel));
+            return thumbnail == null ? null : MakeChannelThumbnail(thumbnail, GetSourceChannel(channel));
         }
 
         public void Swap(Channel ch1, Channel ch2)

@@ -57,22 +57,22 @@ namespace TextureMerge
 
                     var serializer = new XmlSerializer(typeof(Config));
 
-                    var stream = new FileStream(lastRedirect.Expand(), FileMode.Open, FileAccess.Read);
-                    var config = (Config)serializer.Deserialize(stream);
-                    stream.Close();
-
-                    if (config.Redirect == lastRedirect)
+                    using (var stream = new FileStream(lastRedirect.Expand(), FileMode.Open, FileAccess.Read))
                     {
-                        Current = config;
-                        return;
-                    }
+                        var config = (Config)serializer.Deserialize(stream);
 
-                    else
-                    {
-                        lastRedirect = config.Redirect;
-                        redirected++;
-                    }
+                        if (config.Redirect == lastRedirect)
+                        {
+                            Current = config;
+                            return;
+                        }
 
+                        else
+                        {
+                            lastRedirect = config.Redirect;
+                            redirected++;
+                        }
+                    }
                 } while (redirected < 2);
             }
             catch (Exception e)
@@ -88,9 +88,11 @@ namespace TextureMerge
             {
                 try
                 {
-                    var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create, FileAccess.Write);
-                    var serializer = new XmlSerializer(typeof(Config));
-                    serializer.Serialize(stream, Current);
+                    using (var stream = new FileStream(Current.Redirect.Expand(), FileMode.Create, FileAccess.Write))
+                    {
+                        var serializer = new XmlSerializer(typeof(Config));
+                        serializer.Serialize(stream, Current);
+                    }
                 }
                 catch (Exception e)
                 {
