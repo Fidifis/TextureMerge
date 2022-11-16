@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace TextureMerge
 {

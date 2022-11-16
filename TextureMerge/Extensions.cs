@@ -97,7 +97,6 @@ namespace TextureMerge
                 case ".tif": return MagickFormat.Tiff;
                 case ".tga": return MagickFormat.Tga;
                 case ".webp": return MagickFormat.WebP;
-                case ".pdf": return MagickFormat.Pdf;
                 case ".psd": return MagickFormat.Psd;
                 case ".dib": return MagickFormat.Dib;
                 case ".ico": return MagickFormat.Ico;

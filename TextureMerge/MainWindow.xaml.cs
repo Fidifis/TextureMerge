@@ -12,7 +12,6 @@ namespace TextureMerge
         private static readonly SolidColorBrush statusBlueColor = new SolidColorBrush(Color.FromRgb(51, 150, 226));
         private static readonly SolidColorBrush statusGreenColor = new SolidColorBrush(Color.FromRgb(51, 226, 110));
         private readonly Merge merge = new Merge();
-        private bool hasSetupPath = false;
         private bool hasEditedPath = false;
         private Color defaultColor;
 
@@ -128,7 +127,6 @@ namespace TextureMerge
         private void PathToSaveChanged(object sender, TextChangedEventArgs e)
         {
             hasEditedPath = true;
-            hasSetupPath = false;
         }
 
         private void SaveImageNameChanged(object sender, TextChangedEventArgs e)

@@ -12,12 +12,9 @@ namespace TextureMerge
     {
         private async void ButtonMerge(object sender, RoutedEventArgs e)
         {
-            // TODO It looks weird. Maybe simplify this to one variable.
-            if (!(hasEditedPath && Directory.Exists(PathToSave.Text)) &&
-                !hasSetupPath)
+            if (!hasEditedPath || !Directory.Exists(PathToSave.Text))
             {
-                SetSaveImagePath();
-                if (!hasSetupPath)
+                if (!SetSaveImagePath())
                 {
                     MessageDialog.Show("Operation aborted");
                     return;
@@ -160,14 +157,16 @@ namespace TextureMerge
             {
                 InitialDirectory = PathToSave.Text,
                 Title = "Select an image file",
-                Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*" //TODO: Add more formats
+                Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tiff;*.tif;*.tga;*.webp;*.psd;*.dib;*.ico;*.svg)|" +
+                                      "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tiff;*.tif;*.tga;*.webp;*.psd;*.dib;*.ico;*.svg|" +
+                                      "All files (*.*)|*.*"
             };
             bool? r = openFileDialog.ShowDialog();
             path = openFileDialog.FileName;
             return r;
         }
 
-        private void SetSaveImagePath()
+        private bool SetSaveImagePath()
         {
             var saveFileDialog = new SaveFileDialog
             {
@@ -188,9 +187,9 @@ namespace TextureMerge
             {
                 PathToSave.Text = Path.GetDirectoryName(saveFileDialog.FileName);
                 SaveImageName.Text = Path.GetFileName(saveFileDialog.FileName);
-                hasSetupPath = true;
-                hasEditedPath = false;
+                return true;
             }
+            return false;
         }
 
         private void ButtonLoad(Channel channel)
@@ -221,7 +220,7 @@ namespace TextureMerge
 
         private async void LoadToChannelAsync(Channel channel, string path)
         {
-            if (path == null || path.Length == 0)
+            if (path == null || path.Length == 0 || !File.Exists(path))
             {
                 throw new ArgumentException("Invalid path");
             }
@@ -230,7 +229,7 @@ namespace TextureMerge
             var label = mapper.slots[ichannel].label;
             var image = mapper.slots[ichannel].image;
 
-            if (!hasEditedPath && !hasSetupPath)
+            if (!hasEditedPath || !Directory.Exists(PathToSave.Text))
             {
                 PathToSave.Text = Path.GetDirectoryName(path);
                 hasEditedPath = false;

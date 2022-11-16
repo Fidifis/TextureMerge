@@ -37,6 +37,10 @@ namespace TextureMerge
                 result.Image.Alpha(AlphaOption.On);
 
             var resultPixels = result.GetPixelArray();
+
+            if ((alpha == null && resultPixels.Length % 3 != 0) || (alpha != null && resultPixels.Length % 4 != 0))
+                throw new InvalidOperationException("Internal error: Wrong pixels");
+
             var redPixels = red is null ? CreateArrayWithColor(width * height * 3, fillColor.R) : red.GetPixelArray();
             var greenPixels = green is null ? CreateArrayWithColor(width * height * 3, fillColor.G) : green.GetPixelArray();
             var bluePixels = blue is null ? CreateArrayWithColor(width * height * 3, fillColor.B) : blue.GetPixelArray();
@@ -347,7 +351,6 @@ namespace TextureMerge
             return MakeChannelThumbnail(source, channelSource);
         }
 
-        // TODO This is very similar to LoadChannel. They could be rewriten to avoid duplicit code.
         public TMImage SetChannelSource(Channel channel, Channel channelSource)
         {
             if (channelSource == Channel.Alpha)
