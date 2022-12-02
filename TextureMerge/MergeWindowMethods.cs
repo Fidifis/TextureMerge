@@ -10,89 +10,62 @@ namespace TextureMerge
 {
     public partial class MainWindow : Window
     {
-        private async void ButtonMerge(object sender, RoutedEventArgs e)
-        {
-            if ((!hasEditedPath || !Directory.Exists(PathToSave.Text)) &&
-                !SetSaveImagePath())
-            {
-                MessageDialog.Show("Operation aborted");
-                return;
-            }
+        private bool CheckSaveImagePath() => !hasEditedPath || !Directory.Exists(PathToSave.Text);
 
-            switch (Path.GetExtension(SaveImageName.Text))
+        private string CheckFileExtension(string filePath)
+        {
+            switch (Path.GetExtension(filePath))
             {
                 case null:
                 case "":
-                    MessageDialog.Show("File don't have an extension!\n",
-                                       "No extension",
-                                       MessageDialog.Type.Error,
-                                       MessageDialog.Buttons.Ok);
-
-                    return;
+                    return "File don't have an extension!";
                 case ".jpeg":
                 case ".jpg":
                     if (!merge.IsEmpty(Channel.Alpha))
                     {
-                        MessageDialog.Show("This image format do not support alpha channel.", "Error", MessageDialog.Type.Error);
-                        return;
+                        return "This image format do not support alpha channel.";
                     }
                     break;
             }
+            return null;
+        }
 
-            string path = PathToSave.Text + "\\" + SaveImageName.Text;
-            if (File.Exists(path) &&
-                MessageDialog.Show("File already exist!\n" +
-                    "Do you want to overwrite it?",
-                    "File already exist",
-                    MessageDialog.Type.Warning,
-                    MessageDialog.Buttons.YesNo) != true)
+        private async Task<Merge> ResizeMergeSetAsync(Merge merge, int width, int height)
+        {
+            var resizeDialog = new Resize(width, height)
             {
-                    return;
-
-            }
-
-            Merge correct = merge;
-
-            if (!merge.CheckResolution(out int width, out int height))
+                Owner = this
+            };
+            if (resizeDialog.ShowDialog() == true)
             {
-                var resizeDialog = new Resize(width, height)
+                try
                 {
-                    Owner = this
-                };
-                if (resizeDialog.ShowDialog() == true)
-                {
-                    try
-                    {
-                        SetStatus("Resizeing...", statusBlueColor);
-                        correct = await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
-                            resizeDialog.DoStretch.IsChecked == true,
-                            ColorToMagick(defaultColor));
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        MessageDialog.Show("Failed to resize." + Environment.NewLine + ex.Message,
-                        "Error", MessageDialog.Type.Error);
-                        return;
-                    }
-                    finally
-                    {
-                        SetStatus();
-                    }
+                    SetStatus("Resizeing...", statusBlueColor);
+                    return await merge.ResizeAsync(resizeDialog.NewWidth, resizeDialog.NewHeight,
+                        resizeDialog.DoStretch.IsChecked == true,
+                        ColorToMagick(defaultColor));
                 }
-                else
+                catch (ArgumentException ex)
                 {
-                    MessageDialog.Show("Operation aborted");
-                    return;
+                    MessageDialog.Show("Failed to resize." + Environment.NewLine + ex.Message,
+                    "Error", MessageDialog.Type.Error);
+                    return null;
+                }
+                finally
+                {
+                    SetStatus();
                 }
             }
-            else if (width == 0 || height == 0)
+            else
             {
-                MessageDialog.Show("No images loaded", type: MessageDialog.Type.Error);
-                return;
+                MessageDialog.Show("Operation aborted");
+                return null;
             }
+        }
 
-            int newDepth = -1;
-            if (!correct.IsDepthSame())
+        private int GetDepth(Merge merge)
+        {
+            if (!merge.IsDepthSame())
             {
                 var depthDialog = new Depth()
                 {
@@ -100,41 +73,99 @@ namespace TextureMerge
                 };
                 if (depthDialog.ShowDialog() == true)
                 {
-                    newDepth = depthDialog.NewDepth;
+                    return depthDialog.NewDepth;
                 }
                 else
                 {
-                    MessageDialog.Show("Operation aborted");
-                    return;
+                    return -2;
                 }
             }
+            return -1;
+        }
 
-            SetStatus("Merging...", statusBlueColor);
-
+        private async Task<bool> SaveMerge(Merge merge, int depth, string path)
+        {
             if (Directory.Exists(PathToSave.Text))
             {
                 try
                 {
-                    var result = await correct.DoMergeAsync(ColorToMagick(defaultColor), newDepth);
-                
+                    SetStatus("Merging...", statusBlueColor);
+                    var result = await merge.DoMergeAsync(ColorToMagick(defaultColor), depth);
+
                     SetStatus("Saving...", statusBlueColor);
                     await result.SaveAsync(path);
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageDialog.Show("Failed to save image." + Environment.NewLine + ex.Message,
                         "Error", MessageDialog.Type.Error);
+                    return false;
                 }
             }
 
             else
+            {
                 MessageDialog.Show("Save path is not valid!\n" +
                     "Check if the path is correct.",
                     type: MessageDialog.Type.Error);
+                return false;
+            }
+        }
 
+        private async void ButtonMerge(object sender, RoutedEventArgs e)
+        {
+            bool isResolutionValid = merge.CheckResolution(out int width, out int height);
+            if (width == 0 || height == 0)
+            {
+                MessageDialog.Show("No images loaded", type: MessageDialog.Type.Error);
+                return;
+            }
 
-            SetStatus("Done!", statusGreenColor);
-            await Task.Delay(5000);
+            if (CheckSaveImagePath() && !SetSaveImagePath())
+            {
+                MessageDialog.Show("Operation aborted");
+                return;
+            }
+
+            string error;
+            if ((error = CheckFileExtension(SaveImageName.Text)) != null)
+            {
+                MessageDialog.Show(error, "Error", MessageDialog.Type.Error);
+                return;
+            }
+
+            string path = Path.Combine(PathToSave.Text, SaveImageName.Text);
+            if (File.Exists(path) &&
+                MessageDialog.Show("File already exist!\n" +
+                    "Do you want to overwrite it?",
+                    "File already exist",
+                    MessageDialog.Type.Warning,
+                    MessageDialog.Buttons.YesNo) != true)
+            {
+                return;
+            }
+
+            Merge correct = merge;
+            if (!isResolutionValid)
+            {
+                correct = await ResizeMergeSetAsync(merge, width, height);
+            }
+            if (correct == null)
+                return;
+
+            int depth = GetDepth(correct);
+            if (depth == -2)
+            {
+                MessageDialog.Show("Operation aborted");
+                return;
+            }
+
+            if (await SaveMerge(correct, depth, path))
+            {
+                SetStatus("Done!", statusGreenColor);
+                await Task.Delay(5000);
+            }
             SetStatus();
         }
         

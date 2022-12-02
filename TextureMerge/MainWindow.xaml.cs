@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ImageMagick;
 using System;
-using System.Windows.Media.TextFormatting;
 
 namespace TextureMerge
 {
