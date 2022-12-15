@@ -320,6 +320,7 @@ namespace TextureMerge
 
 
             var source = new TMImage(new MagickImage(path));
+            source.Image.AutoOrient();
 
             if (source is null)
                 throw new ArgumentException("Failed to load image");
