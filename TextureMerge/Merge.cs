@@ -28,6 +28,9 @@ namespace TextureMerge
             if (!CheckResolution(out int width, out int height))
                 throw new InvalidOperationException("Resolution missmatch");
 
+            if (red?.Image.HasAlpha == true || green?.Image.HasAlpha == true || blue?.Image.HasAlpha == true)
+                throw new ArgumentException("Bitmap has alpha channel");
+
             var result = new TMImage(new MagickImage(fillColor, width, height));
             result.Image.Depth = depth == -1 ? GetHighestDepth() : depth;
 
@@ -321,6 +324,7 @@ namespace TextureMerge
 
             var source = new TMImage(new MagickImage(path));
             source.Image.AutoOrient();
+            source.Image.ColorSpace = ColorSpace.sRGB;
 
             if (source is null)
                 throw new ArgumentException("Failed to load image");
