@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 
@@ -322,7 +323,7 @@ namespace TextureMerge
                 throw new ArgumentException("Alpha can't be source channel");
 
 
-            var source = new TMImage(new MagickImage(path));
+            var source = new TMImage(new MagickImage(path), Path.GetFileName(path));
             source.Image.AutoOrient();
             source.Image.ColorSpace = ColorSpace.sRGB;
 
@@ -447,6 +448,23 @@ namespace TextureMerge
                     return blue is null;
                 case Channel.Alpha:
                     return alpha is null;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+        }
+
+        public string GetOriginFileName(Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.Red:
+                    return red.FileName;
+                case Channel.Green:
+                    return green.FileName;
+                case Channel.Blue:
+                    return blue.FileName;
+                case Channel.Alpha:
+                    return alpha.FileName;
                 default:
                     throw new ArgumentException("Invalid channel");
             }

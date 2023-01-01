@@ -9,10 +9,16 @@ namespace TextureMerge
     public class TMImage
     {
         public MagickImage Image { get; private set; }
+        public string FileName { get; private set; } = null;
 
         public TMImage(MagickImage image)
         {
             Image = image;
+        }
+
+        public TMImage(MagickImage image, string name) : this(image)
+        {
+            FileName = name;
         }
 
         public ushort[] GetPixelArray()

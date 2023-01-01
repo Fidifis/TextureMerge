@@ -239,6 +239,7 @@ namespace TextureMerge
             int ichannel = (int)channel;
             merge.Clear(channel);
             mapper.slots[ichannel].image.Source = null;
+            mapper.slots[ichannel].image.ToolTip = null;
             mapper.slots[ichannel].label.Visibility = Visibility.Visible;
             mapper.slots[ichannel].grayscaleSourceGrid.Visibility = Visibility.Hidden;
             mapper.slots[ichannel].colorSourceGrid.Visibility = Visibility.Hidden;
@@ -306,6 +307,7 @@ namespace TextureMerge
             var label = mapper.slots[ichannel].label;
             var grayscaleGrid = mapper.slots[ichannel].grayscaleSourceGrid;
             var colorGrid = mapper.slots[ichannel].colorSourceGrid;
+            var image = mapper.slots[ichannel].image;
 
             if (merge.IsEmpty(channel))
             {
@@ -318,6 +320,7 @@ namespace TextureMerge
             {
                 load.Content = CLEAR_TEXT;
                 label.Visibility = Visibility.Hidden;
+                image.ToolTip = merge.GetOriginFileName(channel);
                 if (merge.IsGrayScale(channel))
                 {
                     grayscaleGrid.Visibility = Visibility.Visible;

@@ -23,6 +23,9 @@ namespace TextureMerge
             MapResources();
             MagickNET.Initialize();
 
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+                typeof(DependencyObject), new FrameworkPropertyMetadata(60000));
+
             Config.Load();
             ApplyConfig();
             hasEditedPath = false;
