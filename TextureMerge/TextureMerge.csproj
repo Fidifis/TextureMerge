@@ -85,38 +85,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ColorPicker.xaml.cs">
+    <Compile Include="Dialogs\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Config.cs" />
-    <Compile Include="Depth.xaml.cs">
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Dialogs\Depth.xaml.cs">
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MergeWindowMapper.cs" />
-    <Compile Include="MergeWindowMethods.cs" />
-    <Compile Include="MessageDialog.xaml.cs">
+    <Compile Include="Merge\MergeWindowMapper.cs" />
+    <Compile Include="Merge\MergeWindowMethods.cs" />
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resize.xaml.cs">
+    <Compile Include="Dialogs\Resize.xaml.cs">
       <DependentUpon>Resize.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings.xaml.cs">
+    <Compile Include="Config\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="TMImage.cs" />
-    <Compile Include="UpdateAvailable.xaml.cs">
+    <Compile Include="Update\UpdateAvailable.xaml.cs">
       <DependentUpon>UpdateAvailable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UpdateCheck.cs" />
-    <Page Include="ColorPicker.xaml">
+    <Compile Include="Update\UpdateCheck.cs" />
+    <Page Include="Dialogs\ColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Depth.xaml">
+    <Page Include="Dialogs\Depth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Merge\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -125,29 +125,29 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Merge\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MessageDialog.xaml">
+    <Page Include="Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resize.xaml">
+    <Page Include="Dialogs\Resize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings.xaml">
+    <Page Include="Config\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UpdateAvailable.xaml">
+    <Page Include="Update\UpdateAvailable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Merge.cs" />
+    <Compile Include="Merge\Merge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
