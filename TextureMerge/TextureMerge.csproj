@@ -92,6 +92,9 @@
     <Compile Include="Dialogs\Depth.xaml.cs">
       <DependentUpon>Depth.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ViewImage.xaml.cs">
+      <DependentUpon>ViewImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Merge\MergeWindowMapper.cs" />
     <Compile Include="Merge\MergeWindowMethods.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
@@ -113,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Depth.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ViewImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

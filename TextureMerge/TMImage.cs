@@ -37,7 +37,10 @@ namespace TextureMerge
             }
         }
 
-        public TMImage Clone() => new TMImage((MagickImage)Image.Clone());
+        public TMImage Clone()
+        {
+            return new TMImage((MagickImage)Image.Clone(), FileName);
+        }
 
         ~TMImage()
         {

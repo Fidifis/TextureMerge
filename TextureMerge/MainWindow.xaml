@@ -41,7 +41,7 @@
             <Grid Grid.Column="0" Margin="5,0,40,0" Drop="RedDrop" AllowDrop="true">
                 <Label x:Name="redNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="RedCh" Margin="10,10,10,70"/>
+                    <Image x:Name="RedCh" Margin="10,10,10,70" Cursor="Hand" MouseUp="RedCh_MouseUp"/>
                 </Border>
                 <Grid x:Name="srcGridCR" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
@@ -61,7 +61,7 @@
             <Grid Grid.Column="1" Margin="5,0,40,0" Drop="GreenDrop" AllowDrop="true">
                 <Label x:Name="greenNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="GreenCh" Margin="10,10,10,70"/>
+                    <Image x:Name="GreenCh" Margin="10,10,10,70" Cursor="Hand" MouseUp="GreenCh_MouseUp"/>
                 </Border>
                 <Grid x:Name="srcGridCG" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
@@ -81,7 +81,7 @@
             <Grid Grid.Column="2" Margin="5,0,40,0" Drop="BlueDrop" AllowDrop="true">
                 <Label x:Name="blueNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="BlueCh" Margin="10,10,10,70"/>
+                    <Image x:Name="BlueCh" Margin="10,10,10,70" Cursor="Hand" MouseUp="BlueCh_MouseUp"/>
                 </Border>
                 <Grid x:Name="srcGridCB" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>
@@ -100,7 +100,7 @@
             <Grid Grid.Column="3" Margin="5,0,40,0" Drop="AlphaDrop" AllowDrop="true">
                 <Label x:Name="alphaNoDataLabel" Content="No Image" Style="{StaticResource bigLabelStyle}"/>
                 <Border>
-                    <Image x:Name="AlphaCh" Margin="10,10,10,70"/>
+                    <Image x:Name="AlphaCh" Margin="10,10,10,70" Cursor="Hand" MouseUp="AlphaCh_MouseUp"/>
                 </Border>
                 <Grid x:Name="srcGridCA" Visibility="Hidden" Height="25" Width="auto" VerticalAlignment="Bottom" Margin="0,0,0,40" HorizontalAlignment="Center">
                     <Label Content="source" HorizontalAlignment="Left" Margin="0,0,60,0"/>

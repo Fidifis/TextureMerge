@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using ImageMagick;
 
 namespace TextureMerge
@@ -273,7 +274,31 @@ namespace TextureMerge
             return result;
         }
 
-        private static TMImage MakeChannelThumbnail(TMImage sourceBitmap, Channel channel)
+        public TMImage GetImage(Channel channel)
+        {
+            TMImage image;
+            switch (channel)
+            {
+                case Channel.Red:
+                    image = ExtractChannel(red, redChSource);
+                    break;
+                case Channel.Green:
+                    image = ExtractChannel(green, greenChSource);
+                    break;
+                case Channel.Blue:
+                    image = ExtractChannel(blue, blueChSource);
+                    break;
+                case Channel.Alpha:
+                    image = ExtractChannel(alpha, alphaChSource);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+
+            return image;
+        }
+
+        private static TMImage ExtractChannel(TMImage sourceBitmap, Channel channel)
         {
             if (channel == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
@@ -284,16 +309,25 @@ namespace TextureMerge
             if (sourceBitmap.Image.HasAlpha)
                 throw new ArgumentException("Source bitmap has alpha channel");
 
-            var thumb = sourceBitmap.Clone();
-            thumb.Image.Thumbnail(512, 512);
-            var result = new TMImage(new MagickImage(new MagickColor(0, 0, 0), thumb.Image.Width, thumb.Image.Height));
+            var result = new TMImage(new MagickImage(new MagickColor(0, 0, 0), sourceBitmap.Image.Width, sourceBitmap.Image.Height), sourceBitmap.FileName);
             var pixels = result.GetPixelArray();
-            var sourcePixels = thumb.GetPixelArray();
+            var sourcePixels = sourceBitmap.GetPixelArray();
             for (int i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = sourcePixels[i - (i % 3) + (int)channel];
             }
             result.SetPixels(pixels);
+            return result;
+        }
+
+        private static TMImage MakeChannelThumbnail(TMImage sourceBitmap, Channel channel)
+        {
+            if (sourceBitmap == null)
+                throw new ArgumentException("Source bitmap is null");
+
+            var thumb = sourceBitmap.Clone();
+            thumb.Image.Thumbnail(512, 512);
+            var result = ExtractChannel(thumb, channel);
             return result;
         }
 
