@@ -279,18 +279,27 @@ namespace TextureMerge
             return ExtractChannel(GetStoredImage(channel), GetSourceChannel(channel));
         }
 
-        public void PutEditedImage(TMImage image, Channel channel)
+        public void PutEditedImage(TMImage newImage, Channel channel)
         {
-            if (image == null)
+            if (newImage == null)
                 throw new ArgumentException("Source bitmap is null");
 
-            if (image.Image.HasAlpha)
+            if (newImage.Image.HasAlpha)
                 throw new ArgumentException("Source bitmap has alpha channel");
 
-            AlterImage(channel, (newImage, gg) =>
+            AlterImage(channel, (image, sourceChannel) =>
             {
+                if (image.Image.HasAlpha)
+                    throw new ArgumentException("Image has alpha channel");
 
-                return newImage;
+                var pixels = image.GetPixelArray();
+                var newPixels = newImage.GetPixelArray();
+                for (int i = (int)sourceChannel; i < pixels.Length; i += 3)
+                {
+                    pixels[i] = newPixels[i];
+                }
+                image.SetPixels(pixels);
+                return image;
             });
         }
 
