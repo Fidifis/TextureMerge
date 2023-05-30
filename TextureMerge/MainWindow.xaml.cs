@@ -332,5 +332,58 @@ namespace TextureMerge
         {
             new ViewImage(merge.GetChannelThumbnail(Channel.Alpha), "Alpha", merge.GetSourceChannel(Channel.Alpha).ToString()).Show();
         }
+
+        private void RAInvertSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void RALevelsSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void GAInvertSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void GALevelsSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BAInvertSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BALevelsSelected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AAInvertSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void AALevelsSelected(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void RActions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RActions.SelectedIndex = 0;
+        }
+
+        private void GActions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GActions.SelectedIndex = 0;
+        }
+
+        private void BActions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BActions.SelectedIndex = 0;
+        }
+
+        private void AActions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AActions.SelectedIndex = 0;
+        }
     }
 }

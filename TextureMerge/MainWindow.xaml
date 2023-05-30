@@ -54,7 +54,16 @@
                 </Grid>
                 <Label Content="R" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCC0000" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
-                    <Button x:Name="LoadR" Content="Load"  Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="LoadR" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
+                    <ComboBox x:Name="RActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="RActions_SelectionChanged" >
+                        <ComboBoxItem x:Name="RActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
+                        <ComboBoxItem Content="Invert" Selected="RAInvertSelected"/>
+                        <ComboBoxItem Content="Auto Levels" Selected="RALevelsSelected"/>
+                    </ComboBox>
                 </Grid>
             </Grid>
             <Button Grid.Column="1" Content="⇄" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Click="SwapGB"/>
@@ -74,7 +83,16 @@
                 </Grid>
                 <Label Content="G" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF00CC00" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
                     <Button x:Name="LoadG" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadG" />
+                    <ComboBox x:Name="GActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="GActions_SelectionChanged" >
+                        <ComboBoxItem x:Name="GActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
+                        <ComboBoxItem Content="Invert" Selected="GAInvertSelected"/>
+                        <ComboBoxItem Content="Auto Levels" Selected="GALevelsSelected"/>
+                    </ComboBox>
                 </Grid>
             </Grid>
             <Button Grid.Column="2" Content="⇄" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Click="SwapBA"/>
@@ -94,7 +112,16 @@
                 </Grid>
                 <Label Content="B" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF0000CC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
                     <Button x:Name="LoadB" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadB" />
+                    <ComboBox x:Name="BActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="BActions_SelectionChanged" >
+                        <ComboBoxItem x:Name="BActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
+                        <ComboBoxItem Content="Invert" Selected="BAInvertSelected"/>
+                        <ComboBoxItem Content="Auto Levels" Selected="BALevelsSelected"/>
+                    </ComboBox>
                 </Grid>
             </Grid>
             <Grid Grid.Column="3" Margin="5,0,40,0" Drop="AlphaDrop" AllowDrop="true">
@@ -113,7 +140,16 @@
                 </Grid>
                 <Label Content="A" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFCCCCCC" FontSize="16"/>
                 <Grid Height="45" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
                     <Button x:Name="LoadA" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadA" />
+                    <ComboBox x:Name="AActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="AActions_SelectionChanged" >
+                        <ComboBoxItem x:Name="AActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
+                        <ComboBoxItem Content="Invert" Selected="AAInvertSelected"/>
+                        <ComboBoxItem Content="Auto Levels" Selected="AALevelsSelected"/>
+                    </ComboBox>
                 </Grid>
             </Grid>
         </Grid>
