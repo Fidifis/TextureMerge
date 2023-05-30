@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using ImageMagick;
 
 namespace TextureMerge
@@ -16,9 +14,10 @@ namespace TextureMerge
 
         public Task<TMImage> DoMergeAsync(MagickColor fillColor, int depth = -1)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
-                    return DoMerge(fillColor, depth);
+                                return DoMerge(fillColor, depth);
             });
         }
 
@@ -221,9 +220,10 @@ namespace TextureMerge
 
         public Task<Merge> ResizeAsync(int width, int height, bool stretch, MagickColor fillColor = null)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 lock (redLock) lock (greenLock) lock (blueLock) lock (alphaLock)
-                    return Resize(width, height, stretch, fillColor);
+                                return Resize(width, height, stretch, fillColor);
             });
         }
 
@@ -276,26 +276,22 @@ namespace TextureMerge
 
         public TMImage GetImage(Channel channel)
         {
-            TMImage image;
-            switch (channel)
-            {
-                case Channel.Red:
-                    image = ExtractChannel(red, redChSource);
-                    break;
-                case Channel.Green:
-                    image = ExtractChannel(green, greenChSource);
-                    break;
-                case Channel.Blue:
-                    image = ExtractChannel(blue, blueChSource);
-                    break;
-                case Channel.Alpha:
-                    image = ExtractChannel(alpha, alphaChSource);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            return ExtractChannel(GetStoredImage(channel), GetSourceChannel(channel));
+        }
 
-            return image;
+        public void PutEditedImage(TMImage image, Channel channel)
+        {
+            if (image == null)
+                throw new ArgumentException("Source bitmap is null");
+
+            if (image.Image.HasAlpha)
+                throw new ArgumentException("Source bitmap has alpha channel");
+
+            AlterImage(channel, (newImage, gg) =>
+            {
+
+                return newImage;
+            });
         }
 
         private static TMImage ExtractChannel(TMImage sourceBitmap, Channel channel)
@@ -331,24 +327,24 @@ namespace TextureMerge
             return result;
         }
 
-        public Task<TMImage> LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
+        public Task LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
         {
             switch (channelSlot)
             {
                 case Channel.Red:
-                    return Task.Run(() => { lock (redLock) return LoadChannel(path, channelSlot, channelSource); });
+                    return Task.Run(() => { lock (redLock) LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Green:
-                    return Task.Run(() => { lock (greenLock) return LoadChannel(path, channelSlot, channelSource); });
+                    return Task.Run(() => { lock (greenLock) LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Blue:
-                    return Task.Run(() => { lock (blueLock) return LoadChannel(path, channelSlot, channelSource); });
+                    return Task.Run(() => { lock (blueLock) LoadChannel(path, channelSlot, channelSource); });
                 case Channel.Alpha:
-                    return Task.Run(() => { lock (alphaLock) return LoadChannel(path, channelSlot, channelSource); });
+                    return Task.Run(() => { lock (alphaLock) LoadChannel(path, channelSlot, channelSource); });
                 default:
                     throw new ArgumentException("Invalid channel");
             }
         }
 
-        public TMImage LoadChannel(string path, Channel channelSlot, Channel channelSource)
+        public void LoadChannel(string path, Channel channelSlot, Channel channelSource)
         {
             if (path == string.Empty)
                 throw new ArgumentException("Invalid path");
@@ -387,63 +383,53 @@ namespace TextureMerge
                 default:
                     throw new ArgumentException("Invalid channel");
             }
-
-            return MakeChannelThumbnail(source, channelSource);
         }
 
-        public TMImage SetChannelSource(Channel channel, Channel channelSource)
+        public void SetChannelSource(Channel channel, Channel channelSource)
         {
             if (channelSource == Channel.Alpha)
                 throw new ArgumentException("Alpha can't be source channel");
 
-            TMImage thumbnail;
             switch (channel)
             {
                 case Channel.Red:
                     redChSource = channelSource;
-                    thumbnail = red;
                     break;
                 case Channel.Green:
                     greenChSource = channelSource;
-                    thumbnail = green;
                     break;
                 case Channel.Blue:
                     blueChSource = channelSource;
-                    thumbnail = blue;
                     break;
                 case Channel.Alpha:
                     alphaChSource = channelSource;
-                    thumbnail = alpha;
                     break;
                 default:
                     throw new ArgumentException("Invalid channel");
             }
-
-            return MakeChannelThumbnail(thumbnail, channelSource);
         }
 
         public TMImage GetChannelThumbnail(Channel channel)
         {
-            TMImage thumbnail;
+            TMImage thumbnail = GetStoredImage(channel);
+            return thumbnail == null ? null : MakeChannelThumbnail(thumbnail, GetSourceChannel(channel));
+        }
+
+        public Task<TMImage> GetChannelThumbnailAsync(Channel channel)
+        {
             switch (channel)
             {
                 case Channel.Red:
-                    thumbnail = red;
-                    break;
+                    return Task.Run(() => { lock (redLock) return GetChannelThumbnail(channel); });
                 case Channel.Green:
-                    thumbnail = green;
-                    break;
+                    return Task.Run(() => { lock (greenLock) return GetChannelThumbnail(channel); });
                 case Channel.Blue:
-                    thumbnail = blue;
-                    break;
+                    return Task.Run(() => { lock (blueLock) return GetChannelThumbnail(channel); });
                 case Channel.Alpha:
-                    thumbnail = alpha;
-                    break;
+                    return Task.Run(() => { lock (alphaLock) return GetChannelThumbnail(channel); });
                 default:
                     throw new ArgumentException("Invalid channel");
             }
-
-            return thumbnail == null ? null : MakeChannelThumbnail(thumbnail, GetSourceChannel(channel));
         }
 
         public void Swap(Channel ch1, Channel ch2)
@@ -470,38 +456,19 @@ namespace TextureMerge
             alphaChSource = channels[3];
         }
 
-        public bool IsEmpty(Channel which)
+        public void Clear(Channel which)
         {
-            switch (which)
-            {
-                case Channel.Red:
-                    return red is null;
-                case Channel.Green:
-                    return green is null;
-                case Channel.Blue:
-                    return blue is null;
-                case Channel.Alpha:
-                    return alpha is null;
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            AlterImage(which, (image, imageSource) => null);
+        }
+
+        public bool IsEmpty(Channel channel)
+        {
+            return GetStoredImage(channel) is null;
         }
 
         public string GetOriginFileName(Channel channel)
         {
-            switch (channel)
-            {
-                case Channel.Red:
-                    return red.FileName;
-                case Channel.Green:
-                    return green.FileName;
-                case Channel.Blue:
-                    return blue.FileName;
-                case Channel.Alpha:
-                    return alpha.FileName;
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            return GetStoredImage(channel).FileName;
         }
 
         public Channel GetSourceChannel(Channel channel)
@@ -521,22 +488,39 @@ namespace TextureMerge
             }
         }
 
-        public void Clear(Channel which)
+        private void AlterImage(Channel channel, Func<TMImage, Channel, TMImage> func)
         {
-            switch (which)
+            switch (channel)
             {
                 case Channel.Red:
-                    red = null;
+                    red = func(red, redChSource);
                     break;
                 case Channel.Green:
-                    green = null;
+                    green = func(green, greenChSource);
                     break;
                 case Channel.Blue:
-                    blue = null;
+                    blue = func(blue, blueChSource);
                     break;
                 case Channel.Alpha:
-                    alpha = null;
+                    alpha = func(alpha, alphaChSource);
                     break;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+        }
+
+        private TMImage GetStoredImage(Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.Red:
+                    return red;
+                case Channel.Green:
+                    return green;
+                case Channel.Blue:
+                    return blue;
+                case Channel.Alpha:
+                    return alpha;
                 default:
                     throw new ArgumentException("Invalid channel");
             }

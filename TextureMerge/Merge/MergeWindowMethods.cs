@@ -268,7 +268,8 @@ namespace TextureMerge
             try
             {
                 var sourceChannel = channel == Channel.Alpha ? Channel.Red : channel;
-                image.SetImageThumbnail (await merge.LoadChannelAsync(path, channel, sourceChannel));
+                await merge.LoadChannelAsync(path, channel, sourceChannel);
+                image.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
                 label.Visibility = Visibility.Hidden;
                 UpdateSourceGrid(channel);
             }

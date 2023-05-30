@@ -172,75 +172,87 @@ namespace TextureMerge
             }
         }
 
-        private void SrcRR(object sender, RoutedEventArgs e)
+        private async void SrcRR(object sender, RoutedEventArgs e)
         {
-            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Red));
+            merge.SetChannelSource(Channel.Red, Channel.Red);
+            RedCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Red));
             UpdateSourceGrid(Channel.Red);
         }
 
-        private void SrcRG(object sender, RoutedEventArgs e)
+        private async void SrcRG(object sender, RoutedEventArgs e)
         {
-            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Green));
+            merge.SetChannelSource(Channel.Red, Channel.Green);
+            RedCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Red));
             UpdateSourceGrid(Channel.Red);
         }
 
-        private void SrcRB(object sender, RoutedEventArgs e)
+        private async void SrcRB(object sender, RoutedEventArgs e)
         {
-            RedCh.SetImageThumbnail(merge.SetChannelSource(Channel.Red, Channel.Blue));
+            merge.SetChannelSource(Channel.Red, Channel.Blue);
+            RedCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Red));
             UpdateSourceGrid(Channel.Red);
         }
 
-        private void SrcGR(object sender, RoutedEventArgs e)
+        private async void SrcGR(object sender, RoutedEventArgs e)
         {
-            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Red));
+            merge.SetChannelSource(Channel.Green, Channel.Red);
+            GreenCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Green));
             UpdateSourceGrid(Channel.Green);
         }
 
-        private void SrcGG(object sender, RoutedEventArgs e)
+        private async void SrcGG(object sender, RoutedEventArgs e)
         {
-            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Green));
+            merge.SetChannelSource(Channel.Green, Channel.Green);
+            GreenCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Green));
             UpdateSourceGrid(Channel.Green);
         }
 
-        private void SrcGB(object sender, RoutedEventArgs e)
+        private async void SrcGB(object sender, RoutedEventArgs e)
         {
-            GreenCh.SetImageThumbnail(merge.SetChannelSource(Channel.Green, Channel.Blue));
+            merge.SetChannelSource(Channel.Green, Channel.Blue);
+            GreenCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Green));
             UpdateSourceGrid(Channel.Green);
         }
 
-        private void SrcBR(object sender, RoutedEventArgs e)
+        private async void SrcBR(object sender, RoutedEventArgs e)
         {
-            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Red));
+            merge.SetChannelSource(Channel.Blue, Channel.Red);
+            BlueCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Blue));
             UpdateSourceGrid(Channel.Blue);
         }
 
-        private void SrcBG(object sender, RoutedEventArgs e)
+        private async void SrcBG(object sender, RoutedEventArgs e)
         {
-            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Green));
+            merge.SetChannelSource(Channel.Blue, Channel.Green);
+            BlueCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Blue));
             UpdateSourceGrid(Channel.Blue);
         }
 
-        private void SrcBB(object sender, RoutedEventArgs e)
+        private async void SrcBB(object sender, RoutedEventArgs e)
         {
-            BlueCh.SetImageThumbnail(merge.SetChannelSource(Channel.Blue, Channel.Blue));
+            merge.SetChannelSource(Channel.Blue, Channel.Blue);
+            BlueCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Blue));
             UpdateSourceGrid(Channel.Blue);
         }
 
-        private void SrcAR(object sender, RoutedEventArgs e)
+        private async void SrcAR(object sender, RoutedEventArgs e)
         {
-            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Red));
+            merge.SetChannelSource(Channel.Alpha, Channel.Red);
+            AlphaCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Alpha));
             UpdateSourceGrid(Channel.Alpha);
         }
 
-        private void SrcAG(object sender, RoutedEventArgs e)
+        private async void SrcAG(object sender, RoutedEventArgs e)
         {
-            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Green));
+            merge.SetChannelSource(Channel.Alpha, Channel.Green);
+            AlphaCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Alpha));
             UpdateSourceGrid(Channel.Alpha);
         }
 
-        private void SrcAB(object sender, RoutedEventArgs e)
+        private async void SrcAB(object sender, RoutedEventArgs e)
         {
-            AlphaCh.SetImageThumbnail(merge.SetChannelSource(Channel.Alpha, Channel.Blue));
+            merge.SetChannelSource(Channel.Alpha, Channel.Blue);
+            AlphaCh.SetImageThumbnail(await merge.GetChannelThumbnailAsync(Channel.Alpha));
             UpdateSourceGrid(Channel.Alpha);
         }
 

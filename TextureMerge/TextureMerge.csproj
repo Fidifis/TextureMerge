@@ -95,6 +95,7 @@
     <Compile Include="Dialogs\ViewImage.xaml.cs">
       <DependentUpon>ViewImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Merge\ImageEdits.cs" />
     <Compile Include="Merge\MergeWindowMapper.cs" />
     <Compile Include="Merge\MergeWindowMethods.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
