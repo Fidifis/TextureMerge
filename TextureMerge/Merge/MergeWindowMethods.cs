@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Runtime.Remoting.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -352,5 +353,23 @@ namespace TextureMerge
                 ByteToUshortKeepRatio(color.R),
                 ByteToUshortKeepRatio(color.G),
                 ByteToUshortKeepRatio(color.B));
+    
+        private async void InvertImageAsync(Channel channel)
+        {
+            TMImage image = merge.GetImage(channel);
+            TMImage newImage = ImageEdits.Invert(image);
+            merge.PutEditedImage(newImage, channel);
+            var imgSlot = mapper.slots[(int)channel].image;
+            imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+        }
+
+        private async void AutoLevelImageAsync(Channel channel)
+        {
+            TMImage image = merge.GetImage(channel);
+            TMImage newImage = ImageEdits.AutoLevel(image);
+            merge.PutEditedImage(newImage, channel);
+            var imgSlot = mapper.slots[(int)channel].image;
+            imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+        }
     }
 }

@@ -335,35 +335,42 @@ namespace TextureMerge
 
         private void RAInvertSelected(object sender, RoutedEventArgs e)
         {
+            InvertImageAsync(Channel.Red);
         }
 
         private void RALevelsSelected(object sender, RoutedEventArgs e)
         {
+            AutoLevelImageAsync(Channel.Red);
         }
 
         private void GAInvertSelected(object sender, RoutedEventArgs e)
         {
+            InvertImageAsync(Channel.Green);
         }
 
         private void GALevelsSelected(object sender, RoutedEventArgs e)
         {
+            AutoLevelImageAsync(Channel.Green);
         }
 
         private void BAInvertSelected(object sender, RoutedEventArgs e)
         {
+            InvertImageAsync(Channel.Blue);
         }
 
         private void BALevelsSelected(object sender, RoutedEventArgs e)
         {
-
+            AutoLevelImageAsync(Channel.Blue);
         }
 
         private void AAInvertSelected(object sender, RoutedEventArgs e)
         {
+            InvertImageAsync(Channel.Alpha);
         }
 
         private void AALevelsSelected(object sender, RoutedEventArgs e)
         {
+            AutoLevelImageAsync(Channel.Alpha);
         }
 
         private void RActions_SelectionChanged(object sender, SelectionChangedEventArgs e)

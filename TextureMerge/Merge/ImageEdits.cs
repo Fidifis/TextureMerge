@@ -9,7 +9,7 @@
             return result;
         }
 
-        public static TMImage FullRange(TMImage image)
+        public static TMImage AutoLevel(TMImage image)
         {
             var result = image.Clone();
             result.Image.AutoLevel();
