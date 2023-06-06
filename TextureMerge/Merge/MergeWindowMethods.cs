@@ -356,20 +356,50 @@ namespace TextureMerge
     
         private async void InvertImageAsync(Channel channel)
         {
-            TMImage image = merge.GetImage(channel);
-            TMImage newImage = ImageEdits.Invert(image);
-            merge.PutEditedImage(newImage, channel);
-            var imgSlot = mapper.slots[(int)channel].image;
-            imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+            if (merge.IsEmpty(channel))
+            {
+                MessageDialog.Show("Cannot perform an action when no image is loaded",
+                    type: MessageDialog.Type.Notice);
+                return;
+            }
+
+            try
+            {
+                TMImage image = merge.GetImage(channel);
+                TMImage newImage = ImageEdits.Invert(image);
+                merge.PutEditedImage(newImage, channel);
+                var imgSlot = mapper.slots[(int)channel].image;
+                imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+            }
+            catch (Exception ex)
+            {
+                MessageDialog.Show("Failed to perform action Invert." + Environment.NewLine + ex.Message,
+                    "Error", MessageDialog.Type.Error);
+            }
         }
 
         private async void AutoLevelImageAsync(Channel channel)
         {
-            TMImage image = merge.GetImage(channel);
-            TMImage newImage = ImageEdits.AutoLevel(image);
-            merge.PutEditedImage(newImage, channel);
-            var imgSlot = mapper.slots[(int)channel].image;
-            imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+            if (merge.IsEmpty(channel))
+            {
+                MessageDialog.Show("Cannot perform an action when no image is loaded",
+                    type: MessageDialog.Type.Notice);
+                return;
+            }
+
+            try
+            {
+                TMImage image = merge.GetImage(channel);
+                TMImage newImage = ImageEdits.AutoLevel(image);
+                merge.PutEditedImage(newImage, channel);
+                var imgSlot = mapper.slots[(int)channel].image;
+                imgSlot.SetImageThumbnail(await merge.GetChannelThumbnailAsync(channel));
+            }
+            catch (Exception ex)
+            {
+                MessageDialog.Show("Failed to perform action AutoLevel." + Environment.NewLine + ex.Message,
+                    "Error", MessageDialog.Type.Error);
+            }
         }
     }
 }
