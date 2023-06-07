@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="19.6" version="20.2" Modules="simple" RootPath="." Language="en" Id="{441A1EFB-2FFB-4A85-B61F-3417A77D0D6F}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.6" version="20.7.1" Modules="simple" RootPath="." Language="en" Id="{441A1EFB-2FFB-4A85-B61F-3417A77D0D6F}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
-    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 20.2 build 2c3f1cf9" ValueLocId="-"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_DOTNET_VERSION;AI_DETECTED_ADMIN_USER"/>
     <ROW Property="AI_REQUIRED_DOTNET_DISPLAY" MultiBuildValue="DefaultBuild:4.8" ValueLocId="-"/>
     <ROW Property="AI_REQUIRED_DOTNET_VERSION" MultiBuildValue="DefaultBuild:4.8" ValueLocId="-"/>
@@ -14,10 +12,10 @@
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="Manufacturer" Value="Fidifis"/>
-    <ROW Property="ProductCode" Value="1033:{B0F91C90-25A3-4D3C-A793-1C11106E8499} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{A015A74A-3C66-4FE5-B22D-A1FACC1A9079} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="TextureMerge"/>
-    <ROW Property="ProductVersion" Value="1.3.3"/>
+    <ROW Property="ProductVersion" Value="1.4.0" Options="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{C6BCFED9-578D-4E43-8345-740156903ECA}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
