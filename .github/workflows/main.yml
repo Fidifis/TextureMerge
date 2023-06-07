@@ -41,5 +41,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          .\TextureMerge\bin\x64\TextureMerge.zip
-          .\Setup\setup-SetupFiles\setup.msi
+          TextureMerge/bin/x64/TextureMerge.zip
+          Setup/setup-SetupFiles/setup.msi
