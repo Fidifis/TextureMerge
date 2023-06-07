@@ -21,6 +21,40 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Width" Value="19"/>
             </Style>
+
+            <!--ComboBox Style-->
+            <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="Border" Grid.ColumnSpan="2" Background="#34363a" BorderBrush="#FF007AC8" BorderThickness="2"/>
+                    <Path x:Name="Arrow" Grid.Column="1" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                </Grid>
+            </ControlTemplate>
+            <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid>
+                                <ToggleButton x:Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" />
+                                <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="5, 2, 0, 2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                    <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border x:Name="DropDownBorder" Background="#343640" BorderThickness="1" BorderBrush="#007ACC">
+                                            <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -59,7 +93,7 @@
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LoadR" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadR" />
-                    <ComboBox x:Name="RActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="RActions_SelectionChanged" >
+                    <ComboBox x:Name="RActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="RActions_SelectionChanged" Style="{StaticResource CustomComboBoxStyle}">
                         <ComboBoxItem x:Name="RActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
                         <ComboBoxItem Content="Invert" Selected="RAInvertSelected"/>
                         <ComboBoxItem Content="Auto Levels" Selected="RALevelsSelected"/>
@@ -88,7 +122,7 @@
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LoadG" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadG" />
-                    <ComboBox x:Name="GActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="GActions_SelectionChanged" >
+                    <ComboBox x:Name="GActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="GActions_SelectionChanged" Style="{StaticResource CustomComboBoxStyle}">
                         <ComboBoxItem x:Name="GActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
                         <ComboBoxItem Content="Invert" Selected="GAInvertSelected"/>
                         <ComboBoxItem Content="Auto Levels" Selected="GALevelsSelected"/>
@@ -117,7 +151,7 @@
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LoadB" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadB" />
-                    <ComboBox x:Name="BActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="BActions_SelectionChanged" >
+                    <ComboBox x:Name="BActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="BActions_SelectionChanged" Style="{StaticResource CustomComboBoxStyle}">
                         <ComboBoxItem x:Name="BActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
                         <ComboBoxItem Content="Invert" Selected="BAInvertSelected"/>
                         <ComboBoxItem Content="Auto Levels" Selected="BALevelsSelected"/>
@@ -145,7 +179,7 @@
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LoadA" Content="Load" Grid.Column="0" Margin="10,10,5,10" Click="ButtonLoadA" />
-                    <ComboBox x:Name="AActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="AActions_SelectionChanged" >
+                    <ComboBox x:Name="AActions" Grid.Column="1" Margin="10,10,5,10" SelectionChanged="AActions_SelectionChanged" Style="{StaticResource CustomComboBoxStyle}">
                         <ComboBoxItem x:Name="AActionsHeading" IsSelected="True" Visibility="Collapsed" Content="Actions"/>
                         <ComboBoxItem Content="Invert" Selected="AAInvertSelected"/>
                         <ComboBoxItem Content="Auto Levels" Selected="AALevelsSelected"/>
