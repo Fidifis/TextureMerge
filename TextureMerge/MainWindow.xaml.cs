@@ -21,7 +21,16 @@ namespace TextureMerge
         {
             InitializeComponent();
             MapResources();
-            MagickNET.Initialize();
+
+            try
+            {
+                MagickNET.Initialize();
+            }
+            catch (Exception ex)
+            {
+                MessageDialog.Show("Failed to initialize MagickNET library." + Environment.NewLine + ex.Message,
+                "Error", MessageDialog.Type.Error);
+            }
 
             ToolTipService.ShowDurationProperty.OverrideMetadata(
                 typeof(DependencyObject), new FrameworkPropertyMetadata(60000));
