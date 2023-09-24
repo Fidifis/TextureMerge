@@ -324,22 +324,22 @@ namespace TextureMerge
             // Using only thumbnail to view image. Call merge.GetImage instead for full resolution.
             // For now we use thumbnail for performance, because
             // the merge.GetImage takes a long time to convert to .NET ImageSource.
-            new ViewImage(merge.GetChannelThumbnail(Channel.Red), "Red", merge.GetSourceChannel(Channel.Red).ToString()).Show();
+            new ViewImage(merge.GetImage(Channel.Red), "Red", merge.GetSourceChannel(Channel.Red).ToString()).Show();
         }
 
         private void GreenCh_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new ViewImage(merge.GetChannelThumbnail(Channel.Green), "Green", merge.GetSourceChannel(Channel.Green).ToString()).Show();
+            new ViewImage(merge.GetImage(Channel.Green), "Green", merge.GetSourceChannel(Channel.Green).ToString()).Show();
         }
 
         private void BlueCh_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new ViewImage(merge.GetChannelThumbnail(Channel.Blue), "Blue", merge.GetSourceChannel(Channel.Blue).ToString()).Show();
+            new ViewImage(merge.GetImage(Channel.Blue), "Blue", merge.GetSourceChannel(Channel.Blue).ToString()).Show();
         }
 
         private void AlphaCh_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new ViewImage(merge.GetChannelThumbnail(Channel.Alpha), "Alpha", merge.GetSourceChannel(Channel.Alpha).ToString()).Show();
+            new ViewImage(merge.GetImage(Channel.Alpha), "Alpha", merge.GetSourceChannel(Channel.Alpha).ToString()).Show();
         }
 
         private void RAInvertSelected(object sender, RoutedEventArgs e)

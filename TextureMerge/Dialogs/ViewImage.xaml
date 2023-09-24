@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextureMerge"
         mc:Ignorable="d"
-        Title="View Image" Height="768" Width="768">
+        Title="View Image" Height="768" Width="768"
+        Loaded="WindowLoaded">
     <Grid>
         <Image x:Name="TheImage"/>
     </Grid>

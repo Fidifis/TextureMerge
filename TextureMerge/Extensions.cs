@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using ImageMagick;
 
 namespace TextureMerge
@@ -19,14 +20,8 @@ namespace TextureMerge
             return Math.Round(value, decimalPlaces).ToString();
         }
 
-        public static void SetImageThumbnail(this Image element, TMImage image)
+        public static BitmapImage ConvertToBitmap(this TMImage image)
         {
-            if (image == null)
-            {
-                element.Source = null;
-                return;
-            }
-
             using (var stream = new MemoryStream())
             {
                 image.Image.Format = MagickFormat.Png;
@@ -38,8 +33,33 @@ namespace TextureMerge
                 imageSource.StreamSource = stream;
                 imageSource.EndInit();
 
-                element.Source = imageSource;
+                return imageSource;
             }
+        }
+
+        public static void SetImageThumbnail(this Image element, TMImage image)
+        {
+            if (image == null)
+            {
+                element.Source = null;
+                return;
+            }
+
+            element.Source = image.ConvertToBitmap();
+        }
+
+        public static void SetImageThumbnailDispatcher(this Image element, TMImage image, Dispatcher dispatcher)
+        {
+            if (image == null)
+            {
+                element.Source = null;
+                return;
+            }
+
+            dispatcher.InvokeAsync(() =>
+            {
+                element.Source = image.ConvertToBitmap();
+            });
         }
 
         public static void Save(this TMImage bitmap, string saveFilePath)
