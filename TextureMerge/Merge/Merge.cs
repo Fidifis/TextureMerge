@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Remoting.Channels;
 using System.Threading.Tasks;
 using ImageMagick;
 
@@ -338,19 +339,8 @@ namespace TextureMerge
 
         public Task LoadChannelAsync(string path, Channel channelSlot, Channel channelSource)
         {
-            switch (channelSlot)
-            {
-                case Channel.Red:
-                    return Task.Run(() => { lock (redLock) LoadChannel(path, channelSlot, channelSource); });
-                case Channel.Green:
-                    return Task.Run(() => { lock (greenLock) LoadChannel(path, channelSlot, channelSource); });
-                case Channel.Blue:
-                    return Task.Run(() => { lock (blueLock) LoadChannel(path, channelSlot, channelSource); });
-                case Channel.Alpha:
-                    return Task.Run(() => { lock (alphaLock) LoadChannel(path, channelSlot, channelSource); });
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            var dLock = GetLock(channelSlot);
+            return Task.Run(() => { lock (dLock) LoadChannel(path, channelSlot, channelSource); });
         }
 
         public void LoadChannel(string path, Channel channelSlot, Channel channelSource)
@@ -371,27 +361,8 @@ namespace TextureMerge
 
             source.Image.Alpha(AlphaOption.Off);
 
-            switch (channelSlot)
-            {
-                case Channel.Red:
-                    red = source;
-                    redChSource = channelSource;
-                    break;
-                case Channel.Green:
-                    green = source;
-                    greenChSource = channelSource;
-                    break;
-                case Channel.Blue:
-                    blue = source;
-                    blueChSource = channelSource;
-                    break;
-                case Channel.Alpha:
-                    alpha = source;
-                    alphaChSource = channelSource;
-                    break;
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            AlterImage(channelSlot, (_image, _imageSource) => source);
+            SetChannelSource(channelSlot, channelSource);
         }
 
         public void SetChannelSource(Channel channel, Channel channelSource)
@@ -426,19 +397,8 @@ namespace TextureMerge
 
         public Task<TMImage> GetChannelThumbnailAsync(Channel channel)
         {
-            switch (channel)
-            {
-                case Channel.Red:
-                    return Task.Run(() => { lock (redLock) return GetChannelThumbnail(channel); });
-                case Channel.Green:
-                    return Task.Run(() => { lock (greenLock) return GetChannelThumbnail(channel); });
-                case Channel.Blue:
-                    return Task.Run(() => { lock (blueLock) return GetChannelThumbnail(channel); });
-                case Channel.Alpha:
-                    return Task.Run(() => { lock (alphaLock) return GetChannelThumbnail(channel); });
-                default:
-                    throw new ArgumentException("Invalid channel");
-            }
+            var dLock = GetLock(channel);
+            return Task.Run(() => { lock (dLock) return GetChannelThumbnail(channel); });
         }
 
         public void Swap(Channel ch1, Channel ch2)
@@ -530,6 +490,23 @@ namespace TextureMerge
                     return blue;
                 case Channel.Alpha:
                     return alpha;
+                default:
+                    throw new ArgumentException("Invalid channel");
+            }
+        }
+
+        private object GetLock(Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.Red:
+                    return redLock;
+                case Channel.Green:
+                    return greenLock;
+                case Channel.Blue:
+                    return blueLock;
+                case Channel.Alpha:
+                    return alphaLock;
                 default:
                     throw new ArgumentException("Invalid channel");
             }
