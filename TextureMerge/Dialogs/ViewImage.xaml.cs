@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace TextureMerge
 {
@@ -53,14 +51,7 @@ namespace TextureMerge
             if (FullImage == null)
                 return;
 
-            Task.Run(() => {
-                // This is here because Dispatcher.Invoke locks the image and the preview doesn't get loaded in time and nothing is rendered until the full resolution is processed.
-                Thread.Sleep(50);
-                TheImage.Dispatcher.Invoke(() =>
-                {
-                    TheImage.Source = FullImage.ConvertToBitmap();
-                });
-            });
+            TheImage.SetImageThumbnailAsync(FullImage);
         }
     }
 }
