@@ -19,7 +19,34 @@ namespace TextureMerge
 
             TheImage.SetImageThumbnail(thubnail);
             Title = $"View image - in {channelName} channel - source {channelSource} - {image.Image.Width}x{image.Image.Height} - {image.FileName}";
+
+            int width = image.Image.Width;
+            int height = image.Image.Height;
+            ResizeToFit(ref width, ref height, 768);
+
+            Width = width;
+            Height = height;
         }
+
+        private static void ResizeToFit(ref int width, ref int height, int size)
+        {
+            double aspectRatio = (double)width / height;
+
+            if (width > size || height > size)
+            {
+                if (aspectRatio > 1)
+                {
+                    width = size;
+                    height = (int)(size / aspectRatio);
+                }
+                else
+                {
+                    height = size;
+                    width = (int)(size * aspectRatio);
+                }
+            }
+        }
+
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
