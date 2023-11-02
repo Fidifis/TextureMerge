@@ -12,10 +12,10 @@
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="Manufacturer" Value="Fidifis"/>
-    <ROW Property="ProductCode" Value="1033:{A015A74A-3C66-4FE5-B22D-A1FACC1A9079} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{2BE73AA6-E6C4-4311-A78F-685CE9A57418} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="TextureMerge"/>
-    <ROW Property="ProductVersion" Value="1.4.0" Options="4"/>
+    <ROW Property="ProductVersion" Value="1.4.1" Options="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{C6BCFED9-578D-4E43-8345-740156903ECA}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
