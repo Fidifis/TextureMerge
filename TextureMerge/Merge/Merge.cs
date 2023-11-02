@@ -363,6 +363,7 @@ namespace TextureMerge
 
 
             var source = new TMImage(new MagickImage(path), Path.GetFileName(path));
+            source.Image.ColorType = ColorType.TrueColor;
             source.Image.AutoOrient();
             source.Image.ColorSpace = ColorSpace.sRGB;
 
