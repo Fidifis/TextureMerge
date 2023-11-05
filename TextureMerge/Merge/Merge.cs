@@ -362,15 +362,12 @@ namespace TextureMerge
                 throw new ArgumentException("Alpha can't be source channel");
 
 
-            var source = new TMImage(new MagickImage(path), Path.GetFileName(path));
+            var source = new TMImage(new MagickImage(path), Path.GetFileName(path)) ?? throw new ArgumentException("Failed to load image");
+
+            source.Image.Alpha(AlphaOption.Off);
             source.Image.ColorType = ColorType.TrueColor;
             source.Image.AutoOrient();
             source.Image.ColorSpace = ColorSpace.sRGB;
-
-            if (source is null)
-                throw new ArgumentException("Failed to load image");
-
-            source.Image.Alpha(AlphaOption.Off);
 
             switch (channelSlot)
             {

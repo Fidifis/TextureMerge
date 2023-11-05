@@ -51,5 +51,5 @@ using System.Windows;
 // Můžete zadat všechny hodnoty nebo nastavit výchozí číslo buildu a revize
 // pomocí zástupného znaku * takto:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.1")]
-[assembly: AssemblyFileVersion("1.4.1")]
+[assembly: AssemblyVersion("1.4.2")]
+[assembly: AssemblyFileVersion("1.4.2")]
