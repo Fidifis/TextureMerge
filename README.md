@@ -1,5 +1,8 @@
 # TextureMerge
 
+[![GitHub latest release version](https://img.shields.io/github/v/release/Fidifis/TextureMerge.svg?style=flat)](https://github.com/Fidifis/TextureMerge/releases/latest)
+[![Github All Releases download count](https://img.shields.io/github/downloads/Fidifis/TextureMerge/total.svg?style=flat)](https://github.com/Fidifis/TextureMerge/releases/latest)
+
 [![Main](https://github.com/Fidifis/TextureMerge/actions/workflows/main.yml/badge.svg)](https://github.com/Fidifis/TextureMerge/actions/workflows/main.yml)
 [![CodeQL](https://github.com/Fidifis/TextureMerge/actions/workflows/codeql.yml/badge.svg)](https://github.com/Fidifis/TextureMerge/actions/workflows/codeql.yml)
 
